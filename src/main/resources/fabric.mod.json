@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "seasonalspice",
+  "version": "${version}",
+  "name": "Mim1q's Seasonal Spice",
+  "description": "Decoration from the four seasons!",
+  "authors": [
+    "Mim1q"
+  ],
+  "contact": {},
+  "license": "APACHE 2.0",
+  "icon": "assets/seasonalspice/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "com.github.mim1q.seasonalspice.SeasonalSpiceClient"
+    ],
+    "main": [
+      "com.github.mim1q.seasonalspice.SeasonalSpice"
+    ]
+  },
+  "mixins": [
+    "seasonalspice.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.9",
+    "fabric": ">=0.66.0",
+    "minecraft": "1.19.2"
+  }
+}
