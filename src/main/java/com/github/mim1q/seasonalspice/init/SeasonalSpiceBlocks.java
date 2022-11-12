@@ -12,6 +12,7 @@ import net.minecraft.util.registry.Registry;
 public class SeasonalSpiceBlocks {
 
   public static final PitchforkBlock PITCHFORK = registerWithSimpleItem(new PitchforkBlock(Settings.copy(Blocks.IRON_BLOCK)), "pitchfork");
+  public static final PitchforkBlock SPADE = registerWithSimpleItem(new PitchforkBlock(Settings.copy(Blocks.IRON_BLOCK)), "spade");
 
   public static void init() { }
 
