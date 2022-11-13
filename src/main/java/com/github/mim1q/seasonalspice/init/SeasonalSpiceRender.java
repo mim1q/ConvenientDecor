@@ -10,7 +10,8 @@ public class SeasonalSpiceRender {
       RenderLayer.getCutout(),
       SeasonalSpiceBlocks.RED_PLASTIC_SHOVEL,
       SeasonalSpiceBlocks.BLUE_PLASTIC_SHOVEL,
-      SeasonalSpiceBlocks.YELLOW_PLASTIC_SHOVEL
+      SeasonalSpiceBlocks.YELLOW_PLASTIC_SHOVEL,
+      SeasonalSpiceBlocks.HAY_STACK_BLOCK
     );
   }
 }
