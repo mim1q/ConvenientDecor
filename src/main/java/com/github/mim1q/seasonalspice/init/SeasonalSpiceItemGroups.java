@@ -11,6 +11,7 @@ public class SeasonalSpiceItemGroups {
     .icon(() -> Blocks.OAK_SAPLING.asItem().getDefaultStack())
     .appendItems(stacks -> {
       stacks.add(SeasonalSpiceBlocks.SHOVEL.asItem().getDefaultStack());
+      stacks.add(SeasonalSpiceBlocks.WATERING_CAN.asItem().getDefaultStack());
     })
     .build();
 

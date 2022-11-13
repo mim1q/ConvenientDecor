@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "full=true": {
+      "model": "seasonalspice:block/watering_can/watering_can_full"
+    },
+    "full=false": {
+      "model": "seasonalspice:block/watering_can/watering_can"
+    }
+  }
+}

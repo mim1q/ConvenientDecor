@@ -11,7 +11,8 @@ public class SeasonalSpiceRender {
       SeasonalSpiceBlocks.RED_PLASTIC_SHOVEL,
       SeasonalSpiceBlocks.BLUE_PLASTIC_SHOVEL,
       SeasonalSpiceBlocks.YELLOW_PLASTIC_SHOVEL,
-      SeasonalSpiceBlocks.HAYSTACK_BLOCK
+      SeasonalSpiceBlocks.HAYSTACK_BLOCK,
+      SeasonalSpiceBlocks.WATERING_CAN
     );
   }
 }
