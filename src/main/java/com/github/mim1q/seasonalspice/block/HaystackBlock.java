@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
@@ -11,9 +12,9 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
-public class HayStackBlock extends Block {
-  public HayStackBlock(Settings settings) {
-    super(settings.offsetType(Block.OffsetType.XYZ).nonOpaque().dynamicBounds());
+public class HaystackBlock extends Block {
+  public HaystackBlock(Settings settings) {
+    super(settings.offsetType(Block.OffsetType.XYZ).nonOpaque().dynamicBounds().noCollision());
   }
 
   @Override
@@ -29,6 +30,12 @@ public class HayStackBlock extends Block {
   }
 
   @Override
+  @SuppressWarnings("deprecation")
+  public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    return false;
+  }
+
+  @Override
   public float getMaxHorizontalModelOffset() {
     return 0.125f;
   }
@@ -36,18 +43,6 @@ public class HayStackBlock extends Block {
   @Override
   public float getVerticalModelOffsetMultiplier() {
     return 0.125f;
-  }
-
-  @Override
-  @SuppressWarnings("deprecation")
-  public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-    return VoxelShapes.empty();
-  }
-
-  @Override
-  @SuppressWarnings("deprecation")
-  public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
-    return VoxelShapes.empty();
   }
 
   @Override
