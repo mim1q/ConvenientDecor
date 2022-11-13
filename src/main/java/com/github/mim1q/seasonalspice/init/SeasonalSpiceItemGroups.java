@@ -17,6 +17,7 @@ public class SeasonalSpiceItemGroups {
   public static final ItemGroup SUMMER_SPICE = FabricItemGroupBuilder.create(SeasonalSpice.id("summer_spice"))
     .icon(() -> Blocks.SUNFLOWER.asItem().getDefaultStack())
     .appendItems(stacks -> {
+      stacks.add(SeasonalSpiceBlocks.UNBUNDLED_HAY_BLOCK.asItem().getDefaultStack());
       stacks.add(SeasonalSpiceBlocks.RED_PLASTIC_SHOVEL.asItem().getDefaultStack());
       stacks.add(SeasonalSpiceBlocks.YELLOW_PLASTIC_SHOVEL.asItem().getDefaultStack());
       stacks.add(SeasonalSpiceBlocks.BLUE_PLASTIC_SHOVEL.asItem().getDefaultStack());
