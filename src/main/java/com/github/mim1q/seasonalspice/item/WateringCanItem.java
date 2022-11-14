@@ -68,6 +68,9 @@ public class WateringCanItem extends Item {
       WateringCanItem.setWaterLevel(stack, 32);
       return TypedActionResult.success(stack);
     }
+    if (state.isOf(SeasonalSpiceBlocks.PERMANENT_FARMLAND)) {
+      return TypedActionResult.fail(stack);
+    }
     if (state.isOf(Blocks.FARMLAND)) {
       if (user.isSneaking()) {
         return null;
@@ -76,7 +79,7 @@ public class WateringCanItem extends Item {
         return TypedActionResult.fail(stack);
       }
       WateringCanItem.setWaterLevel(stack, WateringCanItem.getWaterLevel(stack) - 1);
-      world.setBlockState(hitResult.getBlockPos(), Blocks.WET_SPONGE.getDefaultState());
+      world.setBlockState(hitResult.getBlockPos(), SeasonalSpiceBlocks.PERMANENT_FARMLAND.getState());
       return TypedActionResult.success(stack);
     }
     return null;
