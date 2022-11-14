@@ -2,6 +2,7 @@ package com.github.mim1q.seasonalspice.block;
 
 import com.github.mim1q.seasonalspice.block.blockentity.WateringCanBlockEntity;
 import com.github.mim1q.seasonalspice.init.SeasonalSpiceItems;
+import com.github.mim1q.seasonalspice.item.WateringCanItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
@@ -53,16 +54,16 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
   @Nullable
   @Override
   public BlockState getPlacementState(ItemPlacementContext ctx) {
-    boolean full = ctx.getStack().getDamage() < ctx.getStack().getMaxDamage();
+    boolean full = WateringCanItem.getWaterLevel(ctx.getStack()) > 0;
     return this.getDefaultState().with(FACING, ctx.getPlayerFacing()).with(FULL, full);
   }
 
   @Override
   public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
     BlockEntity entity = world.getBlockEntity(pos);
-    if (entity instanceof WateringCanBlockEntity) {
+    if (entity instanceof WateringCanBlockEntity wateringCan) {
       ItemStack stack = new ItemStack(SeasonalSpiceItems.WATERING_CAN);
-      stack.setDamage(((WateringCanBlockEntity) entity).getDamage());
+      WateringCanItem.setWaterLevel(stack, wateringCan.getWaterLevel());
       return stack;
     }
     return null;

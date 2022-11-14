@@ -1,6 +1,7 @@
 package com.github.mim1q.seasonalspice.block.blockentity;
 
 import com.github.mim1q.seasonalspice.init.SeasonalSpiceBlockEntities;
+import com.github.mim1q.seasonalspice.item.WateringCanItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
@@ -8,35 +9,35 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
 public class WateringCanBlockEntity extends BlockEntity {
-  private int damage = 0;
+  private int waterLevel = 0;
 
   public WateringCanBlockEntity(BlockPos pos, BlockState state) {
     super(SeasonalSpiceBlockEntities.WATERING_CAN, pos, state);
   }
 
-  public int getDamage() {
-    return damage;
+  public int getWaterLevel() {
+    return waterLevel;
   }
 
-  public void setDamage(int damage) {
-    this.damage = damage;
+  public void setWaterLevel(int waterLevel) {
+    this.waterLevel = waterLevel;
   }
 
   @Override
   public void readNbt(NbtCompound nbt) {
     super.readNbt(nbt);
-    damage = nbt.getInt("damage");
+    waterLevel = nbt.getInt("WaterLevel");
   }
 
   @Override
   protected void writeNbt(NbtCompound nbt) {
     super.writeNbt(nbt);
-    nbt.putInt("damage", damage);
+    nbt.putInt("WaterLevel", waterLevel);
   }
 
   @Override
   public void setStackNbt(ItemStack stack) {
     super.setStackNbt(stack);
-    this.setDamage(stack.getDamage());
+    this.setWaterLevel(WateringCanItem.getWaterLevel(stack));
   }
 }

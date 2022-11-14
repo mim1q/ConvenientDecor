@@ -12,6 +12,7 @@ public class SeasonalSpiceItemGroups {
     .appendItems(stacks -> {
       stacks.add(SeasonalSpiceBlocks.SHOVEL.asItem().getDefaultStack());
       stacks.add(SeasonalSpiceItems.WATERING_CAN.getDefaultStack());
+      stacks.add(SeasonalSpiceItems.WATERING_CAN.getStack(32));
     })
     .build();
 

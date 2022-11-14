@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "seasonalspice:block/watering_can",
-		"1": "seasonalspice:block/wooden_watering_can",
-		"particle": "seasonalspice:block/wooden_watering_can"
+		"1": "seasonalspice:block/watering_can",
+		"particle": "seasonalspice:block/watering_can"
 	},
 	"elements": [
 		{
@@ -22,7 +22,7 @@
 			"from": [5, 3, 5],
 			"to": [11, 7, 11],
 			"faces": {
-				"up": {"uv": [6, 16, 0, 10], "texture": "#1"}
+				"up": {"uv": [6, 16, 0, 10], "texture": "#1", "tintindex": 0}
 			}
 		},
 		{

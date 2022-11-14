@@ -9,7 +9,7 @@ import net.minecraft.util.registry.Registry;
 public class SeasonalSpiceItems {
 
   public static final WateringCanItem WATERING_CAN = register(new WateringCanItem(
-    new FabricItemSettings().maxCount(1).maxDamage(32)
+    new FabricItemSettings().maxCount(1)
   ), "watering_can");
 
   public static void init() { }

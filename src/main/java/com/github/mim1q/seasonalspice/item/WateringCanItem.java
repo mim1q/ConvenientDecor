@@ -16,6 +16,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
@@ -29,6 +30,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class WateringCanItem extends Item {
+
+  public static final int MAX_WATER_LEVEL = 32;
+  public static final String WATER_LEVEL_KEY = "item.seasonalspice.watering_can.water_level";
+
   public WateringCanItem(Settings settings) {
     super(settings);
   }
@@ -49,7 +54,7 @@ public class WateringCanItem extends Item {
     if (result2.getResult().isAccepted()) {
       BlockEntity entity = world.getBlockEntity(ctx.getBlockPos());
       if (entity instanceof WateringCanBlockEntity wateringCan) {
-        wateringCan.setDamage(stack.getDamage());
+        wateringCan.setWaterLevel(WateringCanItem.getWaterLevel(stack));
       }
     }
     return result2;
@@ -58,14 +63,17 @@ public class WateringCanItem extends Item {
   protected TypedActionResult<ItemStack> tryUseOnBlock(World world, PlayerEntity user, ItemStack stack, BlockHitResult hitResult) {
     BlockState state = world.getBlockState(hitResult.getBlockPos());
     if (state.getFluidState().isOf(Fluids.WATER)) {
-      stack.setDamage(0);
+      WateringCanItem.setWaterLevel(stack, 32);
       return TypedActionResult.success(stack);
     }
     if (state.isOf(Blocks.FARMLAND)) {
-      if (stack.getDamage() == this.getMaxDamage()) {
+      if (user.isSneaking()) {
+        return null;
+      }
+      if (WateringCanItem.getWaterLevel(stack) == 0) {
         return TypedActionResult.fail(stack);
       }
-      stack.setDamage(stack.getDamage() + 1);
+      WateringCanItem.setWaterLevel(stack, WateringCanItem.getWaterLevel(stack) - 1);
       world.setBlockState(hitResult.getBlockPos(), Blocks.WET_SPONGE.getDefaultState());
       return TypedActionResult.success(stack);
     }
@@ -93,11 +101,42 @@ public class WateringCanItem extends Item {
 
   @Override
   public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-    super.appendTooltip(stack, world, tooltip, context);
+    tooltip.add(Text.translatable(WATER_LEVEL_KEY, WateringCanItem.getWaterLevel(stack), MAX_WATER_LEVEL).formatted(Formatting.AQUA));
   }
 
   @Override
   public boolean isItemBarVisible(ItemStack stack) {
     return true;
+  }
+
+  @Override
+  public ItemStack getDefaultStack() {
+    ItemStack stack = super.getDefaultStack();
+    WateringCanItem.setWaterLevel(stack, 0);
+    return stack;
+  }
+
+  public ItemStack getStack(int waterLevel) {
+    ItemStack stack = super.getDefaultStack();
+    WateringCanItem.setWaterLevel(stack, waterLevel);
+    return stack;
+  }
+
+  @Override
+  public int getItemBarColor(ItemStack stack) {
+    return 0x00AAFF;
+  }
+
+  @Override
+  public int getItemBarStep(ItemStack stack) {
+    return Math.round((WateringCanItem.getWaterLevel(stack) / 32.0f) * 13.0F);
+  }
+
+  public static int getWaterLevel(ItemStack stack) {
+    return stack.getOrCreateNbt().getInt("WaterLevel");
+  }
+
+  public static void setWaterLevel(ItemStack stack, int waterLevel) {
+    stack.getOrCreateNbt().putInt("WaterLevel", waterLevel);
   }
 }
