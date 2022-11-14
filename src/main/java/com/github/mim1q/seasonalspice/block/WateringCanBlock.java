@@ -10,7 +10,7 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 
 public class WateringCanBlock extends Block {
-  public static final VoxelShape SHAPE = createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 12.0D, 12.0D);
+  public static final VoxelShape SHAPE = createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
   public static final BooleanProperty FULL = BooleanProperty.of("full");
 
   public WateringCanBlock(Settings settings) {
