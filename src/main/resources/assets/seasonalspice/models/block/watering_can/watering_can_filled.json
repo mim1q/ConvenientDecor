@@ -1,8 +1,8 @@
 {
 	"parent": "seasonalspice:block/watering_can/watering_can",
 	"textures": {
-		"0": "seasonalspice:block/wooden_watering_can",
+		"0": "seasonalspice:block/watering_can",
 		"1": "minecraft:block/water_still",
-		"particle": "seasonalspice:block/wooden_watering_can"
+		"particle": "seasonalspice:block/watering_can"
 	}
 }

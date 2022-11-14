@@ -7,5 +7,6 @@ public class SeasonalSpiceClient implements ClientModInitializer {
   @Override
   public void onInitializeClient() {
     SeasonalSpiceRender.initBlocks();
+    SeasonalSpiceRender.initItems();
   }
 }

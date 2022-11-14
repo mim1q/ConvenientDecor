@@ -8,6 +8,8 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.context.LootContext;
@@ -26,11 +28,11 @@ import java.util.List;
 public class WateringCanBlock extends Block implements BlockEntityProvider {
   public static final VoxelShape SHAPE = createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
   public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-  public static final BooleanProperty FULL = BooleanProperty.of("full");
+  public static final BooleanProperty FILLED = BooleanProperty.of("filled");
 
   public WateringCanBlock(Settings settings) {
     super(settings);
-    this.setDefaultState(super.getDefaultState().with(FULL, false));
+    this.setDefaultState(super.getDefaultState().with(FILLED, false));
   }
 
   @Nullable
@@ -42,7 +44,7 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
   @Override
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
     super.appendProperties(builder);
-    builder.add(FACING, FULL);
+    builder.add(FACING, FILLED);
   }
 
   @Override
@@ -54,8 +56,8 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
   @Nullable
   @Override
   public BlockState getPlacementState(ItemPlacementContext ctx) {
-    boolean full = WateringCanItem.getWaterLevel(ctx.getStack()) > 0;
-    return this.getDefaultState().with(FACING, ctx.getPlayerFacing()).with(FULL, full);
+    boolean filled = WateringCanItem.getWaterLevel(ctx.getStack()) > 0 || EnchantmentHelper.getLevel(Enchantments.INFINITY, ctx.getStack()) > 0;
+    return this.getDefaultState().with(FACING, ctx.getPlayerFacing()).with(FILLED, filled);
   }
 
   @Override
@@ -64,6 +66,9 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
     if (entity instanceof WateringCanBlockEntity wateringCan) {
       ItemStack stack = new ItemStack(SeasonalSpiceItems.WATERING_CAN);
       WateringCanItem.setWaterLevel(stack, wateringCan.getWaterLevel());
+      if (wateringCan.isInfiniteWater()) {
+        stack.addEnchantment(Enchantments.INFINITY, 1);
+      }
       return stack;
     }
     return null;

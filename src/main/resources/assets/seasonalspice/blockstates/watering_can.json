@@ -1,32 +1,32 @@
 {
   "variants": {
-    "full=true,facing=north": {
-      "model": "seasonalspice:block/watering_can/watering_can_full"
+    "filled=true,facing=north": {
+      "model": "seasonalspice:block/watering_can/watering_can_filled"
     },
-    "full=true,facing=east": {
-      "model": "seasonalspice:block/watering_can/watering_can_full",
+    "filled=true,facing=east": {
+      "model": "seasonalspice:block/watering_can/watering_can_filled",
       "y": 90
     },
-    "full=true,facing=south": {
-      "model": "seasonalspice:block/watering_can/watering_can_full",
+    "filled=true,facing=south": {
+      "model": "seasonalspice:block/watering_can/watering_can_filled",
       "y": 180
     },
-    "full=true,facing=west": {
-      "model": "seasonalspice:block/watering_can/watering_can_full",
+    "filled=true,facing=west": {
+      "model": "seasonalspice:block/watering_can/watering_can_filled",
       "y": 270
     },
-    "full=false,facing=north": {
+    "filled=false,facing=north": {
       "model": "seasonalspice:block/watering_can/watering_can"
     },
-    "full=false,facing=east": {
+    "filled=false,facing=east": {
       "model": "seasonalspice:block/watering_can/watering_can",
       "y": 90
     },
-    "full=false,facing=south": {
+    "filled=false,facing=south": {
       "model": "seasonalspice:block/watering_can/watering_can",
       "y": 180
     },
-    "full=false,facing=west": {
+    "filled=false,facing=west": {
       "model": "seasonalspice:block/watering_can/watering_can",
       "y": 270
     }

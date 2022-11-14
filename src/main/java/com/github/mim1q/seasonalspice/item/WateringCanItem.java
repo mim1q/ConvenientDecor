@@ -7,6 +7,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
@@ -54,7 +56,7 @@ public class WateringCanItem extends Item {
     if (result2.getResult().isAccepted()) {
       BlockEntity entity = world.getBlockEntity(ctx.getBlockPos());
       if (entity instanceof WateringCanBlockEntity wateringCan) {
-        wateringCan.setWaterLevel(WateringCanItem.getWaterLevel(stack));
+        wateringCan.setStackNbt(stack);
       }
     }
     return result2;
@@ -70,7 +72,7 @@ public class WateringCanItem extends Item {
       if (user.isSneaking()) {
         return null;
       }
-      if (WateringCanItem.getWaterLevel(stack) == 0) {
+      if (!WateringCanItem.canWater(stack)) {
         return TypedActionResult.fail(stack);
       }
       WateringCanItem.setWaterLevel(stack, WateringCanItem.getWaterLevel(stack) - 1);
@@ -96,11 +98,15 @@ public class WateringCanItem extends Item {
       world.emitGameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Emitter.of(user, newState));
       stack.decrement(1);
     }
-    return TypedActionResult.consume(stack);
+    return TypedActionResult.success(stack);
   }
 
   @Override
   public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+    super.appendTooltip(stack, world, tooltip, context);
+    if (EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0) {
+      return;
+    }
     tooltip.add(Text.translatable(WATER_LEVEL_KEY, WateringCanItem.getWaterLevel(stack), MAX_WATER_LEVEL).formatted(Formatting.AQUA));
   }
 
@@ -138,5 +144,10 @@ public class WateringCanItem extends Item {
 
   public static void setWaterLevel(ItemStack stack, int waterLevel) {
     stack.getOrCreateNbt().putInt("WaterLevel", waterLevel);
+  }
+
+  public static boolean canWater(ItemStack stack) {
+    int infinity = EnchantmentHelper.getLevel(Enchantments.INFINITY, stack);
+    return WateringCanItem.getWaterLevel(stack) > 0 || infinity > 0;
   }
 }

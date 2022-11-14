@@ -1,3 +1,11 @@
 {
-  "parent": "seasonalspice:block/watering_can/watering_can"
+  "parent": "seasonalspice:block/watering_can/watering_can",
+  "overrides": [
+    {
+      "predicate": {
+        "seasonalspice:filled": 1
+      },
+      "model": "seasonalspice:block/watering_can/watering_can_filled"
+    }
+  ]
 }
