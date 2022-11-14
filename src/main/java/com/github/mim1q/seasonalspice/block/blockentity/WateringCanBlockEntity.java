@@ -8,35 +8,35 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.BlockPos;
 
 public class WateringCanBlockEntity extends BlockEntity {
-  private int waterLevel = 0;
+  private int damage = 0;
 
   public WateringCanBlockEntity(BlockPos pos, BlockState state) {
     super(SeasonalSpiceBlockEntities.WATERING_CAN, pos, state);
   }
 
-  public int getWaterLevel() {
-    return waterLevel;
+  public int getDamage() {
+    return damage;
   }
 
-  public void setWaterLevel(int waterLevel) {
-    this.waterLevel = waterLevel;
+  public void setDamage(int damage) {
+    this.damage = damage;
   }
 
   @Override
   public void readNbt(NbtCompound nbt) {
     super.readNbt(nbt);
-    waterLevel = nbt.getInt("waterLevel");
+    damage = nbt.getInt("damage");
   }
 
   @Override
   protected void writeNbt(NbtCompound nbt) {
     super.writeNbt(nbt);
-    nbt.putInt("waterLevel", waterLevel);
+    nbt.putInt("damage", damage);
   }
 
   @Override
   public void setStackNbt(ItemStack stack) {
     super.setStackNbt(stack);
-    stack.setDamage(waterLevel);
+    this.setDamage(stack.getDamage());
   }
 }
