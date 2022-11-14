@@ -1,5 +1,6 @@
 package com.github.mim1q.seasonalspice;
 
+import com.github.mim1q.seasonalspice.init.SeasonalSpiceBlockEntities;
 import com.github.mim1q.seasonalspice.init.SeasonalSpiceBlocks;
 import com.github.mim1q.seasonalspice.init.SeasonalSpiceItemGroups;
 import com.github.mim1q.seasonalspice.init.SeasonalSpiceItems;
@@ -12,6 +13,7 @@ public class SeasonalSpice implements ModInitializer {
   @Override
   public void onInitialize() {
     SeasonalSpiceBlocks.init();
+    SeasonalSpiceBlockEntities.init();
     SeasonalSpiceItems.init();
     SeasonalSpiceItemGroups.init();
   }
