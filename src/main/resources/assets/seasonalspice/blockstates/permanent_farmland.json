@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "seasonalspice:block/farmland_permanent"
+      "model": "seasonalspice:block/permanent_farmland"
     }
   }
 }
