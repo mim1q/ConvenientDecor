@@ -1,9 +1,11 @@
 package com.github.mim1q.seasonalspice.item;
 
+import com.github.mim1q.seasonalspice.block.CustomProperties;
 import com.github.mim1q.seasonalspice.block.blockentity.WateringCanBlockEntity;
 import com.github.mim1q.seasonalspice.init.SeasonalSpiceBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.client.item.TooltipContext;
@@ -24,6 +26,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
@@ -68,18 +71,22 @@ public class WateringCanItem extends Item {
       WateringCanItem.setWaterLevel(stack, 32);
       return TypedActionResult.success(stack);
     }
-    if (state.isOf(SeasonalSpiceBlocks.PERMANENT_FARMLAND)) {
-      return TypedActionResult.fail(stack);
-    }
     if (state.isOf(Blocks.FARMLAND)) {
       if (user.isSneaking()) {
         return null;
       }
-      if (!WateringCanItem.canWater(stack)) {
+      if (!WateringCanItem.canWater(stack) || state.get(CustomProperties.WATERING_CAN_USED)) {
         return TypedActionResult.fail(stack);
       }
       WateringCanItem.setWaterLevel(stack, WateringCanItem.getWaterLevel(stack) - 1);
-      world.setBlockState(hitResult.getBlockPos(), SeasonalSpiceBlocks.PERMANENT_FARMLAND.getState());
+      Vec3d pos = hitResult.getPos();
+      world.setBlockState(
+        hitResult.getBlockPos(),
+        Blocks.FARMLAND.getDefaultState()
+          .with(CustomProperties.WATERING_CAN_USED, true)
+          .with(FarmlandBlock.MOISTURE, 7)
+      );
+      world.playSound(pos.x, pos.y, pos.z, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
       return TypedActionResult.success(stack);
     }
     return null;
