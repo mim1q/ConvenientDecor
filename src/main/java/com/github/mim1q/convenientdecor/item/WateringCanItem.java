@@ -122,7 +122,7 @@ public class WateringCanItem extends Item {
 
   @Override
   public boolean isItemBarVisible(ItemStack stack) {
-    return true;
+    return getWaterLevel(stack) < MAX_WATER_LEVEL;
   }
 
   @Override
