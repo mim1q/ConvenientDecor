@@ -66,10 +66,15 @@ public class WateringCanItem extends Item {
   }
 
   protected TypedActionResult<ItemStack> tryUseOnBlock(World world, PlayerEntity user, ItemStack stack, BlockHitResult hitResult) {
+    Vec3d pos = hitResult.getPos();
     BlockState state = world.getBlockState(hitResult.getBlockPos());
     if (state.getFluidState().isOf(Fluids.WATER)) {
-      WateringCanItem.setWaterLevel(stack, 32);
-      return TypedActionResult.success(stack);
+      if (getWaterLevel(stack) < MAX_WATER_LEVEL) {
+        WateringCanItem.setWaterLevel(stack, MAX_WATER_LEVEL);
+        world.playSound(pos.x, pos.y, pos.z, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
+        return TypedActionResult.success(stack);
+      }
+      return TypedActionResult.fail(stack);
     }
     if (state.isOf(Blocks.FARMLAND)) {
       if (user.isSneaking()) {
@@ -79,7 +84,6 @@ public class WateringCanItem extends Item {
         return TypedActionResult.fail(stack);
       }
       WateringCanItem.setWaterLevel(stack, WateringCanItem.getWaterLevel(stack) - 1);
-      Vec3d pos = hitResult.getPos();
       world.setBlockState(
         hitResult.getBlockPos(),
         Blocks.FARMLAND.getDefaultState()
@@ -104,7 +108,7 @@ public class WateringCanItem extends Item {
     }
     if (state.getMaterial().isReplaceable()) {
       world.setBlockState(pos, newState);
-      world.playSound(user, pos, SoundEvents.BLOCK_METAL_PLACE, SoundCategory.BLOCKS, (BlockSoundGroup.METAL.getVolume() + 1.0F) / 2.0F, BlockSoundGroup.METAL.getPitch() * 0.8F);
+      world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_METAL_PLACE, SoundCategory.BLOCKS, (BlockSoundGroup.METAL.getVolume() + 1.0F) / 2.0F, BlockSoundGroup.METAL.getPitch() * 0.8F, true);
       world.emitGameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Emitter.of(user, newState));
       stack.decrement(1);
     }
