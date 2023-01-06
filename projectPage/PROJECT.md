@@ -7,7 +7,7 @@
 ## This mod introduces new decorative blocks, some of which also serve a convenient function!
 
 - Monsters can't walk through the Haystacks and Leaf Piles
-- The Watering Can can be filled with water and optionally enchanted with Infinity in an Anvil. They, you can use it to permanently hydrate Farmland!
-- Currently Creative-only. Recipes coming soon!
+- The Watering Can can be filled with water and optionally enchanted with Infinity in an Anvil. Then, you can use it to permanently hydrate Farmland!
+- Recipes available through REI
 
 ![Screenshot](https://raw.githubusercontent.com/mim1q/ConvenientDecor/master/projectPage/images/screenshot.jpg)
