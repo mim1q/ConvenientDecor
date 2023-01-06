@@ -115,6 +115,8 @@ public class WateringCanItem extends Item {
     return TypedActionResult.success(stack);
   }
 
+
+
   @Override
   public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
     super.appendTooltip(stack, world, tooltip, context);

@@ -62,7 +62,10 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
 
   @Override
   public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
-    BlockEntity entity = world.getBlockEntity(pos);
+    return getStackFromBlockEntity(world.getBlockEntity(pos));
+  }
+
+  private static ItemStack getStackFromBlockEntity(BlockEntity entity) {
     if (entity instanceof WateringCanBlockEntity wateringCan) {
       ItemStack stack = new ItemStack(ModItems.WATERING_CAN);
       WateringCanItem.setWaterLevel(stack, wateringCan.getWaterLevel());
@@ -77,7 +80,7 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
   @Override
   @SuppressWarnings("deprecation")
   public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-    ItemStack stack = getPickStack(builder.getWorld(), new BlockPos(builder.get(LootContextParameters.ORIGIN)), state);
+    ItemStack stack = getStackFromBlockEntity(builder.getNullable(LootContextParameters.BLOCK_ENTITY));
     return stack == null ? List.of() : List.of(stack);
   }
 }
