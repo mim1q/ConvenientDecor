@@ -118,9 +118,6 @@ public class WateringCanItem extends Item {
   @Override
   public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
     super.appendTooltip(stack, world, tooltip, context);
-    if (EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0) {
-      return;
-    }
     tooltip.add(Text.translatable(WATER_LEVEL_KEY, WateringCanItem.getWaterLevel(stack), MAX_WATER_LEVEL).formatted(Formatting.AQUA));
   }
 
@@ -157,11 +154,15 @@ public class WateringCanItem extends Item {
   }
 
   public static void setWaterLevel(ItemStack stack, int waterLevel) {
-    stack.getOrCreateNbt().putInt("WaterLevel", waterLevel);
+    if (
+      EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) == 0
+      || waterLevel > getWaterLevel(stack)
+    ) {
+      stack.getOrCreateNbt().putInt("WaterLevel", waterLevel);
+    }
   }
 
   public static boolean canWater(ItemStack stack) {
-    int infinity = EnchantmentHelper.getLevel(Enchantments.INFINITY, stack);
-    return WateringCanItem.getWaterLevel(stack) > 0 || infinity > 0;
+    return WateringCanItem.getWaterLevel(stack) > 0;
   }
 }
