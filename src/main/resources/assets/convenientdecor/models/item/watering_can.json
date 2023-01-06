@@ -1,0 +1,11 @@
+{
+  "parent": "convenientdecor:block/watering_can/watering_can",
+  "overrides": [
+    {
+      "predicate": {
+        "convenientdecor:filled": 1
+      },
+      "model": "convenientdecor:block/watering_can/watering_can_filled"
+    }
+  ]
+}

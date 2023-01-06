@@ -1,7 +1,0 @@
-{
-	"parent": "seasonalspice:block/shovel/shovel_lying",
-	"textures": {
-		"0": "seasonalspice:block/yellow_plastic_shovel",
-		"particle": "seasonalspice:block/yellow_plastic_shovel"
-	}
-}

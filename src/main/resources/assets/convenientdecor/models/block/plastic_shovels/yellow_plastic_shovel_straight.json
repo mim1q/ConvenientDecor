@@ -1,0 +1,7 @@
+{
+	"parent": "convenientdecor:block/shovel/shovel_straight",
+	"textures": {
+		"0": "convenientdecor:block/yellow_plastic_shovel",
+		"particle": "convenientdecor:block/yellow_plastic_shovel"
+	}
+}

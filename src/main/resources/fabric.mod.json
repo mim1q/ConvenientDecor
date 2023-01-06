@@ -1,26 +1,26 @@
 {
   "schemaVersion": 1,
-  "id": "seasonalspice",
+  "id": "convenientdecor",
   "version": "${version}",
-  "name": "Mim1q's Seasonal Spice",
-  "description": "Decoration from the four seasons!",
+  "name": "Convenient Decor",
+  "description": "Convenient Decoration Mod by Mim1q",
   "authors": [
     "Mim1q"
   ],
   "contact": {},
   "license": "APACHE 2.0",
-  "icon": "assets/seasonalspice/icon.png",
+  "icon": "assets/convenientdecor/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "com.github.mim1q.seasonalspice.SeasonalSpiceClient"
+      "com.github.mim1q.convenientdecor.ConvenientDecorClient"
     ],
     "main": [
-      "com.github.mim1q.seasonalspice.SeasonalSpice"
+      "com.github.mim1q.convenientdecor.ConvenientDecor"
     ]
   },
   "mixins": [
-    "seasonalspice.mixins.json"
+    "convenientdecor.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.9",

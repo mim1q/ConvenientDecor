@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "seasonalspice:block/unbundled_hay_block_top",
-    "side": "seasonalspice:block/unbundled_hay_block_side"
-  }
-}

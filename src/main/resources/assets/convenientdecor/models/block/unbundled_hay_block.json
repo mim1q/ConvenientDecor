@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "convenientdecor:block/unbundled_hay_block_top",
+    "side": "convenientdecor:block/unbundled_hay_block_side"
+  }
+}

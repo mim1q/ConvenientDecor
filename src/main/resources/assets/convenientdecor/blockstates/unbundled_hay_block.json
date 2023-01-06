@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "convenientdecor:block/unbundled_hay_block"
+    },
+    "axis=z": {
+      "model": "convenientdecor:block/unbundled_hay_block",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "convenientdecor:block/unbundled_hay_block",
+      "y": 90,
+      "x": 90
+    }
+  }
+}

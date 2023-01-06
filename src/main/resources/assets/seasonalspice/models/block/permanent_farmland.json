@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/template_farmland",
-  "textures": {
-    "dirt": "minecraft:block/dirt",
-    "top": "seasonalspice:block/farmland_permanent"
-  }
-}

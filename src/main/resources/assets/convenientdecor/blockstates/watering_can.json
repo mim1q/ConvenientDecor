@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "filled=true,facing=north": {
+      "model": "convenientdecor:block/watering_can/watering_can_filled"
+    },
+    "filled=true,facing=east": {
+      "model": "convenientdecor:block/watering_can/watering_can_filled",
+      "y": 90
+    },
+    "filled=true,facing=south": {
+      "model": "convenientdecor:block/watering_can/watering_can_filled",
+      "y": 180
+    },
+    "filled=true,facing=west": {
+      "model": "convenientdecor:block/watering_can/watering_can_filled",
+      "y": 270
+    },
+    "filled=false,facing=north": {
+      "model": "convenientdecor:block/watering_can/watering_can"
+    },
+    "filled=false,facing=east": {
+      "model": "convenientdecor:block/watering_can/watering_can",
+      "y": 90
+    },
+    "filled=false,facing=south": {
+      "model": "convenientdecor:block/watering_can/watering_can",
+      "y": 180
+    },
+    "filled=false,facing=west": {
+      "model": "convenientdecor:block/watering_can/watering_can",
+      "y": 270
+    }
+  }
+}

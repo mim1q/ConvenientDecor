@@ -1,0 +1,8 @@
+{
+	"parent": "convenientdecor:block/watering_can/watering_can",
+	"textures": {
+		"0": "convenientdecor:block/watering_can",
+		"1": "minecraft:block/water_still",
+		"particle": "convenientdecor:block/watering_can"
+	}
+}

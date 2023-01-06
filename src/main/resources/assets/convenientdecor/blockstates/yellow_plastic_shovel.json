@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "type=straight,facing=north": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_straight"
+    },
+    "type=straight,facing=east": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_straight",
+      "y": 90
+    },
+    "type=straight,facing=south": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_straight",
+      "y": 180
+    },
+    "type=straight,facing=west": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_straight",
+      "y": 270
+    },
+    "type=tilted,facing=north": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_tilted"
+    },
+    "type=tilted,facing=east": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_tilted",
+      "y": 90
+    },
+    "type=tilted,facing=south": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_tilted",
+      "y": 180
+    },
+    "type=tilted,facing=west": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_tilted",
+      "y": 270
+    },
+    "type=lying,facing=north": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_lying"
+    },
+    "type=lying,facing=east": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_lying",
+      "y": 90
+    },
+    "type=lying,facing=south": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_lying",
+      "y": 180
+    },
+    "type=lying,facing=west": {
+      "model": "convenientdecor:block/plastic_shovels/yellow_plastic_shovel_lying",
+      "y": 270
+    }
+  }
+}
