@@ -13,6 +13,7 @@
   "block.convenientdecor.orange_leaf_pile": "Orange Leaf Pile",
   "block.convenientdecor.red_leaf_pile": "Red Leaf Pile",
   "block.convenientdecor.brown_leaf_pile": "Brown Leaf Pile",
+  "block.convenientdecor.watering_can": "Watering Can",
   "item.convenientdecor.watering_can": "Watering Can",
   "item.convenientdecor.watering_can.water_level": "Water Level: %s/%s"
 }
