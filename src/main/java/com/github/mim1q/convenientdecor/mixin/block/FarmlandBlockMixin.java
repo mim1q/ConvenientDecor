@@ -3,7 +3,6 @@ package com.github.mim1q.convenientdecor.mixin.block;
 import com.github.mim1q.convenientdecor.block.CustomProperties;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -15,7 +14,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = FarmlandBlock.class, priority = 2275)
 public abstract class FarmlandBlockMixin extends Block {
@@ -23,14 +21,19 @@ public abstract class FarmlandBlockMixin extends Block {
     super(settings);
   }
 
+  @Inject(method = "<init>", at = @At("TAIL"))
+  private void constructor(CallbackInfo ci) {
+    this.setDefaultState(getDefaultState().with(CustomProperties.HYDRATED, false));
+  }
+
   @Inject(method = "appendProperties", at = @At("HEAD"))
   private void appendProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
-    builder.add(CustomProperties.WATERING_CAN_USED);
+    builder.add(CustomProperties.HYDRATED);
   }
 
   @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
   private void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-    if (state.get(CustomProperties.WATERING_CAN_USED)) {
+    if (state.get(CustomProperties.HYDRATED)) {
       if (world.getBlockState(pos.up()).isAir()) {
         Vec3d offset = new Vec3d(random.nextDouble() - 0.5D, 0.0D, random.nextDouble() - 0.5D);
         Vec3d particlePos = Vec3d.ofBottomCenter(pos.up()).add(0.0D, 0.1D, 0.0D);
@@ -38,11 +41,5 @@ public abstract class FarmlandBlockMixin extends Block {
       }
       ci.cancel();
     }
-  }
-
-  @Inject(method = "getPlacementState", at = @At("RETURN"), cancellable = true)
-  private void getPlacementState(CallbackInfoReturnable<BlockState> cir) {
-    BlockState state = cir.getReturnValue();
-    cir.setReturnValue(state.isOf(Blocks.FARMLAND) ? state.with(CustomProperties.WATERING_CAN_USED, false) : state);
   }
 }

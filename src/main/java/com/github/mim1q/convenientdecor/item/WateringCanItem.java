@@ -80,14 +80,14 @@ public class WateringCanItem extends Item {
       if (user.isSneaking()) {
         return null;
       }
-      if (!WateringCanItem.canWater(stack) || state.get(CustomProperties.WATERING_CAN_USED)) {
+      if (!WateringCanItem.canWater(stack) || state.get(CustomProperties.HYDRATED)) {
         return TypedActionResult.fail(stack);
       }
       WateringCanItem.setWaterLevel(stack, WateringCanItem.getWaterLevel(stack) - 1);
       world.setBlockState(
         hitResult.getBlockPos(),
         Blocks.FARMLAND.getDefaultState()
-          .with(CustomProperties.WATERING_CAN_USED, true)
+          .with(CustomProperties.HYDRATED, true)
           .with(FarmlandBlock.MOISTURE, 7)
       );
       world.playSound(pos.x, pos.y, pos.z, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
