@@ -52,6 +52,6 @@ public class WateringCanBlockEntity extends BlockEntity {
   public void setStackNbt(ItemStack stack) {
     super.setStackNbt(stack);
     this.setWaterLevel(WateringCanItem.getWaterLevel(stack));
-    this.setInfiniteWater(EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) > 0);
+    this.setInfiniteWater(EnchantmentHelper.get(stack).containsKey(Enchantments.INFINITY));
   }
 }
