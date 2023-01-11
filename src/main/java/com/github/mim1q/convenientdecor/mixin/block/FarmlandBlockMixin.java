@@ -1,17 +1,24 @@
 package com.github.mim1q.convenientdecor.mixin.block;
 
 import com.github.mim1q.convenientdecor.block.CustomProperties;
+import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.item.WateringCanItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FarmlandBlock;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = FarmlandBlock.class, priority = 2275)
 public abstract class FarmlandBlockMixin extends Block {
@@ -34,5 +41,23 @@ public abstract class FarmlandBlockMixin extends Block {
     if (state.get(CustomProperties.HYDRATED)) {
       ci.cancel();
     }
+  }
+
+  @Inject(method = "getPlacementState", at = @At("RETURN"), cancellable = true)
+  private void getPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
+    BlockState state = cir.getReturnValue();
+    boolean hydrated = false;
+    PlayerEntity player = ctx.getPlayer();
+    if (player != null) {
+      ItemStack offhandStack = player.getStackInHand(Hand.OFF_HAND);
+      if (offhandStack != null && offhandStack.isOf(ModItems.WATERING_CAN)) {
+        int waterLevel = WateringCanItem.getWaterLevel(offhandStack);
+        if (waterLevel > 0) {
+          WateringCanItem.setWaterLevel(offhandStack, waterLevel - 1);
+          hydrated = true;
+        }
+      }
+    }
+    cir.setReturnValue(state.with(CustomProperties.HYDRATED, hydrated).with(FarmlandBlock.MOISTURE, hydrated ? 7 : 0));
   }
 }
