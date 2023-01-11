@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "convenientdecor_hydrated=false,moisture=0": {
+      "model": "minecraft:block/farmland"
+    },
+    "convenientdecor_hydrated=false,moisture=1": {
+      "model": "minecraft:block/farmland"
+    },
+    "convenientdecor_hydrated=false,moisture=2": {
+      "model": "minecraft:block/farmland"
+    },
+    "convenientdecor_hydrated=false,moisture=3": {
+      "model": "minecraft:block/farmland"
+    },
+    "convenientdecor_hydrated=false,moisture=4": {
+      "model": "minecraft:block/farmland"
+    },
+    "convenientdecor_hydrated=false,moisture=5": {
+      "model": "minecraft:block/farmland"
+    },
+    "convenientdecor_hydrated=false,moisture=6": {
+      "model": "minecraft:block/farmland"
+    },
+    "convenientdecor_hydrated=false,moisture=7": {
+      "model": "minecraft:block/farmland_moist"
+    },
+    "convenientdecor_hydrated=true": {
+      "model": "convenientdecor:block/permanent_farmland"
+    }
+  }
+}
