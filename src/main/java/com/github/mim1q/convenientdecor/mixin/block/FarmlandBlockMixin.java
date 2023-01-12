@@ -27,7 +27,7 @@ public abstract class FarmlandBlockMixin extends Block {
   }
 
   private boolean isUnhydratable() {
-    return this.getDefaultState().getProperties().contains(CustomProperties.HYDRATED);
+    return !this.getDefaultState().getProperties().contains(CustomProperties.HYDRATED);
   }
 
   @Inject(method = "<init>", at = @At("TAIL"))
