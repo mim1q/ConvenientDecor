@@ -12,13 +12,13 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -68,7 +68,7 @@ public class WateringCanItem extends Item {
   protected TypedActionResult<ItemStack> tryUseOnBlock(World world, PlayerEntity user, ItemStack stack, BlockHitResult hitResult) {
     Vec3d pos = hitResult.getPos();
     BlockState state = world.getBlockState(hitResult.getBlockPos());
-    if (state.getFluidState().isOf(Fluids.WATER)) {
+    if (state.getFluidState().isIn(FluidTags.WATER)) {
       if (getWaterLevel(stack) < MAX_WATER_LEVEL) {
         WateringCanItem.setWaterLevel(stack, MAX_WATER_LEVEL);
         world.playSound(pos.x, pos.y, pos.z, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
