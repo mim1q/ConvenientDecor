@@ -26,8 +26,13 @@ public abstract class FarmlandBlockMixin extends Block {
     super(settings);
   }
 
+  private boolean isUnhydratable() {
+    return this.getDefaultState().getProperties().contains(CustomProperties.HYDRATED);
+  }
+
   @Inject(method = "<init>", at = @At("TAIL"))
   private void constructor(CallbackInfo ci) {
+    if (isUnhydratable()) return;
     this.setDefaultState(getDefaultState().with(CustomProperties.HYDRATED, false));
   }
 
@@ -38,6 +43,7 @@ public abstract class FarmlandBlockMixin extends Block {
 
   @Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
   private void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
+    if (isUnhydratable()) return;
     if (state.get(CustomProperties.HYDRATED)) {
       ci.cancel();
     }
@@ -45,6 +51,7 @@ public abstract class FarmlandBlockMixin extends Block {
 
   @Inject(method = "getPlacementState", at = @At("RETURN"), cancellable = true)
   private void getPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
+    if (isUnhydratable()) return;
     BlockState state = cir.getReturnValue();
     boolean hydrated = false;
     PlayerEntity player = ctx.getPlayer();
