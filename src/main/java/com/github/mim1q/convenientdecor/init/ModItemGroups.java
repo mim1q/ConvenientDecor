@@ -27,6 +27,9 @@ public class ModItemGroups {
         ModBlocks.BROWN_LEAF_PILE.asItem().getDefaultStack()
       ));
       stacks.addAll(ModBlocks.UMBRELLA.getItemStackList());
+      stacks.addAll(List.of(
+        ModBlocks.BROKEN_UMBRELLA.asItem().getDefaultStack()
+      ));
     })
     .build();
   public static void init() { }

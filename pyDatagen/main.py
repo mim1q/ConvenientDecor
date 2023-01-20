@@ -18,6 +18,8 @@ def generate(base_path: str):
         save(basic.parented_model('minecraft:block/' + color + '_wool'), asset_path('models/item/' + color + '_umbrella'))
 
     colors.foreach(umbrellas)
+    save(basic.single_blockstate('minecraft:block/black_wool'), asset_path('blockstates/broken_umbrella'))
+    save(basic.parented_model('minecraft:block/black_wool'), asset_path('models/item/broken_umbrella'))
 
 
 def save(content: str, path: str):

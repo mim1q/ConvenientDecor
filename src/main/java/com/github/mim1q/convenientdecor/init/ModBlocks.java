@@ -13,6 +13,7 @@ import net.minecraft.block.HayBlock;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
 
 public class ModBlocks {
@@ -33,6 +34,11 @@ public class ModBlocks {
   public static final ColoredGroup.ColoredBlockGroup UMBRELLA = ColoredGroup.ofBlocks(true)
     .add16Colors((color) -> new UmbrellaBlock(FabricBlockSettings.of(Material.WOOL).breakInstantly(), color))
     .register("umbrella");
+
+  public static final UmbrellaBlock BROKEN_UMBRELLA = registerWithSimpleItem(
+    new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK, true),
+    "broken_umbrella"
+  );
 
   public static void init() { }
 

@@ -15,9 +15,13 @@ import org.jetbrains.annotations.Nullable;
 public class UmbrellaBlock extends Block implements BlockEntityProvider {
   public final Identifier texture;
 
-  public UmbrellaBlock(Settings settings, DyeColor color) {
+  public UmbrellaBlock(Settings settings, DyeColor color, boolean broken) {
     super(settings.nonOpaque().noCollision());
-    texture = ConvenientDecor.id("textures/blockentity/umbrella/" + color.getName() + ".png");
+    texture = ConvenientDecor.id("textures/blockentity/umbrella/" + (broken ? "broken" : color.getName()) + ".png");
+  }
+
+  public UmbrellaBlock(Settings settings, DyeColor color) {
+    this(settings, color, false);
   }
 
   @Override
