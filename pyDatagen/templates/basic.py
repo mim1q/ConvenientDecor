@@ -25,3 +25,7 @@ def parented_model(model: str) -> str:
       "parent": "${model}"
     }
     ''').replace("${model}", model)
+
+
+def frontlight(model: str) -> str:
+    return model[:-3] + ',\n  "gui_light": "front"\n}\n'

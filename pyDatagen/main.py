@@ -15,11 +15,11 @@ def generate(base_path: str):
 
     def umbrellas(color: str):
         save(basic.single_blockstate('minecraft:block/' + color + '_wool'), asset_path('blockstates/' + color + '_umbrella'))
-        save(basic.parented_model('minecraft:builtin/entity'), asset_path('models/item/' + color + '_umbrella'))
+        save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset_path('models/item/' + color + '_umbrella'))
 
     colors.foreach(umbrellas)
     save(basic.single_blockstate('minecraft:block/black_wool'), asset_path('blockstates/broken_umbrella'))
-    save(basic.parented_model('minecraft:block/black_wool'), asset_path('models/item/broken_umbrella'))
+    save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset_path('models/item/broken_umbrella'))
 
 
 def save(content: str, path: str):
