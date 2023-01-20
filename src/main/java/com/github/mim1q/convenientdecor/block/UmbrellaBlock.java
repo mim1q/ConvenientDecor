@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class UmbrellaBlock extends Block implements BlockEntityProvider {
   public UmbrellaBlock(Settings settings) {
-    super(settings.nonOpaque());
+    super(settings.nonOpaque().noCollision());
   }
 
   @Override
