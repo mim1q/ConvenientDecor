@@ -47,6 +47,24 @@ tasks {
   }
 }
 
+// Data generation using Python script
+
+tasks.register<Exec>("runPythonDatagen") {
+  workingDir = projectDir
+  val scriptFile = workingDir.resolve("pyDatagen/main.py")
+  val outputPath = workingDir.resolve("src/main/pyGenerated")
+
+  commandLine("python", scriptFile.absolutePath, outputPath.absolutePath)
+}
+
+sourceSets {
+  main {
+    resources {
+      srcDirs("src/main/pyGenerated")
+    }
+  }
+}
+
 // Publishing
 val secretsFile = rootProject.file("publishing.properties")
 val secrets = Secrets(secretsFile)

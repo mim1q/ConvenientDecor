@@ -3,5 +3,6 @@
 build/
 out/
 run/
+src/main/pyGenerated/
 
 publishing.properties
