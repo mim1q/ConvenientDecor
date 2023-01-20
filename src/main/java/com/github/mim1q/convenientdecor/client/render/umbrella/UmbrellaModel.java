@@ -1,4 +1,4 @@
-package com.github.mim1q.convenientdecor.client.render.item;
+package com.github.mim1q.convenientdecor.client.render.umbrella;
 
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;

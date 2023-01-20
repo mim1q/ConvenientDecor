@@ -1,7 +1,7 @@
 package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
-import com.github.mim1q.convenientdecor.client.render.item.UmbrellaModel;
+import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaModel;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.TexturedModelDataProvider;
 import net.minecraft.client.render.entity.model.EntityModelLayer;

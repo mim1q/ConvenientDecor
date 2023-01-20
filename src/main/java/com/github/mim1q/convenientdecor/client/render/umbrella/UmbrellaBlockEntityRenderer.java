@@ -1,4 +1,4 @@
-package com.github.mim1q.convenientdecor.client.render.item;
+package com.github.mim1q.convenientdecor.client.render.umbrella;
 
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaBlockEntity;
 import com.github.mim1q.convenientdecor.init.ModEntityModelLayers;

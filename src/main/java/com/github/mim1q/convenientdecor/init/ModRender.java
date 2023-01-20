@@ -2,7 +2,7 @@ package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.client.colors.FallLeavesColors;
-import com.github.mim1q.convenientdecor.client.render.item.UmbrellaBlockEntityRenderer;
+import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaBlockEntityRenderer;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
