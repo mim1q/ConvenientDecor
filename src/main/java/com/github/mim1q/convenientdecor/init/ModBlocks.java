@@ -8,7 +8,6 @@ import com.github.mim1q.convenientdecor.block.WateringCanBlock;
 import com.github.mim1q.convenientdecor.init.group.ColoredGroup;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.HayBlock;
 import net.minecraft.block.Material;
@@ -32,7 +31,7 @@ public class ModBlocks {
   public static final HaystackBlock BROWN_LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "brown_leaf_pile");
 
   public static final ColoredGroup.ColoredBlockGroup UMBRELLA = ColoredGroup.ofBlocks(true)
-    .add16Colors((color) -> new UmbrellaBlock(AbstractBlock.Settings.of(Material.METAL)))
+    .add16Colors((color) -> new UmbrellaBlock(FabricBlockSettings.of(Material.WOOL).breakInstantly(), color))
     .register("umbrella");
 
   public static void init() { }
