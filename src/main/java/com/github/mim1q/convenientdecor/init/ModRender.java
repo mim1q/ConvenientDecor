@@ -2,8 +2,10 @@ package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.client.colors.FallLeavesColors;
+import com.github.mim1q.convenientdecor.client.render.item.UmbrellaBlockEntityRenderer;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
@@ -12,6 +14,8 @@ public class ModRender {
   public static void init() { }
 
   public static void initBlocks() {
+    BlockEntityRendererRegistry.register(ModBlockEntities.UMBRELLA, UmbrellaBlockEntityRenderer::new);
+
     BlockRenderLayerMap.INSTANCE.putBlocks(
       RenderLayer.getCutout(),
       ModBlocks.RED_PLASTIC_SHOVEL,

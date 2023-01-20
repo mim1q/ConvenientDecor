@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("unchecked")
@@ -33,6 +34,28 @@ public abstract class ColoredGroup<T, U extends ColoredGroup<T, U>> {
 
   public T get(DyeColor color) {
     return entries.get(color);
+  }
+
+  // Returns an arbitrarily (roughly by color) ordered list
+  public List<T> getList() {
+    return List.of(
+      get(DyeColor.BLACK),
+      get(DyeColor.GRAY),
+      get(DyeColor.LIGHT_GRAY),
+      get(DyeColor.WHITE),
+      get(DyeColor.BROWN),
+      get(DyeColor.BLUE),
+      get(DyeColor.CYAN),
+      get(DyeColor.LIGHT_BLUE),
+      get(DyeColor.LIME),
+      get(DyeColor.GREEN),
+      get(DyeColor.YELLOW),
+      get(DyeColor.ORANGE),
+      get(DyeColor.RED),
+      get(DyeColor.PINK),
+      get(DyeColor.MAGENTA),
+      get(DyeColor.PURPLE)
+    );
   }
 
   protected abstract void registerSingle(Identifier id, T entry);
