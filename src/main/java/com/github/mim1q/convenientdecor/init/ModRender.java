@@ -64,8 +64,10 @@ public class ModRender {
   }
 
   public static void initDynamicItemRenderers(EntityRendererFactory.Context context) {
+    UmbrellaItemRenderer umbrellaItemRenderer = new UmbrellaItemRenderer(context.getModelLoader());
     for (Item item : ModItems.UMBRELLA.getList()) {
-      BuiltinItemRendererRegistry.INSTANCE.register(item, new UmbrellaItemRenderer(context.getModelLoader()));
+      BuiltinItemRendererRegistry.INSTANCE.register(item, umbrellaItemRenderer);
     }
+    BuiltinItemRendererRegistry.INSTANCE.register(ModItems.BROKEN_UMBRELLA, umbrellaItemRenderer);
   }
 }

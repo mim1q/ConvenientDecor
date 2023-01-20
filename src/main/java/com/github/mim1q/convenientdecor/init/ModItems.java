@@ -1,6 +1,7 @@
 package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
+import com.github.mim1q.convenientdecor.block.UmbrellaBlock;
 import com.github.mim1q.convenientdecor.init.group.ColoredGroup;
 import com.github.mim1q.convenientdecor.init.group.ColoredGroup.ColoredItemGroup;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
@@ -8,6 +9,7 @@ import com.github.mim1q.convenientdecor.item.WateringCanItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
 
 public class ModItems {
@@ -17,8 +19,10 @@ public class ModItems {
   );
 
   public static final ColoredItemGroup UMBRELLA = ColoredGroup.ofItems()
-    .add16Colors(color -> new UmbrellaItem(new FabricItemSettings(), color))
+    .add16Colors(color -> new UmbrellaItem((UmbrellaBlock) ModBlocks.UMBRELLA.get(color), color))
     .register("umbrella");
+
+  public static final UmbrellaItem BROKEN_UMBRELLA = register(new UmbrellaItem(ModBlocks.BROKEN_UMBRELLA, DyeColor.BLACK), "broken_umbrella");
 
   public static void init() { }
 
