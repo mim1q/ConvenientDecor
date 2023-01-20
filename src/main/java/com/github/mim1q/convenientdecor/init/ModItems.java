@@ -1,6 +1,9 @@
 package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
+import com.github.mim1q.convenientdecor.init.group.ColoredGroup;
+import com.github.mim1q.convenientdecor.init.group.ColoredGroup.ColoredItemGroup;
+import com.github.mim1q.convenientdecor.item.UmbrellaItem;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
@@ -12,6 +15,10 @@ public class ModItems {
     new WateringCanItem(new FabricItemSettings().maxCount(1).equipmentSlot(stack -> EquipmentSlot.HEAD)),
     "watering_can"
   );
+
+  public static final ColoredItemGroup UMBRELLA = ColoredGroup.ofItems()
+    .add16Colors(color -> new UmbrellaItem(new FabricItemSettings(), color))
+    .register("umbrella");
 
   public static void init() { }
 
