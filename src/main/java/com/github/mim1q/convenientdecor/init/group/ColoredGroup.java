@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -92,6 +93,10 @@ public abstract class ColoredGroup<T, U extends ColoredGroup<T, U>> {
       if (withBlockItem) {
         Registry.register(Registry.ITEM, id, new BlockItem(entry, new FabricItemSettings().group(ModItemGroups.CONVENIENT_DECOR)));
       }
+    }
+
+    public List<ItemStack> getItemStackList() {
+      return getList().stream().map(block -> block.asItem().getDefaultStack()).toList();
     }
   }
 
