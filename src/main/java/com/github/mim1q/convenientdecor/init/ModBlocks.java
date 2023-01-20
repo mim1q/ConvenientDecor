@@ -31,14 +31,11 @@ public class ModBlocks {
   public static final HaystackBlock RED_LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "red_leaf_pile");
   public static final HaystackBlock BROWN_LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "brown_leaf_pile");
 
-  public static final ColoredGroup.ColoredBlockGroup UMBRELLA = ColoredGroup.ofBlocks(true)
+  public static final ColoredGroup.ColoredBlockGroup UMBRELLA = ColoredGroup.ofBlocks(false)
     .add16Colors((color) -> new UmbrellaBlock(FabricBlockSettings.of(Material.WOOL).breakInstantly(), color))
     .register("umbrella");
 
-  public static final UmbrellaBlock BROKEN_UMBRELLA = registerWithSimpleItem(
-    new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK, true),
-    "broken_umbrella"
-  );
+  public static final UmbrellaBlock BROKEN_UMBRELLA = register(new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK),"broken_umbrella");
 
   public static void init() { }
 

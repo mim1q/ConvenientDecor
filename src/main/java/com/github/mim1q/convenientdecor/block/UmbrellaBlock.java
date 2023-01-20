@@ -1,6 +1,5 @@
 package com.github.mim1q.convenientdecor.block;
 
-import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaBlockEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -8,20 +7,15 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.util.DyeColor;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
 public class UmbrellaBlock extends Block implements BlockEntityProvider {
-  public final Identifier texture;
-
-  public UmbrellaBlock(Settings settings, DyeColor color, boolean broken) {
-    super(settings.nonOpaque().noCollision());
-    texture = ConvenientDecor.id("textures/blockentity/umbrella/" + (broken ? "broken" : color.getName()) + ".png");
-  }
+  public final DyeColor color;
 
   public UmbrellaBlock(Settings settings, DyeColor color) {
-    this(settings, color, false);
+    super(settings.nonOpaque().noCollision());
+    this.color = color;
   }
 
   @Override
