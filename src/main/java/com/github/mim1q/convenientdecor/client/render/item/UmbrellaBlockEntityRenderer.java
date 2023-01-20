@@ -25,7 +25,10 @@ public class UmbrellaBlockEntityRenderer implements BlockEntityRenderer<Umbrella
 
   @Override
   public void render(UmbrellaBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    matrices.push();
+    matrices.scale(1.0F, -1.0F, -1.0F);
     VertexConsumer consumer = vertexConsumers.getBuffer(unfoldedModel.getLayer(TEXTURE));
     unfoldedModel.render(matrices, consumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+    matrices.pop();
   }
 }
