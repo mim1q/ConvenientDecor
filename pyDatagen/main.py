@@ -16,7 +16,7 @@ def generate(base_path: str):
     print('Executing Python Datagen Script')
 
     def umbrella(color: str, recipe: bool = True):
-        save(basic.single_blockstate(f'minecraft:block/{color}_wool'), asset(f'blockstates/{color}_umbrella'))
+        save(basic.single_blockstate(f'minecraft:block/{color if color in colors.colors else "black"}_wool'), asset(f'blockstates/{color}_umbrella'))
         save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset(f'models/item/{color}_umbrella'))
         save(drop.single_item(mod_id(f'{color}_umbrella')), data(f'loot_tables/blocks/{color}_umbrella'))
         if recipe:
