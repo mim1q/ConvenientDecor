@@ -52,8 +52,8 @@ public abstract class LivingEntityMixin extends Entity {
   }
 
   private boolean onlyAirAbove() {
-    for (int i = this.getBlockY(); i <= world.getTopY(); i++) {
-      if (world.isAir(this.getBlockPos().withY(i))) {
+    for (int i = this.getBlockY() + 1; i <= world.getTopY(); i++) {
+      if (!world.isAir(this.getBlockPos().withY(i))) {
         return false;
       }
     }
