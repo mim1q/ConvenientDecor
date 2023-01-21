@@ -35,7 +35,7 @@ public class UmbrellaItem extends BlockItem {
   public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
     ItemStack stack = user.getStackInHand(hand);
     if (!world.isClient) {
-      setFolded(stack, !getFolded(stack));
+      setFolded(stack, !isFolded(stack));
       world.playSound(null, user.getBlockPos().up(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 1.0F, 1.0F);
       user.getItemCooldownManager().set(this, 20);
     }
@@ -46,7 +46,7 @@ public class UmbrellaItem extends BlockItem {
     stack.getOrCreateNbt().putBoolean("folded", folded);
   }
 
-  public static boolean getFolded(ItemStack stack) {
+  public static boolean isFolded(ItemStack stack) {
     NbtCompound nbt = stack.getNbt();
     if (nbt == null) return false;
     return nbt.getBoolean("folded");
