@@ -21,7 +21,7 @@ public class UmbrellaItemRenderer implements DynamicItemRenderer {
   @Override
   public void render(ItemStack stack, Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
     UmbrellaItem item = (UmbrellaItem) stack.getItem();
-    boolean folded = false;
+    boolean folded = UmbrellaItem.getFolded(stack);
     boolean broken = item == ModItems.BROKEN_UMBRELLA;
     if (mode == Mode.GUI) {
       float scale = folded ? 0.66F : 0.5F;
