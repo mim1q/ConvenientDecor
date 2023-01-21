@@ -24,14 +24,15 @@ public class UmbrellaBlockEntityRenderer implements BlockEntityRenderer<Umbrella
   public void render(UmbrellaBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
     BlockState state = entity.getCachedState();
     UmbrellaBlock block = (UmbrellaBlock) state.getBlock();
+    boolean folded = entity.folded;
     float rotation = state.get(UmbrellaBlock.ROTATION) * 22.5F;
     matrices.push();
     matrices.translate(0.5F, 0.05F, 0.5F);
     matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-rotation + 90.0F));
-    matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(55.0F));
-    matrices.translate(0.25F, -0.5F, 0.0F);
+    matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(folded ? 100.0F : 55.0F));
+    matrices.translate(0.25F, folded ? -0.6F : -0.5F, 0.0F);
     matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(30.0F));
-    umbrellaRenderer.render(matrices, vertexConsumers, light, overlay, block.color, block == ModBlocks.BROKEN_UMBRELLA, false);
+    umbrellaRenderer.render(matrices, vertexConsumers, light, overlay, block.color, block == ModBlocks.BROKEN_UMBRELLA, folded);
     matrices.pop();
   }
 }
