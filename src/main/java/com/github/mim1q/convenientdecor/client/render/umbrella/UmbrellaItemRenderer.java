@@ -57,8 +57,9 @@ public class UmbrellaItemRenderer implements DynamicItemRenderer {
     }
     if (mode == Mode.FIXED) {
       matrices.translate(0.45F, 0.0F, 0.0F);
-      matrices.scale(0.33F, 0.33F, 0.33F);
-      matrices.translate(0.0F, 0.66F, 1.7F);
+      matrices.scale(0.5F, 0.5F, 0.5F);
+      matrices.translate(0.1F, 0.15F, 1.0F);
+      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
     }
     umbrellaRenderer.render(matrices, vertexConsumers, light, overlay, item.color, broken, folded);
   }
