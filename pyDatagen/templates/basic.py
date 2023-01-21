@@ -3,7 +3,7 @@ import textwrap
 
 
 def from_file(filename: str) -> str:
-    path = os.path.join(os.path.dirname(__file__), 'json', filename)
+    path = os.path.dirname(__file__) + '/../json/' + filename + '.json'
     with open(path, 'r') as file:
         return file.read()
 

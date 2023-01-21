@@ -2,24 +2,28 @@ import os
 import shutil
 import sys
 import colors
+from templates import drop
 from templates import basic
 
 mod = 'convenientdecor'
 
 
 def generate(base_path: str):
-    def asset_path(file): return base_path + '/assets/' + mod + "/" + file + '.json'
+    def asset(file): return base_path + '/assets/' + mod + "/" + file + '.json'
+    def data(file): return base_path + '/data/' + mod + "/" + file + '.json'
     def mod_id(name): return mod + ':' + name
 
     print('Executing Python Datagen Script')
 
-    def umbrellas(color: str):
-        save(basic.single_blockstate('minecraft:block/' + color + '_wool'), asset_path('blockstates/' + color + '_umbrella'))
-        save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset_path('models/item/' + color + '_umbrella'))
+    def umbrella(color: str, recipe: bool = True):
+        save(basic.single_blockstate(f'minecraft:block/{color}_wool'), asset(f'blockstates/{color}_umbrella'))
+        save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset(f'models/item/{color}_umbrella'))
+        save(drop.single_item(mod_id(f'{color}_umbrella')), data(f'loot_tables/blocks/{color}_umbrella'))
+        if recipe:
+            save(basic.from_file("recipes/black_umbrella").replace('black', color), data(f'recipes/{color}_umbrella'))
 
-    colors.foreach(umbrellas)
-    save(basic.single_blockstate('minecraft:block/black_wool'), asset_path('blockstates/broken_umbrella'))
-    save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset_path('models/item/broken_umbrella'))
+    colors.foreach(umbrella)
+    umbrella('broken', recipe=False)
 
 
 def save(content: str, path: str):
