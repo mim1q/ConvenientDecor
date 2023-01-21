@@ -37,7 +37,6 @@ public class UmbrellaItem extends BlockItem {
     if (!world.isClient) {
       setFolded(stack, !isFolded(stack));
       world.playSound(null, user.getBlockPos().up(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 1.0F, 1.0F);
-      user.getItemCooldownManager().set(this, 20);
     }
     return TypedActionResult.success(stack, true);
   }

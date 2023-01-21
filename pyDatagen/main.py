@@ -1,8 +1,8 @@
 import os
 import shutil
 import sys
+
 import colors
-from templates import drop
 from templates import basic
 
 mod = 'convenientdecor'
@@ -18,7 +18,6 @@ def generate(base_path: str):
     def umbrella(color: str, recipe: bool = True):
         save(basic.single_blockstate(f'minecraft:block/{color if color in colors.colors else "black"}_wool'), asset(f'blockstates/{color}_umbrella'))
         save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset(f'models/item/{color}_umbrella'))
-        save(drop.single_item(mod_id(f'{color}_umbrella')), data(f'loot_tables/blocks/{color}_umbrella'))
         if recipe:
             save(basic.from_file("recipes/black_umbrella").replace('black', color), data(f'recipes/{color}_umbrella'))
 
