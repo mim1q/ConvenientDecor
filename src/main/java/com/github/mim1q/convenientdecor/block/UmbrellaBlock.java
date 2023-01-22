@@ -24,6 +24,7 @@ import java.util.List;
 public class UmbrellaBlock extends Block implements BlockEntityProvider {
   public static final IntProperty ROTATION = Properties.ROTATION;
   public static final BooleanProperty FOLDED = BooleanProperty.of("folded");
+  public static final BooleanProperty LEANING = BooleanProperty.of("leaning");
 
   public final DyeColor color;
 
@@ -34,7 +35,7 @@ public class UmbrellaBlock extends Block implements BlockEntityProvider {
 
   @Override
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-    builder.add(ROTATION, FOLDED);
+    builder.add(ROTATION, FOLDED, LEANING);
     super.appendProperties(builder);
   }
 
@@ -43,7 +44,8 @@ public class UmbrellaBlock extends Block implements BlockEntityProvider {
   public BlockState getPlacementState(ItemPlacementContext ctx) {
     return this.getDefaultState()
       .with(ROTATION, MathHelper.floor((double)(ctx.getPlayerYaw() * 16.0F / 360.0F) + 0.5) & 15)
-      .with(FOLDED, UmbrellaItem.isFolded(ctx.getStack()));
+      .with(FOLDED, UmbrellaItem.isFolded(ctx.getStack()))
+      .with(LEANING, ctx.getSide().getAxis().isHorizontal());
   }
 
   @Override
