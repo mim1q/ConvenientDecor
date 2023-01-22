@@ -72,8 +72,8 @@ public abstract class LivingEntityMixin extends Entity {
       } else {
         umbrellaTimer = Math.min(0, umbrellaTimer + 1);
       }
-      if (umbrellaTimer > 20 * 4 && this.random.nextFloat() < 0.5F) {
-        umbrellaTimer = -(20 * 60) - this.random.nextInt(20 * 120);
+      if (umbrellaTimer > 20 * 60 && this.random.nextFloat() < 0.5F) {
+        umbrellaTimer = -(20 * 60 * 4) - this.random.nextInt(20 * 120);
         LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(this.world);
         if (lightning != null) {
           lightning.setPosition(this.getPos());
