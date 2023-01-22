@@ -37,7 +37,7 @@ public class UmbrellaBlockEntityRenderer implements BlockEntityRenderer<Umbrella
     if (leaning) {
       matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(folded ? 30.0F : 10.0F));
       matrices.translate(folded ? 0.3F : 0.65F, folded ? -0.3F : -0.2F, 0.0F);
-      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(30.0F));
+      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
     } else {
       matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(folded ? 100.0F : 55.0F));
       matrices.translate(0.25F, folded ? -0.6F : -0.5F, 0.0F);
