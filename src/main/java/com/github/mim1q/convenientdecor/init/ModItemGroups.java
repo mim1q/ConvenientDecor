@@ -28,7 +28,8 @@ public class ModItemGroups {
       ));
       stacks.addAll(ModBlocks.UMBRELLA.getItemStackList());
       stacks.addAll(List.of(
-        ModBlocks.BROKEN_UMBRELLA.asItem().getDefaultStack()
+        ModBlocks.BROKEN_UMBRELLA.asItem().getDefaultStack(),
+        ModBlocks.UMBRELLA_STAND.asItem().getDefaultStack()
       ));
     })
     .build();

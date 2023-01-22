@@ -2,6 +2,7 @@ package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaBlockEntity;
+import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaStandBlockEntity;
 import com.github.mim1q.convenientdecor.block.blockentity.WateringCanBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
@@ -12,14 +13,16 @@ import net.minecraft.util.registry.Registry;
 import java.util.List;
 
 public class ModBlockEntities {
-  public static final BlockEntityType<WateringCanBlockEntity> WATERING_CAN = register(
-    "watering_can",
+  public static final BlockEntityType<WateringCanBlockEntity> WATERING_CAN = register("watering_can",
     FabricBlockEntityTypeBuilder.create(WateringCanBlockEntity::new, ModBlocks.WATERING_CAN).build()
   );
 
-  public static final BlockEntityType<UmbrellaBlockEntity> UMBRELLA = register(
-    "umbrella",
+  public static final BlockEntityType<UmbrellaBlockEntity> UMBRELLA = register("umbrella",
     createBuilder(UmbrellaBlockEntity::new, ModBlocks.UMBRELLA.getList(), ModBlocks.BROKEN_UMBRELLA).build()
+  );
+
+  public static final BlockEntityType<UmbrellaStandBlockEntity> UMBRELLA_STAND = register("umbrella_stand",
+    FabricBlockEntityTypeBuilder.create(UmbrellaStandBlockEntity::new, ModBlocks.UMBRELLA_STAND).build()
   );
 
   public static void init() { }
