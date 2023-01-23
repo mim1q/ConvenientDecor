@@ -31,6 +31,7 @@ public class ModItemGroups {
         ModBlocks.BROKEN_UMBRELLA.asItem().getDefaultStack(),
         ModBlocks.UMBRELLA_STAND.asItem().getDefaultStack()
       ));
+      stacks.addAll(ModItems.RAINCOAT.getItemStackList());
     })
     .build();
   public static void init() { }

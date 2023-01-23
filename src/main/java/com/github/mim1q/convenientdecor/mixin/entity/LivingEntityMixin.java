@@ -1,12 +1,11 @@
 package com.github.mim1q.convenientdecor.mixin.entity;
 
 import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.item.RaincoatItem;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -19,12 +18,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
   @Shadow public abstract ItemStack getStackInHand(Hand hand);
-
   @Shadow public abstract void setStackInHand(Hand hand, ItemStack stack);
+  @Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
   public LivingEntityMixin(EntityType<?> type, World world) {
     super(type, world);
@@ -99,6 +99,25 @@ public abstract class LivingEntityMixin extends Entity {
       return Math.min(d, 0.025F);
     }
     return d;
+  }
+
+  @Inject(method = "getMaxHealth", at = @At("RETURN"), cancellable = true)
+  @SuppressWarnings("DataFlowIssue")
+  private void getMaxHealth(CallbackInfoReturnable<Float> cir) {
+    if (!this.isPlayer() || ((PlayerEntity)(Object) this).getInventory() == null) {
+      return;
+    }
+    float raincoatBonus = 0.0F;
+    if (this.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof RaincoatItem) {
+      if (this.world.isThundering()) {
+        raincoatBonus = 8.0F;
+      } else if (this.world.isRaining()) {
+        raincoatBonus = 4.0F;
+      }
+    }
+    cir.setReturnValue(
+      cir.getReturnValue() + raincoatBonus
+    );
   }
 
   @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))

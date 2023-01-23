@@ -29,6 +29,8 @@ def generate(base_path: str):
     save(basic.parented_model(mod_id('block/umbrella_stand')), asset('models/item/umbrella_stand'))
     save(drop.single_item(mod_id('umbrella_stand')), data('loot_tables/blocks/umbrella_stand'))
 
+    colors.foreach(lambda color: save(basic.generated_model(mod_id(f'item/raincoat/{color}')), asset(f'models/item/{color}_raincoat')))
+
 
 def save(content: str, path: str):
     os.makedirs(os.path.dirname(path), exist_ok=True)

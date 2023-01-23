@@ -16,7 +16,7 @@ def single_blockstate(model: str) -> str:
           "model": "${model}"
         }
       }
-    }''').replace("${model}", model)
+    }''').replace('${model}', model)
 
 
 def parented_model(model: str) -> str:
@@ -24,7 +24,18 @@ def parented_model(model: str) -> str:
     {
       "parent": "${model}"
     }
-    ''').replace("${model}", model)
+    ''').replace('${model}', model)
+
+
+def generated_model(texture: str) -> str:
+    return textwrap.dedent('''\
+    {
+      "parent": "minecraft:item/generated",
+      "textures": {
+        "layer0": "${texture}"
+      }
+    }
+    ''').replace('${texture}', texture)
 
 
 def frontlight(model: str) -> str:

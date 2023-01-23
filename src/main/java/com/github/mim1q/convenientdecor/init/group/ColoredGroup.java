@@ -105,5 +105,9 @@ public abstract class ColoredGroup<T, U extends ColoredGroup<T, U>> {
     protected void registerSingle(Identifier id, Item entry) {
       Registry.register(Registry.ITEM, id, entry);
     }
+
+    public List<ItemStack> getItemStackList() {
+      return getList().stream().map(item -> item.getDefaultStack()).toList();
+    }
   }
 }
