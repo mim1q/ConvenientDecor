@@ -1,6 +1,7 @@
 package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
+import com.github.mim1q.convenientdecor.client.render.clothes.CustomClothesModelData;
 import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaModel;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry.TexturedModelDataProvider;
@@ -9,6 +10,8 @@ import net.minecraft.client.render.entity.model.EntityModelLayer;
 public class ModEntityModelLayers {
   public static final EntityModelLayer UMBRELLA_FOLDED = register("umbrella", "folded", UmbrellaModel::getFoldedTexturedModelData);
   public static final EntityModelLayer UMBRELLA_UNFOLDED = register("umbrella", "unfolded", UmbrellaModel::getUnfoldedTexturedModelData);
+
+  public static final EntityModelLayer CLOTHES_RAINCOAT = register("clothes", "raincoat", CustomClothesModelData::raincoat);
 
   public static void init() {
 

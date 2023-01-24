@@ -1,6 +1,6 @@
 package com.github.mim1q.convenientdecor.mixin.client.render;
 
-import com.github.mim1q.convenientdecor.client.render.clothes.ConvenientDecorClothesFeatureRenderer;
+import com.github.mim1q.convenientdecor.client.render.clothes.CustomClothesFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -19,6 +19,6 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
   @Inject(method = "<init>", at = @At("TAIL"))
   private void init(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
-    this.addFeature(new ConvenientDecorClothesFeatureRenderer(this));
+    this.addFeature(new CustomClothesFeatureRenderer(this, ctx.getModelLoader()));
   }
 }
