@@ -7,8 +7,10 @@ import com.github.mim1q.convenientdecor.init.group.ColoredGroup.ColoredItemGroup
 import com.github.mim1q.convenientdecor.item.RaincoatItem;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
+import com.github.mim1q.convenientdecor.item.material.CustomClothesArmorMaterial;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.registry.Registry;
@@ -24,6 +26,8 @@ public class ModItems {
     .register("umbrella");
 
   public static final UmbrellaItem BROKEN_UMBRELLA = register(new UmbrellaItem(ModBlocks.BROKEN_UMBRELLA, DyeColor.BLACK), "broken_umbrella");
+
+  public static final ArmorMaterial CUSTOM_CLOTHES_ARMOR_MATERIAL = new CustomClothesArmorMaterial();
 
   public static final ColoredItemGroup RAINCOAT = ColoredGroup.ofItems()
     .add16Colors(color -> new RaincoatItem(color))
