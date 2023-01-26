@@ -18,6 +18,7 @@ public class ConvenientDecorClient implements ClientModInitializer {
     LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
       ((entityType, entityRenderer, registrationHelper, context) -> {
         if (!dynamicItemRenderersRegistered) {
+          ModRender.initArmorRenderers(context);
           ModRender.initDynamicItemRenderers(context);
           dynamicItemRenderersRegistered = true;
         }

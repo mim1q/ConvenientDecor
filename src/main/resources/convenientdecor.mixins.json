@@ -9,9 +9,7 @@
     "enchantment.InfinityEnchantmentMixin",
     "entity.LivingEntityMixin"
   ],
-  "client": [
-    "client.render.PlayerEntityRendererMixin"
-  ],
+  "client": [],
   "server": [],
   "injectors": {
     "defaultRequire": 1
