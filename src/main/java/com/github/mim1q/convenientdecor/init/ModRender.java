@@ -16,7 +16,6 @@ import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.item.Item;
-import net.minecraft.util.DyeColor;
 
 public class ModRender {
   public static void init() { }
@@ -70,7 +69,10 @@ public class ModRender {
   }
 
   public static void initArmorRenderers(EntityRendererFactory.Context context) {
-    ArmorRenderer.register(new RaincoatRenderer(context.getModelLoader()), ModItems.RAINCOAT.get(DyeColor.YELLOW));
+    RaincoatRenderer raincoatRenderer = new RaincoatRenderer(context.getModelLoader());
+    for (Item item : ModItems.RAINCOAT.getList()) {
+      ArmorRenderer.register(raincoatRenderer, item);
+    }
   }
 
   public static void initDynamicItemRenderers(EntityRendererFactory.Context context) {
