@@ -22,7 +22,7 @@ public class RaincoatRenderer implements ArmorRenderer {
   @Override
   public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, ItemStack stack, LivingEntity entity, EquipmentSlot slot, int light, BipedEntityModel<LivingEntity> contextModel) {
     VertexConsumer consumer = vertexConsumers.getBuffer(model.getLayer(model.getTexture(stack)));
-    model.applyTransform(contextModel, stack);
+    model.applyTransform(entity, contextModel, stack);
     model.render(matrices, consumer, light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
   }
 }

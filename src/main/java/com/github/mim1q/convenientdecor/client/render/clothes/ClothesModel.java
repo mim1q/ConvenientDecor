@@ -6,6 +6,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
@@ -36,7 +37,7 @@ public abstract class ClothesModel extends Model {
 
   public abstract Identifier getTexture(ItemStack stack);
 
-  public void applyTransform(BipedEntityModel<?> model, ItemStack stack) {
+  public void applyTransform(LivingEntity entity, BipedEntityModel<?> model, ItemStack stack) {
     if (head != null) head.copyTransform(model.head);
     if (body != null) body.copyTransform(model.body);
     if (rightArm != null) rightArm.copyTransform(model.rightArm);
