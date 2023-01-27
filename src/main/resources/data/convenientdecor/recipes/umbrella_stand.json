@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#I#",
+    "# #"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:black_concrete"
+    },
+    "I": {
+      "item": "minecraft:iron_bars"
+    }
+  },
+  "result": {
+    "item": "convenientdecor:umbrella_stand",
+    "count": 1
+  }
+}

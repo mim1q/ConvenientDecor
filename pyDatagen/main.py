@@ -32,6 +32,8 @@ def generate(base_path: str):
     def raincoat(color: str):
         save(basic.generated_model(mod_id(f'item/raincoat/{color}_hood')), asset(f'models/item/{color}_raincoat_hood'))
         save(basic.from_file('models/item/black_raincoat').replace('black', color), asset(f'models/item/{color}_raincoat'))
+        save(basic.from_file('recipes/black_raincoat').replace('black', color), data(f'recipes/{color}_raincoat'))
+
     colors.foreach(raincoat)
 
 
