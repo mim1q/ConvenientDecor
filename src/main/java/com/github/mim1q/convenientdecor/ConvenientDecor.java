@@ -4,6 +4,7 @@ import com.github.mim1q.convenientdecor.init.ModBlockEntities;
 import com.github.mim1q.convenientdecor.init.ModBlocks;
 import com.github.mim1q.convenientdecor.init.ModItemGroups;
 import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.network.ModServerPacketHandler;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 
@@ -16,6 +17,7 @@ public class ConvenientDecor implements ModInitializer {
     ModBlockEntities.init();
     ModItems.init();
     ModItemGroups.init();
+    ModServerPacketHandler.init();
   }
 
   public static Identifier id(String path) {
