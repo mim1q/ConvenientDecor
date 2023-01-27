@@ -34,5 +34,24 @@
   "block.convenientdecor.magenta_umbrella": "Magenta Umbrella",
   "block.convenientdecor.purple_umbrella": "Purple Umbrella",
   "block.convenientdecor.broken_umbrella": "Broken Umbrella",
-  "block.convenientdecor.umbrella_stand": "Umbrella Stand"
+  "block.convenientdecor.umbrella_stand": "Umbrella Stand",
+
+  "item.convenientdecor.black_raincoat": "Black Raincoat",
+  "item.convenientdecor.gray_raincoat": "Gray Raincoat",
+  "item.convenientdecor.light_gray_raincoat": "Light Gray Raincoat",
+  "item.convenientdecor.white_raincoat": "White Raincoat",
+  "item.convenientdecor.brown_raincoat": "Brown Raincoat",
+  "item.convenientdecor.blue_raincoat": "Blue Raincoat",
+  "item.convenientdecor.cyan_raincoat": "Cyan Raincoat",
+  "item.convenientdecor.light_blue_raincoat": "Light Blue Raincoat",
+  "item.convenientdecor.lime_raincoat": "Lime Raincoat",
+  "item.convenientdecor.green_raincoat": "Green Raincoat",
+  "item.convenientdecor.yellow_raincoat": "Yellow Raincoat",
+  "item.convenientdecor.orange_raincoat": "Orange Raincoat",
+  "item.convenientdecor.red_raincoat": "Red Raincoat",
+  "item.convenientdecor.pink_raincoat": "Pink Raincoat",
+  "item.convenientdecor.magenta_raincoat": "Magenta Raincoat",
+  "item.convenientdecor.purple_raincoat": "Purple Raincoat",
+  "tooltip.convenientedecor.raincoat.hood_on": "Right-click to put on hood",
+  "tooltip.convenientedecor.raincoat.hood_off": "Right-click to remove hood"
 }

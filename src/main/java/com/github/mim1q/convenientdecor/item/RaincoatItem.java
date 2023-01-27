@@ -23,6 +23,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class RaincoatItem extends ArmorItem {
+  public static final String HOOD_ON_KEY = "tooltip.convenientedecor.raincoat.hood_on";
+  public static final String HOOD_OFF_KEY = "tooltip.convenientedecor.raincoat.hood_off";
+
   public final DyeColor color;
 
   public RaincoatItem(DyeColor color) {
@@ -44,7 +47,7 @@ public class RaincoatItem extends ArmorItem {
 
   @Override
   public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-    tooltip.add(Text.literal(isHooded(stack) ? "Right-click to put on hood" : "Right-click to remove hood").formatted(Formatting.GRAY));
+    tooltip.add(Text.translatable(isHooded(stack) ? HOOD_OFF_KEY : HOOD_ON_KEY).formatted(Formatting.GRAY));
     super.appendTooltip(stack, world, tooltip, context);
   }
 
