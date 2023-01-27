@@ -42,9 +42,9 @@ public class RaincoatModel extends ClothesModel {
     rightArm.addChild("rightArm_r1", ModelPartBuilder.create().uv(0, 21).cuboid(-1.5F, -0.25F, -2.25F, 5.0F, 11.0F, 5.0F, new Dilation(0.0F)), ModelTransform.of(-1.5F, -2.5F, -0.25F, 0.0F, 0.0F, 0.1745F));
     ModelPartData leftArm = modelPartData.addChild("leftArm", ModelPartBuilder.create(), ModelTransform.pivot(5.0F, 2.0F, 0.0F));
     leftArm.addChild("leftArm_r1", ModelPartBuilder.create().uv(0, 21).mirrored().cuboid(-3.5F, -0.25F, -2.25F, 5.0F, 11.0F, 5.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.of(1.5F, -2.5F, -0.25F, 0.0F, 0.0F, -0.1745F));
-    ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(0, 0).cuboid(-4.5F, -0.5F, -2.5F, 9.0F, 12.0F, 5.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-    body.addChild("frontFlap", ModelPartBuilder.create().uv(28, 29).cuboid(-4.5F, 0.0F, 0.0F, 9.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 11.5F, -2.5F));
-    body.addChild("backFlap", ModelPartBuilder.create().uv(28, 36).cuboid(-4.5F, 0.0F, -2.0F, 9.0F, 4.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 11.5F, 2.5F));
+    ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(0, 0).cuboid(-4.5F, -0.5F, -2.5F, 9.0F, 12.0F, 5.0F, new Dilation(0.1F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+    body.addChild("frontFlap", ModelPartBuilder.create().uv(28, 29).cuboid(-4.5F, 0.0F, 0.0F, 9.0F, 4.0F, 2.0F, new Dilation(0.1F)), ModelTransform.pivot(0.0F, 11.5F, -2.5F));
+    body.addChild("backFlap", ModelPartBuilder.create().uv(28, 36).cuboid(-4.5F, 0.0F, -2.0F, 9.0F, 4.0F, 2.0F, new Dilation(0.1F)), ModelTransform.pivot(0.0F, 11.5F, 2.5F));
     ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
     head.addChild("hood", ModelPartBuilder.create().uv(28, 11).cuboid(-4.5F, -32.5F, -4.5F, 9.0F, 9.0F, 9.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
     head.addChild("hood2", ModelPartBuilder.create().uv(28, 0).cuboid(-4.5F, -3.5F, -0.5F, 9.0F, 6.0F, 5.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
