@@ -29,7 +29,10 @@ def generate(base_path: str):
     save(basic.parented_model(mod_id('block/umbrella_stand')), asset('models/item/umbrella_stand'))
     save(drop.single_item(mod_id('umbrella_stand')), data('loot_tables/blocks/umbrella_stand'))
 
-    colors.foreach(lambda color: save(basic.generated_model(mod_id(f'item/raincoat/{color}')), asset(f'models/item/{color}_raincoat')))
+    def raincoat(color: str):
+        save(basic.generated_model(mod_id(f'item/raincoat/{color}_hood')), asset(f'models/item/{color}_raincoat_hood'))
+        save(basic.from_file('models/item/black_raincoat').replace('black', color), asset(f'models/item/{color}_raincoat'))
+    colors.foreach(raincoat)
 
 
 def save(content: str, path: str):

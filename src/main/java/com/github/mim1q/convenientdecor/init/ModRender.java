@@ -6,6 +6,7 @@ import com.github.mim1q.convenientdecor.client.render.clothes.RaincoatRenderer;
 import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaBlockEntityRenderer;
 import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaItemRenderer;
 import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaStandBlockEntityRenderer;
+import com.github.mim1q.convenientdecor.item.RaincoatItem;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
@@ -65,6 +66,14 @@ public class ModRender {
       ConvenientDecor.id("filled"),
       (stack, world, entity, seed) -> WateringCanItem.canWater(stack) ? 1 : 0
     );
+
+    for (Item item : ModItems.RAINCOAT.getList()) {
+      ModelPredicateProviderRegistry.register(
+        item,
+        ConvenientDecor.id("hood"),
+        (stack, world, entity, seed) -> RaincoatItem.isHooded(stack) ? 1 : 0
+      );
+    }
 
   }
 
