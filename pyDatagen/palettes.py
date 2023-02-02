@@ -54,4 +54,4 @@ def save_img_idx(path: str, template_path: str, palettes: [dict], to_idx: int):
 
 
 def get_path(path: str):
-    return os.path.dirname(__file__) + f'/../img/{path}.png'
+    return os.path.dirname(__file__) + f'/img/{path}.png'

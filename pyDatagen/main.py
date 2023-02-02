@@ -3,7 +3,7 @@ import shutil
 import sys
 
 import colors
-from palettes.palettes import save_img, load_palettes
+from palettes import save_img, load_palettes
 from templates import drop
 from templates import basic
 
