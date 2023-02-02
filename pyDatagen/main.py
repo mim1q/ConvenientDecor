@@ -32,6 +32,8 @@ def generate(base_path: str):
 
     def raincoat(color: str):
         save(basic.generated_model(mod_id(f'item/raincoat/{color}_hood')), asset(f'models/item/{color}_raincoat_hood'))
+        save(basic.generated_model(mod_id(f'item/rain_boots/{color}')), asset(f'models/item/{color}_rain_boots'))
+        save(basic.generated_model(mod_id(f'item/rain_hat/{color}')), asset(f'models/item/{color}_rain_hat'))
         save(basic.from_file('models/item/black_raincoat').replace('black', color), asset(f'models/item/{color}_raincoat'))
         save(basic.from_file('recipes/black_raincoat').replace('black', color), data(f'recipes/{color}_raincoat'))
 
@@ -43,7 +45,11 @@ def generate_textures(output_path: str):
         return os.path.join(output_path, file + '.png')
 
     def raincoat(color: str):
-        save_img(path(f'raincoat/{color}'), 'raincoat/template', load_palettes('raincoat/palettes', 'yellow'), color)
+        save_img(path(f'clothes/raincoat/{color}'), 'raincoat/template', load_palettes('raincoat/palettes', 'yellow'), color)
+        save_img(path(f'item/raincoat/{color}'), 'raincoat/template_item', load_palettes('raincoat/palettes', 'yellow'), color)
+        save_img(path(f'item/raincoat/{color}_hood'), 'raincoat/template_item_hood', load_palettes('raincoat/palettes', 'yellow'), color)
+        save_img(path(f'item/rain_boots/{color}'), 'raincoat/template_boots', load_palettes('raincoat/palettes', 'yellow'), color)
+        save_img(path(f'item/rain_hat/{color}'), 'raincoat/template_hat', load_palettes('raincoat/palettes', 'yellow'), color)
 
     colors.foreach(raincoat)
 

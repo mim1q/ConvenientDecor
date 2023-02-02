@@ -4,9 +4,7 @@ import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.UmbrellaBlock;
 import com.github.mim1q.convenientdecor.init.group.ColoredGroup;
 import com.github.mim1q.convenientdecor.init.group.ColoredGroup.ColoredItemGroup;
-import com.github.mim1q.convenientdecor.item.RaincoatItem;
-import com.github.mim1q.convenientdecor.item.UmbrellaItem;
-import com.github.mim1q.convenientdecor.item.WateringCanItem;
+import com.github.mim1q.convenientdecor.item.*;
 import com.github.mim1q.convenientdecor.item.material.CustomClothesArmorMaterial;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
@@ -33,6 +31,13 @@ public class ModItems {
     .add16Colors(color -> new RaincoatItem(color))
     .register("raincoat");
 
+  public static final ColoredItemGroup RAIN_BOOTS = ColoredGroup.ofItems()
+    .add16Colors(color -> new RainBootsItem(new FabricItemSettings()))
+    .register("rain_boots");
+
+  public static final ColoredItemGroup RAIN_HAT = ColoredGroup.ofItems()
+    .add16Colors(color -> new RainHatItem(new FabricItemSettings()))
+    .register("rain_hat");
   public static void init() { }
 
   public static <T extends Item> T register(T item, String name) {
