@@ -82,6 +82,12 @@ public class ModRender {
     for (Item item : ModItems.RAINCOAT.getList()) {
       ArmorRenderer.register(raincoatRenderer, item);
     }
+    for (Item item : ModItems.RAIN_HAT.getList()) {
+      ArmorRenderer.register(raincoatRenderer, item);
+    }
+    for (Item item : ModItems.RAIN_BOOTS.getList()) {
+      ArmorRenderer.register(raincoatRenderer, item);
+    }
   }
 
   public static void initDynamicItemRenderers(EntityRendererFactory.Context context) {

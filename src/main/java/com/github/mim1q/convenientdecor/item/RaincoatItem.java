@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class RaincoatItem extends ArmorItem {
+public class RaincoatItem extends ArmorItem implements ColoredItem {
   public static final String HOOD_ON_KEY = "tooltip.convenientedecor.raincoat.hood_on";
   public static final String HOOD_OFF_KEY = "tooltip.convenientedecor.raincoat.hood_off";
 
@@ -61,5 +61,10 @@ public class RaincoatItem extends ArmorItem {
       return nbt.getBoolean("hooded");
     }
     return false;
+  }
+
+  @Override
+  public DyeColor getColor() {
+    return color;
   }
 }

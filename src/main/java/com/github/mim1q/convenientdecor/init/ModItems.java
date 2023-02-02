@@ -32,12 +32,13 @@ public class ModItems {
     .register("raincoat");
 
   public static final ColoredItemGroup RAIN_BOOTS = ColoredGroup.ofItems()
-    .add16Colors(color -> new RainBootsItem(new FabricItemSettings()))
+    .add16Colors(color -> new RainBootsItem(new FabricItemSettings(), color))
     .register("rain_boots");
 
   public static final ColoredItemGroup RAIN_HAT = ColoredGroup.ofItems()
-    .add16Colors(color -> new RainHatItem(new FabricItemSettings()))
+    .add16Colors(color -> new RainHatItem(new FabricItemSettings(), color))
     .register("rain_hat");
+
   public static void init() { }
 
   public static <T extends Item> T register(T item, String name) {
