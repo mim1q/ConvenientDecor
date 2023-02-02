@@ -4,5 +4,6 @@ build/
 out/
 run/
 src/main/pyGenerated/
+src/main/pyGeneratedImages/
 
 publishing.properties

@@ -3,6 +3,7 @@ import shutil
 import sys
 
 import colors
+from palettes.palettes import save_img, load_palettes
 from templates import drop
 from templates import basic
 
@@ -37,6 +38,16 @@ def generate(base_path: str):
     colors.foreach(raincoat)
 
 
+def generate_textures(output_path: str):
+    def path(file: str):
+        return os.path.join(output_path, file + '.png')
+
+    def raincoat(color: str):
+        save_img(path(f'raincoat/{color}'), 'raincoat/template', load_palettes('raincoat/palettes', 'yellow'), color)
+
+    colors.foreach(raincoat)
+
+
 def save(content: str, path: str):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'w') as file:
@@ -48,13 +59,18 @@ def main():
         print('No output path specified')
         exit(1)
     output_path = sys.argv[1]
+    texture_output_path = os.path.abspath(os.path.join(output_path, '..', 'pyGeneratedImages'))
 
     if os.path.exists(output_path):
         shutil.rmtree(output_path)
+    if os.path.exists(texture_output_path):
+        shutil.rmtree(texture_output_path)
 
     print('Running Python Data Generator Script')
     print('Output Path: ' + output_path)
+    print('Texture Output Path: ' + texture_output_path)
     generate(output_path)
+    generate_textures(texture_output_path)
 
 
 if __name__ == '__main__':

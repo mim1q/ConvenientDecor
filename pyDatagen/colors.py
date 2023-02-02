@@ -7,3 +7,7 @@ colors = ['black', 'gray', 'light_gray', 'white', 'brown', 'blue', 'cyan', 'ligh
 def foreach(consumer: Callable[[str], None]):
     for color in colors:
         consumer(color)
+
+
+def index(color: str):
+    return colors.index(color)
