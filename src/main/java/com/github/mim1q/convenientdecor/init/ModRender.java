@@ -13,6 +13,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -27,9 +28,6 @@ public class ModRender {
 
     BlockRenderLayerMap.INSTANCE.putBlocks(
       RenderLayer.getCutout(),
-      ModBlocks.RED_PLASTIC_SHOVEL,
-      ModBlocks.BLUE_PLASTIC_SHOVEL,
-      ModBlocks.YELLOW_PLASTIC_SHOVEL,
       ModBlocks.HAYSTACK_BLOCK,
       ModBlocks.WATERING_CAN,
       ModBlocks.LEAF_PILE,
@@ -38,6 +36,9 @@ public class ModRender {
       ModBlocks.RED_LEAF_PILE,
       ModBlocks.BROWN_LEAF_PILE
     );
+    for (Block block : ModBlocks.PLASTIC_SHOVEL.getList()) {
+      BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), block);
+    }
 
     ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> 0x00AAFF, ModBlocks.WATERING_CAN);
     ColorProviderRegistry.BLOCK.register(

@@ -4,8 +4,7 @@ import sys
 
 import colors
 from palettes import save_img, load_palettes
-from templates import drop
-from templates import basic
+from templates import recipe, drop, basic
 
 mod = 'convenientdecor'
 
@@ -17,14 +16,26 @@ def generate(base_path: str):
 
     print('Executing Python Datagen Script')
 
-    def umbrella(color: str, recipe: bool = True):
+    def plastic_shovel(color: str):
+        variants = ('lying', 'tilted', 'straight')
+        texture = mod_id(f'block/plastic_shovel/{color}')
+        for variant in variants:
+            save(basic.parented_model(mod_id(f'block/shovel/{variant}'), [('0', texture), ('particle', texture)]), asset(f'models/block/plastic_shovel/{color}/{variant}'))
+        save(basic.from_file('blockstates/black_plastic_shovel').replace('black', color), asset(f'blockstates/{color}_plastic_shovel'))
+        save(basic.parented_model(mod_id(f'block/plastic_shovel/{color}/straight')), asset(f'models/item/{color}_plastic_shovel'))
+        save(recipe.combine_two(mod_id('shovel'), f'minecraft:{color}_dye', mod_id(f'{color}_plastic_shovel')), data(f'recipes/{color}_plastic_shovel'))
+        save(drop.single_item(mod_id(f'{color}_plastic_shovel')), data(f'loot_tables/blocks/{color}_plastic_shovel'))
+
+    colors.foreach(plastic_shovel)
+
+    def umbrella(color: str, has_recipe: bool = True):
         save(basic.single_blockstate(f'minecraft:block/{color if color in colors.colors else "black"}_wool'), asset(f'blockstates/{color}_umbrella'))
         save(basic.frontlight(basic.parented_model('minecraft:builtin/entity')), asset(f'models/item/{color}_umbrella'))
-        if recipe:
+        if has_recipe:
             save(basic.from_file('recipes/black_umbrella').replace('black', color), data(f'recipes/{color}_umbrella'))
 
     colors.foreach(umbrella)
-    umbrella('broken', recipe=False)
+    umbrella('broken', has_recipe=False)
 
     save(basic.single_blockstate(mod_id('block/umbrella_stand')), asset('blockstates/umbrella_stand'))
     save(basic.parented_model(mod_id('block/umbrella_stand')), asset('models/item/umbrella_stand'))
@@ -43,6 +54,8 @@ def generate(base_path: str):
 def generate_textures(output_path: str):
     def path(file: str):
         return os.path.join(output_path, file + '.png')
+
+    colors.foreach(lambda c: save_img(path(f'block/plastic_shovel/{c}'), 'plastic_shovel/template', load_palettes('plastic_shovel/palettes'), c))
 
     def raincoat(color: str):
         save_img(path(f'clothes/raincoat/{color}'), 'raincoat/template', load_palettes('raincoat/palettes', 'yellow'), color)

@@ -12,10 +12,10 @@ public class ModItemGroups {
     .appendItems(stacks -> {
       stacks.addAll(List.of(
         ModBlocks.PITCHFORK.asItem().getDefaultStack(),
-        ModBlocks.SHOVEL.asItem().getDefaultStack(),
-        ModBlocks.RED_PLASTIC_SHOVEL.asItem().getDefaultStack(),
-        ModBlocks.YELLOW_PLASTIC_SHOVEL.asItem().getDefaultStack(),
-        ModBlocks.BLUE_PLASTIC_SHOVEL.asItem().getDefaultStack(),
+        ModBlocks.SHOVEL.asItem().getDefaultStack()
+      ));
+      stacks.addAll(ModBlocks.PLASTIC_SHOVEL.getItemStackList());
+      stacks.addAll(List.of(
         ModItems.WATERING_CAN.getDefaultStack(),
         ModItems.WATERING_CAN.getStack(32),
         ModBlocks.UNBUNDLED_HAY_BLOCK.asItem().getDefaultStack(),

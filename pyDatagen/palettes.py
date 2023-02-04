@@ -5,7 +5,9 @@ from PIL import Image, PyAccess
 import colors
 
 
-def load_palettes(path: str, color: str) -> [dict]:
+def load_palettes(path: str, color: str = None) -> [dict]:
+    if color is None:
+        return load_palettes_idx(path, -1)
     return load_palettes_idx(path, colors.index(color))
 
 

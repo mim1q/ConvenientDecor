@@ -19,14 +19,6 @@ def single_blockstate(model: str) -> str:
     }''').replace('${model}', model)
 
 
-def parented_model(model: str) -> str:
-    return textwrap.dedent('''\
-    {
-      "parent": "${model}"
-    }
-    ''').replace('${model}', model)
-
-
 def generated_model(texture: str) -> str:
     return textwrap.dedent('''\
     {
@@ -36,6 +28,21 @@ def generated_model(texture: str) -> str:
       }
     }
     ''').replace('${texture}', texture)
+
+
+def parented_model(model: str, textures: [(str, str)] = None) -> str:
+    overwritten_textures = ''
+    if textures is not None:
+        overwritten_textures += ',\n  "textures": {\n'
+        for texture in textures:
+            overwritten_textures += f'    "{texture[0]}": "{texture[1]}",\n'
+        overwritten_textures = overwritten_textures[:-2] + '\n  }'
+
+    return textwrap.dedent('''\
+    {
+      "parent": "${model}"${overwritten_textures}
+    }
+    ''').replace('${overwritten_textures}', overwritten_textures).replace('${model}', model)
 
 
 def frontlight(model: str) -> str:
