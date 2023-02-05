@@ -23,15 +23,16 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
     super(FabricBlockSettings.of(Material.METAL).breakInstantly().noCollision().nonOpaque());
   }
 
-  public static float getWeatherChangePrediction(ServerWorld world) {
+  public static int getWeatherPredictionStrength(ServerWorld world) {
     ServerWorldProperties properties = (ServerWorldProperties) world.getLevelProperties();
-    if (world.isThundering()) {
-      return MathHelper.clamp((13000.0F - properties.getThunderTime()) / 12000.0F, 0.0F, 1.0F);
-    }
-    if (world.isRaining()) {
-      return MathHelper.clamp((13000.0F - properties.getRainTime()) / 12000.0F, 0.0F, 1.0F);
-    }
-    return MathHelper.clamp((13000.0F - properties.getClearWeatherTime()) / 12000.0F, 0.0F, 1.0F);
+    if (world.isThundering()) return getStrengthFromRemainingTime(properties.getThunderTime());
+    if (world.isRaining()) return getStrengthFromRemainingTime(properties.getRainTime());
+    return getStrengthFromRemainingTime(properties.getClearWeatherTime());
+  }
+
+  public static int getStrengthFromRemainingTime(float remainingTime) {
+    int minutes = (int) (remainingTime / 1200) + 1;
+    return MathHelper.clamp(16 - minutes, 0, 15);
   }
 
   @Override
@@ -47,7 +48,7 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
     if (entity == null) {
       return 0;
     }
-    return (int) (entity.getMultiplier() * 1.5F);
+    return (int) (entity.getMultiplier() - 1);
   }
 
   @Override
