@@ -31,7 +31,7 @@ public class WeatherVaneBlockEntity extends BlockEntity {
   }
 
   public void tick(World world, BlockPos pos, BlockState state) {
-    if (!world.isClient && world.getTime() % 40 == 0) {
+    if (!world.isClient && world.getTime() % 20 == 0) {
       updateMultiplier((ServerWorld) world, state);
       markDirty();
       return;
@@ -54,7 +54,7 @@ public class WeatherVaneBlockEntity extends BlockEntity {
   }
 
   public void updateMultiplier(ServerWorld world, BlockState state) {
-    multiplier = 1.0F + WeatherVaneBlock.getWeatherPredictionStrength(world);
+    multiplier = 1.0F + WeatherVaneBlock.getWeatherPredictionStrength(world, ((WeatherVaneBlock) state.getBlock()).timeUnit);
     world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_LISTENERS);
     world.updateNeighbors(this.getPos(), this.getCachedState().getBlock());
     world.updateNeighbors(this.getPos().down(), this.getCachedState().getBlock());

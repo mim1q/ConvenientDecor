@@ -19,21 +19,24 @@ import net.minecraft.world.level.ServerWorldProperties;
 import org.jetbrains.annotations.Nullable;
 
 public class WeatherVaneBlock extends Block implements BlockEntityProvider {
-  public WeatherVaneBlock() {
+  public final int timeUnit;
+
+  public WeatherVaneBlock(int timeUnit) {
     super(FabricBlockSettings.of(Material.METAL).breakInstantly().noCollision().nonOpaque());
+    this.timeUnit = timeUnit;
   }
 
-  public static int getWeatherPredictionStrength(ServerWorld world) {
+  public static int getWeatherPredictionStrength(ServerWorld world, int timeUnit) {
     ServerWorldProperties properties = (ServerWorldProperties) world.getLevelProperties();
     if (world.isRaining() || properties.getClearWeatherTime() == 0) {
-      return getStrengthFromRemainingTime(properties.getRainTime());
+      return getStrengthFromRemainingTime(properties.getRainTime(), timeUnit);
     }
-    return getStrengthFromRemainingTime(properties.getClearWeatherTime());
+    return getStrengthFromRemainingTime(properties.getClearWeatherTime(), timeUnit);
   }
 
-  public static int getStrengthFromRemainingTime(float remainingTime) {
-    int minutes = (int) (remainingTime / 1200) + 1;
-    return MathHelper.clamp(16 - minutes, 0, 15);
+  public static int getStrengthFromRemainingTime(float remainingTime, int timeUnit) {
+    int timeUnits = (int) (remainingTime / timeUnit) + 1;
+    return MathHelper.clamp(16 - timeUnits, 0, 15);
   }
 
   @Override

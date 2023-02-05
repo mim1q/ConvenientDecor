@@ -2,6 +2,8 @@ package com.github.mim1q.convenientdecor.client.render.blockentity;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity;
+import com.github.mim1q.convenientdecor.init.ModBlocks;
+import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.OverlayTexture;
@@ -19,7 +21,10 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 
 public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<WeatherVaneBlockEntity> {
-  public static final Identifier TEXTURE = ConvenientDecor.id("textures/block/weather_vane/copper.png");
+  public static final Identifier TEXTURE_GOLD = ConvenientDecor.id("textures/block/weather_vane/gold.png");
+  public static final Identifier TEXTURE_COPPER = ConvenientDecor.id("textures/block/weather_vane/copper.png");
+  public static final Identifier TEXTURE_IRON = ConvenientDecor.id("textures/block/weather_vane/iron.png");
+  public static final Identifier TEXTURE_NETHERITE = ConvenientDecor.id("textures/block/weather_vane/netherite.png");
 
   private final TextRenderer textRenderer;
 
@@ -31,7 +36,7 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
   public void render(WeatherVaneBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
     matrices.push();
     {
-      VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
+      VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(getTexture(entity.getCachedState().getBlock())));
       matrices.scale(1.0F, -1.0F, -1.0F);
       matrices.translate(0.5F, -1.125F, -0.5F);
       matrices.push();
@@ -41,11 +46,19 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
       }
       matrices.pop();
       matrices.translate(0.0F, 0.75F, 0.0F);
-      renderLetters(matrices, vertexConsumers, 0x3b2822, light, new String[]{"W", "E", "N", "S"});
+      int color = entity.getCachedState().isOf(ModBlocks.NETHERITE_WEATHER_VANE) ? 0xfaf4ff : 0x3b2822;
+      renderLetters(matrices, vertexConsumers, color, light, new String[]{"W", "E", "N", "S"});
       matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
-      renderLetters(matrices, vertexConsumers, 0x3b2822, light, new String[]{"E", "W", "S", "N"});
+      renderLetters(matrices, vertexConsumers, color, light, new String[]{"E", "W", "S", "N"});
     }
     matrices.pop();
+  }
+
+  private static Identifier getTexture(Block block) {
+    if (block == ModBlocks.GOLD_WEATHER_VANE) return TEXTURE_GOLD;
+    if (block == ModBlocks.COPPER_WEATHER_VANE) return TEXTURE_COPPER;
+    if (block == ModBlocks.IRON_WEATHER_VANE) return TEXTURE_IRON;
+    return TEXTURE_NETHERITE;
   }
 
   protected void renderLetters(MatrixStack matrices, VertexConsumerProvider consumers, int color, int light, String[] text) {

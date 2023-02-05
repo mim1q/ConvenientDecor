@@ -50,8 +50,16 @@ def generate(base_path: str):
 
     colors.foreach(raincoat)
 
-    save(basic.single_blockstate(mod_id('block/weather_vane')), asset('blockstates/weather_vane'))
-    save(basic.generated_model(mod_id('item/weather_vane/copper')), asset('models/item/weather_vane'))
+    def weather_vane(material: str):
+        save(basic.single_blockstate(mod_id(f'block/weather_vane/{material}')), asset(f'blockstates/{material}_weather_vane'))
+        texture = mod_id(f'block/weather_vane/{material}')
+        particle = f'minecraft:block/{material}_block'
+        save(basic.parented_model(mod_id(f'block/weather_vane'), [('0', texture), ('particle', particle)]), asset(f'models/block/weather_vane/{material}'))
+        save(basic.generated_model(mod_id(f'item/weather_vane/{material}')), asset(f'models/item/{material}_weather_vane'))
+        save(drop.single_item(mod_id(f'{material}_weather_vane')), data(f'loot_tables/blocks/{material}_weather_vane'))
+
+    for m in ['gold', 'copper', 'iron', 'netherite']:
+        weather_vane(m)
 
 
 def generate_textures(output_path: str):

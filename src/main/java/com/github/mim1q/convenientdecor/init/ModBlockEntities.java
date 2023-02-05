@@ -27,7 +27,12 @@ public class ModBlockEntities {
   );
 
   public static final BlockEntityType<WeatherVaneBlockEntity> WEATHER_VANE = register("weather_vane",
-    FabricBlockEntityTypeBuilder.create(WeatherVaneBlockEntity::new, ModBlocks.WEATHER_VANE).build()
+    FabricBlockEntityTypeBuilder.create(WeatherVaneBlockEntity::new,
+      ModBlocks.GOLD_WEATHER_VANE,
+      ModBlocks.COPPER_WEATHER_VANE,
+      ModBlocks.IRON_WEATHER_VANE,
+      ModBlocks.NETHERITE_WEATHER_VANE
+    ).build()
   );
 
   public static void init() { }

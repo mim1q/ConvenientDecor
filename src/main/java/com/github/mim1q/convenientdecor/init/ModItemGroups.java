@@ -34,7 +34,12 @@ public class ModItemGroups {
       stacks.addAll(ModItems.RAIN_HAT.getItemStackList());
       stacks.addAll(ModItems.RAINCOAT.getItemStackList());
       stacks.addAll(ModItems.RAIN_BOOTS.getItemStackList());
-      stacks.add(ModBlocks.WEATHER_VANE.asItem().getDefaultStack());
+      stacks.addAll(List.of(
+        ModBlocks.GOLD_WEATHER_VANE.asItem().getDefaultStack(),
+        ModBlocks.COPPER_WEATHER_VANE.asItem().getDefaultStack(),
+        ModBlocks.IRON_WEATHER_VANE.asItem().getDefaultStack(),
+        ModBlocks.NETHERITE_WEATHER_VANE.asItem().getDefaultStack()
+      ));
     })
     .build();
   public static void init() { }
