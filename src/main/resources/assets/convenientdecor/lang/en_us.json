@@ -105,7 +105,8 @@
   "item.convenientdecor.magenta_rain_hat": "Magenta Rain Hat",
   "item.convenientdecor.purple_rain_hat": "Purple Rain Hat",
 
-  "block.convenientdecor.puddle": "Puddle",
-  "block.convenientdecor.weather_vane": "Weather Vane",
-  "item.convenientdecor.puddle_in_a_bottle": "Puddle in a Bottle"
+  "block.convenientdecor.gold_weather_vane": "Gold Weather Vane",
+  "block.convenientdecor.copper_weather_vane": "Copper Weather Vane",
+  "block.convenientdecor.iron_weather_vane": "Iron Weather Vane",
+  "block.convenientdecor.netherite_weather_vane": "Netherite Weather Vane"
 }

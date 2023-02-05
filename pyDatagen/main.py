@@ -57,6 +57,7 @@ def generate(base_path: str):
         save(basic.parented_model(mod_id(f'block/weather_vane'), [('0', texture), ('particle', particle)]), asset(f'models/block/weather_vane/{material}'))
         save(basic.generated_model(mod_id(f'item/weather_vane/{material}')), asset(f'models/item/{material}_weather_vane'))
         save(drop.single_item(mod_id(f'{material}_weather_vane')), data(f'loot_tables/blocks/{material}_weather_vane'))
+        save(basic.from_file('recipes/iron_weather_vane').replace('iron', material), data(f'recipes/{material}_weather_vane'))
 
     for m in ['gold', 'copper', 'iron', 'netherite']:
         weather_vane(m)

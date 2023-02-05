@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "iii",
+    " C "
+  ],
+  "key": {
+    "#": { "item": "minecraft:arrow" },
+    "i": { "item": "minecraft:iron_ingot" },
+    "C": { "item": "minecraft:compass" }
+  },
+  "result": { "item": "convenientdecor:iron_weather_vane", "count": 1 }
+}
