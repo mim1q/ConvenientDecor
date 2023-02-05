@@ -34,6 +34,7 @@ public class ModItemGroups {
       stacks.addAll(ModItems.RAIN_HAT.getItemStackList());
       stacks.addAll(ModItems.RAINCOAT.getItemStackList());
       stacks.addAll(ModItems.RAIN_BOOTS.getItemStackList());
+      stacks.add(ModBlocks.WEATHER_VANE.asItem().getDefaultStack());
     })
     .build();
   public static void init() { }
