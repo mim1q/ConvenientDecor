@@ -2,6 +2,7 @@ package com.github.mim1q.convenientdecor.client.render.blockentity;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
@@ -33,7 +34,12 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
       VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
       matrices.scale(1.0F, -1.0F, -1.0F);
       matrices.translate(0.5F, -1.125F, -0.5F);
-      renderTop(matrices, vertices, light);
+      matrices.push();
+      {
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(entity.getYaw(MinecraftClient.getInstance().getTickDelta())));
+        renderTop(matrices, vertices, light);
+      }
+      matrices.pop();
       matrices.translate(0.0F, 0.75F, 0.0F);
       renderLetters(matrices, vertexConsumers, 0x3b2822, light, new String[]{"W", "E", "N", "S"});
       matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
