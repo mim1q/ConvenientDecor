@@ -1,7 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "convenientdecor:block/weather_vane/copper"
+		"0": "convenientdecor:block/weather_vane/copper",
+		"particle": "minecraft:block/copper_block"
 	},
 	"elements": [
 		{

@@ -35,35 +35,30 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
       matrices.translate(0.5F, -1.125F, -0.5F);
       renderTop(matrices, vertices, light);
       matrices.translate(0.0F, 0.75F, 0.0F);
-      renderText(matrices, vertexConsumers, 0xFFFFFF, light, new String[]{"W", "E", "N", "S"});
-      matrices.push();
-      {
-        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
-        renderText(matrices, vertexConsumers, 0xFFFFFF, light, new String[]{"E", "W", "S", "N"});
-      }
-      matrices.pop();
+      renderLetters(matrices, vertexConsumers, 0x3b2822, light, new String[]{"W", "E", "N", "S"});
+      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
+      renderLetters(matrices, vertexConsumers, 0x3b2822, light, new String[]{"E", "W", "S", "N"});
     }
     matrices.pop();
   }
 
-  protected void renderText(MatrixStack matrices, VertexConsumerProvider consumers, int color, int light, String[] text) {
+  protected void renderLetters(MatrixStack matrices, VertexConsumerProvider consumers, int color, int light, String[] text) {
     matrices.push();
-    {
-      matrices.scale(0.01F, 0.01F, 0.01F);
-      matrices.translate(-3.0F, 0.0F, -0.05F);
-      textRenderer.draw(matrices, Text.literal(text[0]).formatted(Formatting.BOLD), -50.0F, 0.0F, color);
-      textRenderer.draw(matrices, Text.literal(text[1]).formatted(Formatting.BOLD), 50.0F, 0.0F, color);
-      matrices.translate(3.0F, 0.0F, 0.05F);
-      matrices.push();
-      {
-        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
-        matrices.translate(-3.0F, 0.0F, -0.05F);
-        textRenderer.draw(matrices, Text.literal(text[2]).formatted(Formatting.BOLD), -50.0F, 0.0F, color);
-        textRenderer.draw(matrices, Text.literal(text[3]).formatted(Formatting.BOLD), 50.0F, 0.0F, color);
-      }
-      matrices.pop();
-    }
+    Matrix4f posM = matrices.peek().getPositionMatrix();
+    matrices.scale(0.01F, 0.01F, 0.01F);
+    matrices.translate(-3.0F, 0.0F, -0.05F);
+    renderLetter(text[0], -50.0F, color, light, posM, consumers);
+    renderLetter(text[1], 50.0F, color, light, posM, consumers);
+    matrices.translate(3.0F, 0.0F, 0.05F);
+    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
+    matrices.translate(-3.0F, 0.0F, -0.05F);
+    renderLetter(text[2], -50.0F, color, light, posM, consumers);
+    renderLetter(text[3], 50.0F, color, light, posM, consumers);
     matrices.pop();
+  }
+
+  protected void renderLetter(String letter, float x, int color, int light, Matrix4f matrix, VertexConsumerProvider vertexConsumerProvider) {
+    textRenderer.draw(Text.literal(letter).formatted(Formatting.BOLD), x, -0.5F, color, false, matrix, vertexConsumerProvider, false, 0x000000, light);
   }
 
   protected void renderTop(MatrixStack matrices, VertexConsumer vertices, int light) {
