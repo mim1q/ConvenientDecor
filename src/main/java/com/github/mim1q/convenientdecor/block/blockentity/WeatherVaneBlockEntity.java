@@ -1,8 +1,10 @@
 package com.github.mim1q.convenientdecor.block.blockentity;
 
+import com.github.mim1q.convenientdecor.block.WeatherVaneBlock;
 import com.github.mim1q.convenientdecor.init.ModBlockEntities;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
@@ -13,18 +15,21 @@ public class WeatherVaneBlockEntity extends BlockEntity {
 
   private float multiplier = 1.0F;
   private float lastYaw = 0.0F;
-  private float yaw = 0.0F;
+  private float yaw = Random.create().nextFloat() * 360.0F;
   private float acceleration = 0.0F;
   private float maxVelocity = 0.0F;
   private float velocity = 0.0F;
 
-
   public WeatherVaneBlockEntity(BlockPos pos, BlockState state) {
     super(ModBlockEntities.WEATHER_VANE, pos, state);
-    yaw = Random.create().nextFloat() * 360.0F;
   }
 
   public void tick(World world, BlockPos pos, BlockState state) {
+    if (!world.isClient && world.getTime() % 40 == 0) {
+      updateMultiplier((ServerWorld) world);
+      markDirty();
+      return;
+    }
     Random rng = world.getRandom();
     if (world.getTime() % 20 == 0 && rng.nextFloat() < 0.25F * multiplier) {
       maxVelocity = rng.nextFloat() * BASE_MAX_VELOCITY * multiplier;
@@ -42,7 +47,17 @@ public class WeatherVaneBlockEntity extends BlockEntity {
     velocity *= 0.95F;
   }
 
+  public void updateMultiplier(ServerWorld world) {
+    multiplier = 1.0F + WeatherVaneBlock.getWeatherChangePrediction(world) * 9.0F;
+    world.updateNeighbors(this.getPos(), this.getCachedState().getBlock());
+    world.updateNeighbors(this.getPos().down(), this.getCachedState().getBlock());
+  }
+
   public float getYaw(float tickDelta) {
     return lastYaw + tickDelta * (yaw - lastYaw);
+  }
+
+  public float getMultiplier() {
+    return multiplier;
   }
 }
