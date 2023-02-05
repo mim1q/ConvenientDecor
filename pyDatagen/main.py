@@ -50,6 +50,8 @@ def generate(base_path: str):
 
     colors.foreach(raincoat)
 
+    save(basic.single_blockstate(mod_id('block/weather_vane')), asset('blockstates/weather_vane'))
+
 
 def generate_textures(output_path: str):
     def path(file: str):

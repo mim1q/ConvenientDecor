@@ -4,6 +4,7 @@ import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaBlockEntity;
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaStandBlockEntity;
 import com.github.mim1q.convenientdecor.block.blockentity.WateringCanBlockEntity;
+import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -23,6 +24,10 @@ public class ModBlockEntities {
 
   public static final BlockEntityType<UmbrellaStandBlockEntity> UMBRELLA_STAND = register("umbrella_stand",
     FabricBlockEntityTypeBuilder.create(UmbrellaStandBlockEntity::new, ModBlocks.UMBRELLA_STAND).build()
+  );
+
+  public static final BlockEntityType<WeatherVaneBlockEntity> WEATHER_VANE = register("weather_vane",
+    FabricBlockEntityTypeBuilder.create(WeatherVaneBlockEntity::new, ModBlocks.WEATHER_VANE).build()
   );
 
   public static void init() { }
