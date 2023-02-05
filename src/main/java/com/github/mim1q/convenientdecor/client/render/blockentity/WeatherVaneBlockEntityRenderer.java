@@ -2,26 +2,67 @@ package com.github.mim1q.convenientdecor.client.render.blockentity;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix3f;
 import net.minecraft.util.math.Matrix4f;
+import net.minecraft.util.math.Vec3f;
 
 public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<WeatherVaneBlockEntity> {
   public static final Identifier TEXTURE = ConvenientDecor.id("textures/block/weather_vane/copper.png");
 
+  private final TextRenderer textRenderer;
+
+  public WeatherVaneBlockEntityRenderer(BlockEntityRendererFactory.Context context) {
+    this.textRenderer = context.getTextRenderer();
+  }
+
   @Override
   public void render(WeatherVaneBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
     matrices.push();
-    VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
-    matrices.scale(1.0F, -1.0F, -1.0F);
-    matrices.translate(0.5F, -1.125F, -0.5F);
-    renderTop(matrices, vertices, light);
+    {
+      VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getEntityCutout(TEXTURE));
+      matrices.scale(1.0F, -1.0F, -1.0F);
+      matrices.translate(0.5F, -1.125F, -0.5F);
+      renderTop(matrices, vertices, light);
+      matrices.translate(0.0F, 0.75F, 0.0F);
+      renderText(matrices, vertexConsumers, 0xFFFFFF, light, new String[]{"W", "E", "N", "S"});
+      matrices.push();
+      {
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
+        renderText(matrices, vertexConsumers, 0xFFFFFF, light, new String[]{"E", "W", "S", "N"});
+      }
+      matrices.pop();
+    }
+    matrices.pop();
+  }
+
+  protected void renderText(MatrixStack matrices, VertexConsumerProvider consumers, int color, int light, String[] text) {
+    matrices.push();
+    {
+      matrices.scale(0.01F, 0.01F, 0.01F);
+      matrices.translate(-3.0F, 0.0F, -0.05F);
+      textRenderer.draw(matrices, Text.literal(text[0]).formatted(Formatting.BOLD), -50.0F, 0.0F, color);
+      textRenderer.draw(matrices, Text.literal(text[1]).formatted(Formatting.BOLD), 50.0F, 0.0F, color);
+      matrices.translate(3.0F, 0.0F, 0.05F);
+      matrices.push();
+      {
+        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
+        matrices.translate(-3.0F, 0.0F, -0.05F);
+        textRenderer.draw(matrices, Text.literal(text[2]).formatted(Formatting.BOLD), -50.0F, 0.0F, color);
+        textRenderer.draw(matrices, Text.literal(text[3]).formatted(Formatting.BOLD), 50.0F, 0.0F, color);
+      }
+      matrices.pop();
+    }
     matrices.pop();
   }
 

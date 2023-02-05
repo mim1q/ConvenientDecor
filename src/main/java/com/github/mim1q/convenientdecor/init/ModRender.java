@@ -26,7 +26,7 @@ public class ModRender {
   public static void initBlocks() {
     BlockEntityRendererRegistry.register(ModBlockEntities.UMBRELLA, UmbrellaBlockEntityRenderer::new);
     BlockEntityRendererRegistry.register(ModBlockEntities.UMBRELLA_STAND, UmbrellaStandBlockEntityRenderer::new);
-    BlockEntityRendererRegistry.register(ModBlockEntities.WEATHER_VANE, (ctx) -> new WeatherVaneBlockEntityRenderer());
+    BlockEntityRendererRegistry.register(ModBlockEntities.WEATHER_VANE, WeatherVaneBlockEntityRenderer::new);
 
     BlockRenderLayerMap.INSTANCE.putBlocks(
       RenderLayer.getCutout(),
