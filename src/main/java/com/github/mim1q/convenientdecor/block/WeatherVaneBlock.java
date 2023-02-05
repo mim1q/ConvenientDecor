@@ -25,8 +25,9 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
 
   public static int getWeatherPredictionStrength(ServerWorld world) {
     ServerWorldProperties properties = (ServerWorldProperties) world.getLevelProperties();
-    if (world.isThundering()) return getStrengthFromRemainingTime(properties.getThunderTime());
-    if (world.isRaining()) return getStrengthFromRemainingTime(properties.getRainTime());
+    if (world.isRaining() || properties.getClearWeatherTime() == 0) {
+      return getStrengthFromRemainingTime(properties.getRainTime());
+    }
     return getStrengthFromRemainingTime(properties.getClearWeatherTime());
   }
 

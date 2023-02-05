@@ -2,12 +2,18 @@ package com.github.mim1q.convenientdecor.block.blockentity;
 
 import com.github.mim1q.convenientdecor.block.WeatherVaneBlock;
 import com.github.mim1q.convenientdecor.init.ModBlockEntities;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class WeatherVaneBlockEntity extends BlockEntity {
   private static final float BASE_MAX_VELOCITY = 0.5F;
@@ -49,6 +55,7 @@ public class WeatherVaneBlockEntity extends BlockEntity {
 
   public void updateMultiplier(ServerWorld world, BlockState state) {
     multiplier = 1.0F + WeatherVaneBlock.getWeatherPredictionStrength(world);
+    world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_LISTENERS);
     world.updateNeighbors(this.getPos(), this.getCachedState().getBlock());
     world.updateNeighbors(this.getPos().down(), this.getCachedState().getBlock());
   }
@@ -59,5 +66,28 @@ public class WeatherVaneBlockEntity extends BlockEntity {
 
   public float getMultiplier() {
     return multiplier;
+  }
+
+  @Override
+  public void readNbt(NbtCompound nbt) {
+    super.readNbt(nbt);
+    multiplier = nbt.getFloat("multiplier");
+  }
+
+  @Override
+  protected void writeNbt(NbtCompound nbt) {
+    super.writeNbt(nbt);
+    nbt.putFloat("multiplier", multiplier);
+  }
+
+  @Nullable
+  @Override
+  public Packet<ClientPlayPacketListener> toUpdatePacket() {
+    return BlockEntityUpdateS2CPacket.create(this);
+  }
+
+  @Override
+  public NbtCompound toInitialChunkDataNbt() {
+    return createNbt();
   }
 }
