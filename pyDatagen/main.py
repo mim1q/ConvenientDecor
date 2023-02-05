@@ -46,7 +46,9 @@ def generate(base_path: str):
         save(basic.generated_model(mod_id(f'item/rain_boots/{color}')), asset(f'models/item/{color}_rain_boots'))
         save(basic.generated_model(mod_id(f'item/rain_hat/{color}')), asset(f'models/item/{color}_rain_hat'))
         save(basic.from_file('models/item/black_raincoat').replace('black', color), asset(f'models/item/{color}_raincoat'))
-        save(basic.from_file('recipes/black_raincoat').replace('black', color), data(f'recipes/{color}_raincoat'))
+        save(recipe.combine_two('minecraft:leather_chestplate', f'minecraft:{color}_wool', mod_id(f'{color}_raincoat')), data(f'recipes/{color}_raincoat'))
+        save(recipe.combine_two('minecraft:leather_boots', f'minecraft:{color}_wool', mod_id(f'{color}_rain_boots')), data(f'recipes/{color}_rain_boots'))
+        save(recipe.combine_two('minecraft:leather_helmet', f'minecraft:{color}_wool', mod_id(f'{color}_rain_hat')), data(f'recipes/{color}_rain_hat'))
 
     colors.foreach(raincoat)
 
