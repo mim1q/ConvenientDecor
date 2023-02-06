@@ -6,8 +6,15 @@
 
 ## This mod introduces new decorative blocks, some of which also serve a convenient function!
 
-- Monsters can't walk through the Haystacks and Leaf Piles, but Players can!
-- The Watering Can can be filled with water and optionally enchanted with Infinity in an Anvil. Then, you can use it to permanently hydrate Farmland!
-- Recipes available through REI
+- 16 stylish lightning-attracting Umbrellas
+- Watering Can to keep your farmland permanently hydrated
+- Piles of Leaves and Hay that monsters can't walk through
+- Weather Vanes that predict when the weather will change
+- Decorative Shovels and Pitchforks
+- and more!
+
+## [Click here to see all of Convenient Decor's Features!](https://github.com/mim1q/ConvenientDecor/wiki)
+
+![Screenshot](https://raw.githubusercontent.com/mim1q/ConvenientDecor/master/projectPage/images/rainy_update.jpg)
 
 ![Screenshot](https://raw.githubusercontent.com/mim1q/ConvenientDecor/master/projectPage/images/screenshot.jpg)
