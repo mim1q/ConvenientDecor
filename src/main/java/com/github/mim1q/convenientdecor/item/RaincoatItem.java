@@ -1,6 +1,6 @@
 package com.github.mim1q.convenientdecor.item;
 
-import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.item.material.ModArmorMaterials;
 import com.github.mim1q.convenientdecor.network.c2s.SwitchHoodC2SPacket;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
@@ -29,7 +29,7 @@ public class RaincoatItem extends ArmorItem implements ColoredItem {
   public final DyeColor color;
 
   public RaincoatItem(DyeColor color) {
-    super(ModItems.CUSTOM_CLOTHES_ARMOR_MATERIAL, EquipmentSlot.CHEST, new FabricItemSettings().maxCount(1));
+    super(ModArmorMaterials.RAINCOAT, EquipmentSlot.CHEST, new FabricItemSettings().maxCount(1));
     this.color = color;
   }
 

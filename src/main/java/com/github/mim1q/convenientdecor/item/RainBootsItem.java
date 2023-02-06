@@ -1,6 +1,6 @@
 package com.github.mim1q.convenientdecor.item;
 
-import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.item.material.ModArmorMaterials;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -15,7 +15,7 @@ public class RainBootsItem extends ArmorItem implements ColoredItem {
   private final DyeColor color;
 
   public RainBootsItem(Settings settings, DyeColor color) {
-    super(ModItems.CUSTOM_CLOTHES_ARMOR_MATERIAL, EquipmentSlot.FEET, settings);
+    super(ModArmorMaterials.RAINCOAT, EquipmentSlot.FEET, settings);
     this.color = color;
   }
 
