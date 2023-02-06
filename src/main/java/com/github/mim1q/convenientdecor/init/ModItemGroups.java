@@ -29,17 +29,15 @@ public class ModItemGroups {
       stacks.addAll(ModBlocks.UMBRELLA.getItemStackList());
       stacks.addAll(List.of(
         ModBlocks.BROKEN_UMBRELLA.asItem().getDefaultStack(),
-        ModBlocks.UMBRELLA_STAND.asItem().getDefaultStack()
-      ));
-      stacks.addAll(ModItems.RAIN_HAT.getItemStackList());
-      stacks.addAll(ModItems.RAINCOAT.getItemStackList());
-      stacks.addAll(ModItems.RAIN_BOOTS.getItemStackList());
-      stacks.addAll(List.of(
+        ModBlocks.UMBRELLA_STAND.asItem().getDefaultStack(),
         ModBlocks.GOLD_WEATHER_VANE.asItem().getDefaultStack(),
         ModBlocks.COPPER_WEATHER_VANE.asItem().getDefaultStack(),
         ModBlocks.IRON_WEATHER_VANE.asItem().getDefaultStack(),
         ModBlocks.NETHERITE_WEATHER_VANE.asItem().getDefaultStack()
       ));
+      stacks.addAll(ModItems.RAIN_HAT.getItemStackList());
+      stacks.addAll(ModItems.RAINCOAT.getItemStackList());
+      stacks.addAll(ModItems.RAIN_BOOTS.getItemStackList());
     })
     .build();
   public static void init() { }
