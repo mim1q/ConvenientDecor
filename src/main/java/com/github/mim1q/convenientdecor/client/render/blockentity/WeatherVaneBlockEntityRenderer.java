@@ -53,15 +53,15 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
   protected void renderTop(MatrixStack matrices, VertexConsumer vertices, int light) {
     Matrix4f posM = matrices.peek().getPositionMatrix();
     Matrix3f normM = matrices.peek().getNormalMatrix();
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, -7.5F, 1.0F, 0.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, 7.5F, 16.0F, 0.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,7.5F, 16.0F, 12.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,-7.5F, 1.0F, 12.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 0.0F, -8.0F, 0.0F, 0.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 0.0F, 8.0F, 16.0F, 0.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 12.0F,8.0F, 16.0F, 12.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 12.0F,-8.0F, 0.0F, 12.0F, 255);
 
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,-7.5F, 1.0F, 12.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,7.5F, 16.0F, 12.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, 7.5F, 16.0F, 0.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, -7.5F, 1.0F, 0.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 12.0F,-8.0F, 0.0F, 12.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 12.0F,8.0F, 16.0F, 12.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 0.0F, 8.0F, 16.0F, 0.0F, 255);
+    vertex(posM, normM, vertices, light, 0.0F, 0.0F, -8.0F, 0.0F, 0.0F, 255);
   }
 
   protected void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertices, int light, float x, float y, float z, float u, float v, int alpha) {
