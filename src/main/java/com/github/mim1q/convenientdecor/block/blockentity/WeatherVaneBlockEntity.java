@@ -2,24 +2,19 @@ package com.github.mim1q.convenientdecor.block.blockentity;
 
 import com.github.mim1q.convenientdecor.block.WeatherVaneBlock;
 import com.github.mim1q.convenientdecor.init.ModBlockEntities;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.Packet;
-import net.minecraft.network.listener.ClientPlayPacketListener;
-import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.ServerWorldProperties;
 
 public class WeatherVaneBlockEntity extends BlockEntity {
   private static final float BASE_MAX_VELOCITY = 0.5F;
   private static final float BASE_ACCELERATION = 0.35F;
 
-  private float multiplier = 1.0F;
   private float lastYaw = 0.0F;
   private float yaw = Random.create().nextFloat() * 360.0F;
   private float acceleration = 0.0F;
@@ -31,8 +26,9 @@ public class WeatherVaneBlockEntity extends BlockEntity {
   }
 
   public void tick(World world, BlockPos pos, BlockState state) {
+    int multiplier = state.get(WeatherVaneBlock.POWER) + 1;
     if (!world.isClient && world.getTime() % 20 == 0) {
-      updateMultiplier((ServerWorld) world, state);
+      updatePower((ServerWorld) world, state);
       markDirty();
       return;
     }
@@ -53,43 +49,42 @@ public class WeatherVaneBlockEntity extends BlockEntity {
     velocity *= 0.95F;
   }
 
-  public void updateMultiplier(ServerWorld world, BlockState state) {
-    multiplier = 1.0F + (state.get(WeatherVaneBlock.FORECAST_MODE)
-      ? WeatherVaneBlock.getWeatherPredictionStrength(world, ((WeatherVaneBlock) state.getBlock()).timeUnit)
-      : WeatherVaneBlock.getStrengthFromWeather(world));
-    world.updateListeners(this.getPos(), this.getCachedState(), this.getCachedState(), Block.NOTIFY_LISTENERS);
-    world.updateNeighbors(this.getPos(), this.getCachedState().getBlock());
-    world.updateNeighbors(this.getPos().down(), this.getCachedState().getBlock());
+  public void updatePower(ServerWorld world, BlockState state) {
+    int power = (state.get(WeatherVaneBlock.FORECAST_MODE)
+      ? getWeatherPredictionStrength(world, ((WeatherVaneBlock) state.getBlock()).timeUnit)
+      : getStrengthFromWeather(world));
+    int lastPower = state.get(WeatherVaneBlock.POWER);
+    world.setBlockState(this.getPos(), state.with(WeatherVaneBlock.POWER, power));
+    if (power != lastPower) {
+      world.updateNeighbors(this.getPos(), this.getCachedState().getBlock());
+      world.updateNeighbors(this.getPos().down(), this.getCachedState().getBlock());
+    }
+  }
+
+  public static int getWeatherPredictionStrength(ServerWorld world, int timeUnit) {
+    ServerWorldProperties properties = (ServerWorldProperties) world.getLevelProperties();
+    if (world.isRaining() || properties.getClearWeatherTime() == 0) {
+      return getStrengthFromRemainingTime(properties.getRainTime(), timeUnit);
+    }
+    return getStrengthFromRemainingTime(properties.getClearWeatherTime(), timeUnit);
+  }
+
+  public static int getStrengthFromRemainingTime(float remainingTime, int timeUnit) {
+    int timeUnits = (int) (remainingTime / timeUnit) + 1;
+    return MathHelper.clamp(16 - timeUnits, 0, 15);
+  }
+
+  public static int getStrengthFromWeather(ServerWorld world) {
+    if (world.isThundering()) {
+      return 15;
+    }
+    if (world.isRaining()) {
+      return 7;
+    }
+    return 0;
   }
 
   public float getYaw(float tickDelta) {
     return lastYaw + tickDelta * (yaw - lastYaw);
-  }
-
-  public float getMultiplier() {
-    return multiplier;
-  }
-
-  @Override
-  public void readNbt(NbtCompound nbt) {
-    super.readNbt(nbt);
-    multiplier = nbt.getFloat("multiplier");
-  }
-
-  @Override
-  protected void writeNbt(NbtCompound nbt) {
-    super.writeNbt(nbt);
-    nbt.putFloat("multiplier", multiplier);
-  }
-
-  @Nullable
-  @Override
-  public Packet<ClientPlayPacketListener> toUpdatePacket() {
-    return BlockEntityUpdateS2CPacket.create(this);
-  }
-
-  @Override
-  public NbtCompound toInitialChunkDataNbt() {
-    return createNbt();
   }
 }

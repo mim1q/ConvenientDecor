@@ -10,19 +10,18 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.IntProperty;
+import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.level.ServerWorldProperties;
 import org.jetbrains.annotations.Nullable;
 
 public class WeatherVaneBlock extends Block implements BlockEntityProvider {
@@ -31,16 +30,18 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
 
   public final int timeUnit;
   public static final BooleanProperty FORECAST_MODE = BooleanProperty.of("forecast_mode");
+  public static final IntProperty POWER = Properties.POWER;
 
   public WeatherVaneBlock(int timeUnit) {
     super(FabricBlockSettings.of(Material.METAL).breakInstantly().noCollision().nonOpaque());
     this.timeUnit = timeUnit;
-    this.setDefaultState(getDefaultState().with(FORECAST_MODE, false));
+    this.setDefaultState(getDefaultState().with(FORECAST_MODE, false).with(POWER, 0));
   }
 
   @Override
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
     builder.add(FORECAST_MODE);
+    builder.add(POWER);
   }
 
   @Override
@@ -54,29 +55,6 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
     return ActionResult.SUCCESS;
   }
 
-  public static int getWeatherPredictionStrength(ServerWorld world, int timeUnit) {
-    ServerWorldProperties properties = (ServerWorldProperties) world.getLevelProperties();
-    if (world.isRaining() || properties.getClearWeatherTime() == 0) {
-      return getStrengthFromRemainingTime(properties.getRainTime(), timeUnit);
-    }
-    return getStrengthFromRemainingTime(properties.getClearWeatherTime(), timeUnit);
-  }
-
-  public static int getStrengthFromRemainingTime(float remainingTime, int timeUnit) {
-    int timeUnits = (int) (remainingTime / timeUnit) + 1;
-    return MathHelper.clamp(16 - timeUnits, 0, 15);
-  }
-
-  public static int getStrengthFromWeather(ServerWorld world) {
-    if (world.isThundering()) {
-      return 15;
-    }
-    if (world.isRaining()) {
-      return 7;
-    }
-    return 0;
-  }
-
   @Override
   @SuppressWarnings("deprecation")
   public boolean emitsRedstonePower(BlockState state) {
@@ -86,11 +64,7 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
   @Override
   @SuppressWarnings("deprecation")
   public int getWeakRedstonePower(BlockState state, BlockView world, BlockPos pos, Direction direction) {
-    WeatherVaneBlockEntity entity = (WeatherVaneBlockEntity) world.getBlockEntity(pos);
-    if (entity == null) {
-      return 0;
-    }
-    return (int) (entity.getMultiplier() - 1);
+    return state.get(POWER);
   }
 
   @Override
