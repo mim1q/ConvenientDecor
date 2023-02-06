@@ -3,9 +3,10 @@ package com.github.mim1q.convenientdecor.client.render.blockentity;
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity;
 import com.github.mim1q.convenientdecor.init.ModBlocks;
+import com.github.mim1q.convenientdecor.init.ModEntityModelLayers;
 import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.OverlayTexture;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -13,17 +14,19 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 
 public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<WeatherVaneBlockEntity> {
-  public static final Identifier TEXTURE_GOLD = ConvenientDecor.id("textures/block/weather_vane/gold.png");
-  public static final Identifier TEXTURE_COPPER = ConvenientDecor.id("textures/block/weather_vane/copper.png");
-  public static final Identifier TEXTURE_IRON = ConvenientDecor.id("textures/block/weather_vane/iron.png");
-  public static final Identifier TEXTURE_NETHERITE = ConvenientDecor.id("textures/block/weather_vane/netherite.png");
+  public static final Identifier TEXTURE_GOLD = ConvenientDecor.id("textures/block/weather_vane/gold_top.png");
+  public static final Identifier TEXTURE_COPPER = ConvenientDecor.id("textures/block/weather_vane/copper_top.png");
+  public static final Identifier TEXTURE_IRON = ConvenientDecor.id("textures/block/weather_vane/iron_top.png");
+  public static final Identifier TEXTURE_NETHERITE = ConvenientDecor.id("textures/block/weather_vane/netherite_top.png");
 
-  public WeatherVaneBlockEntityRenderer(BlockEntityRendererFactory.Context context) { }
+  private final WeatherVaneModel model;
+
+  public WeatherVaneBlockEntityRenderer(BlockEntityRendererFactory.Context context) {
+    model = new WeatherVaneModel(context.getLayerModelPart(ModEntityModelLayers.WEATHER_VANE));
+  }
 
   @Override
   public void render(WeatherVaneBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
@@ -35,7 +38,8 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
       matrices.push();
       {
         matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(entity.getYaw(MinecraftClient.getInstance().getTickDelta())));
-        renderTop(matrices, vertices, light);
+        matrices.translate(0.0F, -0.8125F, 0.0F);
+        model.render(matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
       }
       matrices.pop();
       matrices.translate(0.0F, 0.75F, 0.0F);
@@ -50,27 +54,24 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
     return TEXTURE_NETHERITE;
   }
 
-  protected void renderTop(MatrixStack matrices, VertexConsumer vertices, int light) {
-    Matrix4f posM = matrices.peek().getPositionMatrix();
-    Matrix3f normM = matrices.peek().getNormalMatrix();
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, -8.0F, 0.0F, 0.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, 8.0F, 16.0F, 0.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,8.0F, 16.0F, 12.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,-8.0F, 0.0F, 12.0F, 255);
+  public static class WeatherVaneModel extends Model {
+    private final ModelPart root;
 
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,-8.0F, 0.0F, 12.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 12.0F,8.0F, 16.0F, 12.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, 8.0F, 16.0F, 0.0F, 255);
-    vertex(posM, normM, vertices, light, 0.0F, 0.0F, -8.0F, 0.0F, 0.0F, 255);
-  }
+    public WeatherVaneModel(ModelPart root) {
+      super(RenderLayer::getEntityCutout);
+      this.root = root;
+    }
 
-  protected void vertex(Matrix4f positionMatrix, Matrix3f normalMatrix, VertexConsumer vertices, int light, float x, float y, float z, float u, float v, int alpha) {
-    vertices.vertex(positionMatrix, x / 16.0F, y / 16.0F, z / 16.0F)
-      .color(255, 255, 255, alpha)
-      .texture(u / 16.0F, v / 16.0F)
-      .overlay(OverlayTexture.DEFAULT_UV)
-      .light(light)
-      .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
-      .next();
+    public static TexturedModelData getTexturedModelData() {
+      ModelData modelData = new ModelData();
+      ModelPartData modelPartData = modelData.getRoot();
+     modelPartData.addChild("main", ModelPartBuilder.create().uv(0, -16).mirrored().cuboid(0.0F, -12.0F, -8.0F, 0.0F, 12.0F, 16.0F, new Dilation(0.0F)).mirrored(false), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+      return TexturedModelData.of(modelData, 32, 16);
+    }
+
+    @Override
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+      this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+    }
   }
 }
