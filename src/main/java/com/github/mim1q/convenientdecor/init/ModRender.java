@@ -99,5 +99,6 @@ public class ModRender {
       BuiltinItemRendererRegistry.INSTANCE.register(item, umbrellaItemRenderer);
     }
     BuiltinItemRendererRegistry.INSTANCE.register(ModItems.BROKEN_UMBRELLA, umbrellaItemRenderer);
+    BuiltinItemRendererRegistry.INSTANCE.register(ModItems.ALLERTS_UMBRELLA, umbrellaItemRenderer);
   }
 }

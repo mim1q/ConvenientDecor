@@ -2,22 +2,20 @@ package com.github.mim1q.convenientdecor.client.render.umbrella;
 
 import com.github.mim1q.convenientdecor.block.UmbrellaStandBlock;
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaStandBlockEntity;
-import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaRenderer.UmbrellaRenderHelper;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 
 public class UmbrellaStandBlockEntityRenderer implements BlockEntityRenderer<UmbrellaStandBlockEntity> {
-  private final UmbrellaRenderer umbrellaRenderer;
+  private final UmbrellaRenderHelper umbrellaRenderers;
 
   public UmbrellaStandBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-    EntityModelLoader loader = ctx.getLayerRenderDispatcher();
-    umbrellaRenderer = new UmbrellaRenderer(loader);
+    umbrellaRenderers = new UmbrellaRenderHelper(ctx.getLayerRenderDispatcher());
   }
 
   @Override
@@ -34,13 +32,12 @@ public class UmbrellaStandBlockEntityRenderer implements BlockEntityRenderer<Umb
       matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(200.0F));
       matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
 
-      umbrellaRenderer.render(
+      umbrellaRenderers.getRenderer(stack).render(
         matrices,
         vertexConsumers,
         light,
         overlay,
         umbrella.color,
-        stack.isOf(ModItems.BROKEN_UMBRELLA),
         true
       );
       matrices.pop();

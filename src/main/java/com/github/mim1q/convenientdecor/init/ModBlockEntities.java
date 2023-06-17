@@ -19,7 +19,7 @@ public class ModBlockEntities {
   );
 
   public static final BlockEntityType<UmbrellaBlockEntity> UMBRELLA = register("umbrella",
-    createBuilder(UmbrellaBlockEntity::new, ModBlocks.UMBRELLA.getList(), ModBlocks.BROKEN_UMBRELLA).build()
+    createBuilder(UmbrellaBlockEntity::new, ModBlocks.UMBRELLA.getList(), ModBlocks.BROKEN_UMBRELLA, ModBlocks.ALLERTS_UMBRELLA).build()
   );
 
   public static final BlockEntityType<UmbrellaStandBlockEntity> UMBRELLA_STAND = register("umbrella_stand",

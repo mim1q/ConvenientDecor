@@ -1,6 +1,6 @@
 package com.github.mim1q.convenientdecor.client.render.umbrella;
 
-import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaRenderer.UmbrellaRenderHelper;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.DynamicItemRenderer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -11,18 +11,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3f;
 
 public class UmbrellaItemRenderer implements DynamicItemRenderer {
+  private final UmbrellaRenderHelper umbrellaRenderers;
 
-  private final UmbrellaRenderer umbrellaRenderer;
 
   public UmbrellaItemRenderer(EntityModelLoader loader) {
-    this.umbrellaRenderer = new UmbrellaRenderer(loader);
+    umbrellaRenderers = new UmbrellaRenderHelper(loader);
   }
 
   @Override
   public void render(ItemStack stack, Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
     UmbrellaItem item = (UmbrellaItem) stack.getItem();
     boolean folded = UmbrellaItem.isFolded(stack);
-    boolean broken = item == ModItems.BROKEN_UMBRELLA;
     if (mode == Mode.GUI) {
       float scale = folded ? 0.66F : 0.5F;
       matrices.scale(scale, scale, scale);
@@ -61,6 +60,6 @@ public class UmbrellaItemRenderer implements DynamicItemRenderer {
       matrices.translate(0.1F, 0.15F, 1.0F);
       matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
     }
-    umbrellaRenderer.render(matrices, vertexConsumers, light, overlay, item.color, broken, folded);
+    umbrellaRenderers.getRenderer(stack).render(matrices, vertexConsumers, light, overlay, item.color, folded);
   }
 }

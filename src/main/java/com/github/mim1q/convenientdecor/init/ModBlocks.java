@@ -34,6 +34,7 @@ public class ModBlocks {
     .register("umbrella");
 
   public static final UmbrellaBlock BROKEN_UMBRELLA = register(new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK),"broken_umbrella");
+  public static final UmbrellaBlock ALLERTS_UMBRELLA = register(new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK),"allerts_umbrella");
   public static final UmbrellaStandBlock UMBRELLA_STAND = registerWithSimpleItem(new UmbrellaStandBlock(FabricBlockSettings.of(Material.METAL).breakInstantly()), "umbrella_stand");
   public static final WeatherVaneBlock GOLD_WEATHER_VANE = registerWithSimpleItem(new WeatherVaneBlock(40), "gold_weather_vane");
   public static final WeatherVaneBlock COPPER_WEATHER_VANE = registerWithSimpleItem(new WeatherVaneBlock(100), "copper_weather_vane");

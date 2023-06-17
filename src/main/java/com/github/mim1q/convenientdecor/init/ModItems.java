@@ -22,6 +22,7 @@ public class ModItems {
     .register("umbrella");
 
   public static final UmbrellaItem BROKEN_UMBRELLA = register(new UmbrellaItem(ModBlocks.BROKEN_UMBRELLA, DyeColor.BLACK), "broken_umbrella");
+  public static final UmbrellaItem ALLERTS_UMBRELLA = register(new UmbrellaItem(ModBlocks.ALLERTS_UMBRELLA, DyeColor.RED), "allerts_umbrella");
 
   public static final ColoredItemGroup RAINCOAT = ColoredGroup.ofItems()
     .add16Colors(color -> new RaincoatItem(color))

@@ -2,22 +2,19 @@ package com.github.mim1q.convenientdecor.client.render.umbrella;
 
 import com.github.mim1q.convenientdecor.block.UmbrellaBlock;
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaBlockEntity;
-import com.github.mim1q.convenientdecor.init.ModBlocks;
+import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaRenderer.UmbrellaRenderHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
-import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3f;
 
 public class UmbrellaBlockEntityRenderer implements BlockEntityRenderer<UmbrellaBlockEntity> {
-
-  private final UmbrellaRenderer umbrellaRenderer;
+  private final UmbrellaRenderHelper umbrellaRenderers;
 
   public UmbrellaBlockEntityRenderer(BlockEntityRendererFactory.Context ctx) {
-    EntityModelLoader loader = ctx.getLayerRenderDispatcher();
-    umbrellaRenderer = new UmbrellaRenderer(loader);
+    umbrellaRenderers = new UmbrellaRenderHelper(ctx.getLayerRenderDispatcher());
   }
 
   @Override
@@ -43,7 +40,7 @@ public class UmbrellaBlockEntityRenderer implements BlockEntityRenderer<Umbrella
       matrices.translate(0.25F, folded ? -0.6F : -0.5F, 0.0F);
       matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(30.0F));
     }
-    umbrellaRenderer.render(matrices, vertexConsumers, light, overlay, block.color, block == ModBlocks.BROKEN_UMBRELLA, folded);
+    umbrellaRenderers.getRenderer(state).render(matrices, vertexConsumers, light, overlay, block.color, folded);
     matrices.pop();
   }
 }
