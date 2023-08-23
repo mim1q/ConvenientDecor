@@ -15,6 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -26,6 +27,7 @@ public abstract class FarmlandBlockMixin extends Block {
     super(settings);
   }
 
+  @Unique
   private boolean isUnhydratable() {
     return !this.getDefaultState().getProperties().contains(CustomProperties.HYDRATED);
   }
@@ -53,6 +55,7 @@ public abstract class FarmlandBlockMixin extends Block {
   private void getPlacementState(ItemPlacementContext ctx, CallbackInfoReturnable<BlockState> cir) {
     if (isUnhydratable()) return;
     BlockState state = cir.getReturnValue();
+    if (!state.isOf(this)) return;
     boolean hydrated = false;
     PlayerEntity player = ctx.getPlayer();
     if (player != null) {
