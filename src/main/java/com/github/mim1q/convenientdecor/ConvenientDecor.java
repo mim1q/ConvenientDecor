@@ -7,9 +7,12 @@ import com.github.mim1q.convenientdecor.init.ModItems;
 import com.github.mim1q.convenientdecor.network.ModServerPacketHandler;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ConvenientDecor implements ModInitializer {
   public static final String MOD_ID = "convenientdecor";
+  public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
   @Override
   public void onInitialize() {
