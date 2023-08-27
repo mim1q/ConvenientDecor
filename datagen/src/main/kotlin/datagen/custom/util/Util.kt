@@ -6,7 +6,6 @@ import tada.lib.resources.blockstate.BlockStateModel.Rotation
 import tada.lib.resources.blockstate.VariantBlockState
 import tada.lib.resources.model.ParentedModel
 import tada.lib.util.json
-import tada.lib.util.jsonArray
 
 val HORIZONTAL_DIRECTIONS = listOf(
   "north" to Rotation.NONE,

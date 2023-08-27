@@ -7,13 +7,12 @@ import tada.lib.presets.Preset
 import tada.lib.presets.common.CommonDropPresets
 import tada.lib.presets.common.CommonModelPresets
 import tada.lib.resources.blockstate.BlockState
+import tada.lib.resources.blockstate.BlockStateModel
+import tada.lib.resources.blockstate.BlockStateModel.Rotation
 import tada.lib.resources.model.ParentedModel
 import tada.lib.resources.recipe.CraftingRecipe
 import tada.lib.tags.TagManager
 import tada.lib.util.Id
-import tada.lib.util.json
-import tada.lib.util.jsonArray
-import java.net.ProxySelector
 
 object CustomPresets {
   fun shovel(id: String, color: MinecraftColor? = null) = Preset {
@@ -113,7 +112,15 @@ object CustomPresets {
       texture("1", baseTexture)
       texture("particle", baseTexture)
     })
-    add(name, BlockState.createSingle("$ns:block/$name"))
+    add(name, BlockState.create {
+      variant(
+        "",
+        BlockStateModel("$ns:block/$name", yRot = Rotation.NONE),
+        BlockStateModel("$ns:block/$name", yRot = Rotation.CW_90),
+        BlockStateModel("$ns:block/$name", yRot = Rotation.CW_180),
+        BlockStateModel("$ns:block/$name", yRot = Rotation.CW_270)
+      )
+    })
     add(CommonModelPresets.itemBlockModel(id))
   }
 }

@@ -46,6 +46,12 @@ fun main(args: Array<String>) {
     listOf("yellow", "orange", "red", "brown").forEach {
       add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/oak_leaves", "convenientdecor:block/leaf_pile/oak", true))
     }
+    listOf("spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove").forEach {
+      add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", true))
+    }
+    listOf("azalea", "flowering_azalea").forEach {
+      add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", false))
+    }
 
     add(customRecipes())
   }

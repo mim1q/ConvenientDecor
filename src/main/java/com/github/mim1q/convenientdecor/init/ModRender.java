@@ -15,6 +15,7 @@ import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -36,7 +37,15 @@ public class ModRender {
       ModBlocks.YELLOW_LEAF_PILE,
       ModBlocks.ORANGE_LEAF_PILE,
       ModBlocks.RED_LEAF_PILE,
-      ModBlocks.BROWN_LEAF_PILE
+      ModBlocks.BROWN_LEAF_PILE,
+      ModBlocks.SPRUCE_LEAF_PILE,
+      ModBlocks.BIRCH_LEAF_PILE,
+      ModBlocks.JUNGLE_LEAF_PILE,
+      ModBlocks.ACACIA_LEAF_PILE,
+      ModBlocks.DARK_OAK_LEAF_PILE,
+      ModBlocks.MANGROVE_LEAF_PILE,
+      ModBlocks.AZALEA_LEAF_PILE,
+      ModBlocks.FLOWERING_AZALEA_LEAF_PILE
     );
     for (Block block : ModBlocks.PLASTIC_SHOVEL.getList()) {
       BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), block);
@@ -49,8 +58,14 @@ public class ModRender {
       ModBlocks.YELLOW_LEAF_PILE,
       ModBlocks.ORANGE_LEAF_PILE,
       ModBlocks.RED_LEAF_PILE,
-      ModBlocks.BROWN_LEAF_PILE
+      ModBlocks.BROWN_LEAF_PILE,
+      ModBlocks.JUNGLE_LEAF_PILE,
+      ModBlocks.ACACIA_LEAF_PILE,
+      ModBlocks.DARK_OAK_LEAF_PILE,
+      ModBlocks.MANGROVE_LEAF_PILE
     );
+    ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> FoliageColors.getSpruceColor(), ModBlocks.SPRUCE_LEAF_PILE);
+    ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> FoliageColors.getBirchColor(), ModBlocks.BIRCH_LEAF_PILE);
   }
 
   public static void initItems() {
@@ -61,8 +76,14 @@ public class ModRender {
       ModBlocks.YELLOW_LEAF_PILE,
       ModBlocks.ORANGE_LEAF_PILE,
       ModBlocks.RED_LEAF_PILE,
-      ModBlocks.BROWN_LEAF_PILE
+      ModBlocks.BROWN_LEAF_PILE,
+      ModBlocks.JUNGLE_LEAF_PILE,
+      ModBlocks.ACACIA_LEAF_PILE,
+      ModBlocks.DARK_OAK_LEAF_PILE,
+      ModBlocks.MANGROVE_LEAF_PILE
     );
+    ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getSpruceColor(), ModBlocks.SPRUCE_LEAF_PILE);
+    ColorProviderRegistry.ITEM.register((stack, tintIndex) -> FoliageColors.getBirchColor(), ModBlocks.BIRCH_LEAF_PILE);
 
     ModelPredicateProviderRegistry.register(
       ModItems.WATERING_CAN,

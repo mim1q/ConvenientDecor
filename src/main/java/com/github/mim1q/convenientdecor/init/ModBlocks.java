@@ -18,11 +18,20 @@ public class ModBlocks {
   public static final WateringCanBlock WATERING_CAN = register(new WateringCanBlock(FabricBlockSettings.of(Material.METAL).sounds(BlockSoundGroup.METAL)), "watering_can");
   public static final HayBlock UNBUNDLED_HAY_BLOCK = registerWithSimpleItem(new HayBlock(FabricBlockSettings.copy(net.minecraft.block.Blocks.HAY_BLOCK)), "unbundled_hay_block");
   public static final HaystackBlock HAYSTACK_BLOCK = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.copy(net.minecraft.block.Blocks.HAY_BLOCK)), "haystack_block");
-  public static final HaystackBlock LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "leaf_pile");
-  public static final HaystackBlock YELLOW_LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "yellow_leaf_pile");
-  public static final HaystackBlock ORANGE_LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "orange_leaf_pile");
-  public static final HaystackBlock RED_LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "red_leaf_pile");
-  public static final HaystackBlock BROWN_LEAF_PILE = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), "brown_leaf_pile");
+
+  public static final HaystackBlock LEAF_PILE = registerLeafPile("leaf_pile");
+  public static final HaystackBlock YELLOW_LEAF_PILE = registerLeafPile("yellow_leaf_pile");
+  public static final HaystackBlock ORANGE_LEAF_PILE = registerLeafPile("orange_leaf_pile");
+  public static final HaystackBlock RED_LEAF_PILE = registerLeafPile("red_leaf_pile");
+  public static final HaystackBlock BROWN_LEAF_PILE = registerLeafPile("brown_leaf_pile");
+  public static final HaystackBlock SPRUCE_LEAF_PILE = registerLeafPile("spruce_leaf_pile");
+  public static final HaystackBlock BIRCH_LEAF_PILE = registerLeafPile("birch_leaf_pile");
+  public static final HaystackBlock JUNGLE_LEAF_PILE = registerLeafPile("jungle_leaf_pile");
+  public static final HaystackBlock ACACIA_LEAF_PILE = registerLeafPile("acacia_leaf_pile");
+  public static final HaystackBlock DARK_OAK_LEAF_PILE = registerLeafPile("dark_oak_leaf_pile");
+  public static final HaystackBlock MANGROVE_LEAF_PILE = registerLeafPile("mangrove_leaf_pile");
+  public static final HaystackBlock AZALEA_LEAF_PILE = registerLeafPile("azalea_leaf_pile");
+  public static final HaystackBlock FLOWERING_AZALEA_LEAF_PILE = registerLeafPile("flowering_azalea_leaf_pile");
 
   public static final PitchforkBlock SHOVEL = registerWithSimpleItem(new PitchforkBlock(FabricBlockSettings.of(Material.METAL)), "shovel");
   public static final ColoredGroup.ColoredBlockGroup PLASTIC_SHOVEL = ColoredGroup.ofBlocks(true)
@@ -51,5 +60,9 @@ public class ModBlocks {
   public static <T extends Block> T register(T block, String name) {
     Registry.register(Registry.BLOCK, ConvenientDecor.id(name), block);
     return block;
+  }
+
+  private static HaystackBlock registerLeafPile(String name) {
+    return registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.of(Material.LEAVES).strength(0.2F).sounds(BlockSoundGroup.GRASS)), name);
   }
 }
