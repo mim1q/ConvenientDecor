@@ -45,6 +45,10 @@ tasks {
       options.release.set(17)
     }
   }
+  register("runDatagenScript") {
+    group = "fabric"
+    dependsOn("datagen:run")
+  }
 }
 
 // Data generation using Python script
@@ -60,7 +64,7 @@ tasks.register<Exec>("runPythonDatagen") {
 sourceSets {
   main {
     resources {
-      srcDirs("src/main/pyGenerated")
+      srcDirs("src/main/pyGenerated", "src/main/generated")
     }
   }
 }
