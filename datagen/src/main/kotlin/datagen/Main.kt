@@ -11,6 +11,7 @@ import tada.lib.generator.ResourceGenerator
 import tada.lib.presets.common.CommonDropPresets
 import tada.lib.presets.common.CommonModelPresets
 import tada.lib.resources.blockstate.BlockState
+import tada.lib.resources.recipe.CraftingRecipe
 import java.nio.file.Path
 
 fun main(args: Array<String>) {
@@ -41,16 +42,20 @@ fun main(args: Array<String>) {
       add(weatherVane("convenientdecor", material))
     }
 
-    add(leafPile("convenientdecor:leaf_pile", "minecraft:block/oak_leaves", "convenientdecor:block/leaf_pile/oak", true))
-    add(leafPile("convenientdecor:haystack_block", "convenientdecor:block/unbundled_hay_block_top", "convenientdecor:block/hay_stack", false))
+    add(leafPile("convenientdecor:leaf_pile", "minecraft:block/oak_leaves", "convenientdecor:block/leaf_pile/oak", true, "minecraft:oak_leaves"))
+    add(leafPile("convenientdecor:haystack_block", "convenientdecor:block/unbundled_hay_block_top", "convenientdecor:block/hay_stack", false, "convenientdecor:unbundled_hay_block"))
     listOf("yellow", "orange", "red", "brown").forEach {
       add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/oak_leaves", "convenientdecor:block/leaf_pile/oak", true))
+      add("${it}_leaf_pile", CraftingRecipe.shapeless("convenientdecor:${it}_leaf_pile") {
+        ingredient("convenientdecor:leaf_pile")
+        ingredient("minecraft:${it}_dye")
+      })
     }
     listOf("spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove").forEach {
-      add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", true))
+      add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", true, "minecraft:${it}_leaves"))
     }
     listOf("azalea", "flowering_azalea").forEach {
-      add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", false))
+      add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", false, "minecraft:${it}_leaves"))
     }
 
     add(customRecipes())

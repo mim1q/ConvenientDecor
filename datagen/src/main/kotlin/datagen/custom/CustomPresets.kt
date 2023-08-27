@@ -104,7 +104,7 @@ object CustomPresets {
     })
   }
 
-  fun leafPile(id: String, baseTexture: String, fluffTexture: String, tinted: Boolean = false) = Preset {
+  fun leafPile(id: String, baseTexture: String, fluffTexture: String, tinted: Boolean = false, baseBlock: String? = null) = Preset {
     val (ns, name) = Id(id)
 
     add(name, ParentedModel.block("convenientdecor:block/template/${if (tinted) "leaf_pile_tinted" else "leaf_pile"}") {
@@ -122,6 +122,14 @@ object CustomPresets {
       )
     })
     add(CommonModelPresets.itemBlockModel(id))
+
+    if (baseBlock != null) {
+      add(name, CraftingRecipe.shaped(id) {
+        pattern("L")
+        pattern("L")
+        key("L", baseBlock)
+      })
+    }
   }
 }
 
