@@ -58,7 +58,7 @@ object CustomPresets {
       })
     }
     if (functional) {
-      TagManager.add("convenientdecor:item/functional_umbrellas")
+      TagManager.add("convenientdecor:items/functional_umbrellas", id)
     }
   }
 
@@ -81,8 +81,8 @@ object CustomPresets {
       })
     }
 
-    TagManager.add("convenientdecor:item/raincoats", "$ns:${color}_raincoat")
-    TagManager.add("convenientdecor:item/rain_hats", "$ns:${color}_rain_hat")
+    TagManager.add("convenientdecor:items/raincoats", "$ns:${color}_raincoat")
+    TagManager.add("convenientdecor:items/rain_hats", "$ns:${color}_rain_hat")
   }
 
   fun weatherVane(ns: String, material: String) = Preset {

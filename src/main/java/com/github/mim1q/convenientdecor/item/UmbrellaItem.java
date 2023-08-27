@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 public class UmbrellaItem extends BlockItem {
   public final DyeColor color;
 
-  public UmbrellaItem(UmbrellaBlock block, DyeColor color) {
-    super(block, new FabricItemSettings().maxCount(1));
+  public UmbrellaItem(FabricItemSettings settings, UmbrellaBlock block, DyeColor color) {
+    super(block, settings);
     this.color = color;
   }
 

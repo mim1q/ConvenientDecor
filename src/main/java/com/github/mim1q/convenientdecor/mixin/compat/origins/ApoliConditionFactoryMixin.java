@@ -1,12 +1,11 @@
 package com.github.mim1q.convenientdecor.mixin.compat.origins;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
-import com.github.mim1q.convenientdecor.init.ModItems;
+import com.github.mim1q.convenientdecor.item.ModItemTags;
 import com.github.mim1q.convenientdecor.item.RaincoatItem;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.DyeColor;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.*;
@@ -17,8 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Set;
 import java.util.function.BiFunction;
-
-// TODO: Implement item tags for umbrellas and such!
 
 @SuppressWarnings("rawtypes")
 @Pseudo
@@ -73,15 +70,15 @@ public class ApoliConditionFactoryMixin<T> {
   @Unique
   private static boolean holdingUmbrellaInHand(LivingEntity entity, Hand hand) {
     var stack = entity.getStackInHand(hand);
-    return stack.isOf(ModItems.UMBRELLA.get(DyeColor.BLACK))
+    return stack.isIn(ModItemTags.UMBRELLAS)
       && !UmbrellaItem.isFolded(stack);
   }
 
   @Unique
   private static boolean hasRainClothesOrUmbrella(LivingEntity entity) {
-    var hasRainHat = entity.getEquippedStack(EquipmentSlot.HEAD).isOf(ModItems.RAIN_HAT.get(DyeColor.YELLOW));
+    var hasRainHat = entity.getEquippedStack(EquipmentSlot.HEAD).isIn(ModItemTags.RAIN_HATS);
     var rainCoat = entity.getEquippedStack(EquipmentSlot.CHEST);
-    var hasRainCoatWithHood = rainCoat.isOf(ModItems.RAINCOAT.get(DyeColor.YELLOW)) && RaincoatItem.isHooded(rainCoat);
+    var hasRainCoatWithHood = rainCoat.isIn(ModItemTags.RAINCOATS) && RaincoatItem.isHooded(rainCoat);
     return holdingUmbrella(entity) || hasRainHat || hasRainCoatWithHood;
   }
 }

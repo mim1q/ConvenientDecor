@@ -9,6 +9,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 public class ModItems {
@@ -18,11 +19,11 @@ public class ModItems {
   );
 
   public static final ColoredItemGroup UMBRELLA = ColoredGroup.ofItems()
-    .add16Colors(color -> new UmbrellaItem((UmbrellaBlock) ModBlocks.UMBRELLA.get(color), color))
+    .add16Colors(color -> new UmbrellaItem(new FabricItemSettings().maxCount(1), (UmbrellaBlock) ModBlocks.UMBRELLA.get(color), color))
     .register("umbrella");
 
-  public static final UmbrellaItem BROKEN_UMBRELLA = register(new UmbrellaItem(ModBlocks.BROKEN_UMBRELLA, DyeColor.BLACK), "broken_umbrella");
-  public static final UmbrellaItem ALLERTS_UMBRELLA = register(new UmbrellaItem(ModBlocks.ALLERTS_UMBRELLA, DyeColor.RED), "allerts_umbrella");
+  public static final UmbrellaItem BROKEN_UMBRELLA = register(new UmbrellaItem(new FabricItemSettings().maxCount(1), ModBlocks.BROKEN_UMBRELLA, DyeColor.BLACK), "broken_umbrella");
+  public static final UmbrellaItem ALLERTS_UMBRELLA = register(new UmbrellaItem(new FabricItemSettings().maxCount(1).rarity(Rarity.EPIC), ModBlocks.ALLERTS_UMBRELLA, DyeColor.RED), "allerts_umbrella");
 
   public static final ColoredItemGroup RAINCOAT = ColoredGroup.ofItems()
     .add16Colors(color -> new RaincoatItem(color))
