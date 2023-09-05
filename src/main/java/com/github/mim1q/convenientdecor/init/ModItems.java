@@ -8,9 +8,10 @@ import com.github.mim1q.convenientdecor.item.*;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Rarity;
-import net.minecraft.util.registry.Registry;
 
 public class ModItems {
   public static final WateringCanItem WATERING_CAN = register(
@@ -40,7 +41,7 @@ public class ModItems {
   public static void init() { }
 
   public static <T extends Item> T register(T item, String name) {
-    Registry.register(Registry.ITEM, ConvenientDecor.id(name), item);
+    Registry.register(Registries.ITEM, ConvenientDecor.id(name), item);
     return item;
   }
 }

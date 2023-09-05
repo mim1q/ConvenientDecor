@@ -11,13 +11,13 @@ import com.github.mim1q.convenientdecor.item.RaincoatItem;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderer;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.client.item.ModelPredicateProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.item.Item;
 
@@ -25,9 +25,9 @@ public class ModRender {
   public static void init() { }
 
   public static void initBlocks() {
-    BlockEntityRendererRegistry.register(ModBlockEntities.UMBRELLA, UmbrellaBlockEntityRenderer::new);
-    BlockEntityRendererRegistry.register(ModBlockEntities.UMBRELLA_STAND, UmbrellaStandBlockEntityRenderer::new);
-    BlockEntityRendererRegistry.register(ModBlockEntities.WEATHER_VANE, WeatherVaneBlockEntityRenderer::new);
+    BlockEntityRendererFactories.register(ModBlockEntities.UMBRELLA, UmbrellaBlockEntityRenderer::new);
+    BlockEntityRendererFactories.register(ModBlockEntities.UMBRELLA_STAND, UmbrellaStandBlockEntityRenderer::new);
+    BlockEntityRendererFactories.register(ModBlockEntities.WEATHER_VANE, WeatherVaneBlockEntityRenderer::new);
 
     BlockRenderLayerMap.INSTANCE.putBlocks(
       RenderLayer.getCutout(),

@@ -15,10 +15,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -106,7 +106,7 @@ public class WateringCanItem extends Item {
     if (!world.canPlace(newState, pos, ShapeContext.absent())) {
       return TypedActionResult.fail(stack);
     }
-    if (state.getMaterial().isReplaceable()) {
+    if (state.isReplaceable()) {
       world.setBlockState(pos, newState);
       world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_METAL_PLACE, SoundCategory.BLOCKS, (BlockSoundGroup.METAL.getVolume() + 1.0F) / 2.0F, BlockSoundGroup.METAL.getPitch() * 0.8F, true);
       world.emitGameEvent(GameEvent.BLOCK_PLACE, pos, GameEvent.Emitter.of(user, newState));

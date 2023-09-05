@@ -1,15 +1,15 @@
 package com.github.mim1q.convenientdecor.init.group;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
-import com.github.mim1q.convenientdecor.init.ModItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.HashMap;
 import java.util.List;
@@ -89,9 +89,9 @@ public abstract class ColoredGroup<T, U extends ColoredGroup<T, U>> {
 
     @Override
     protected void registerSingle(Identifier id, Block entry) {
-      Registry.register(Registry.BLOCK, id, entry);
+      Registry.register(Registries.BLOCK, id, entry);
       if (withBlockItem) {
-        Registry.register(Registry.ITEM, id, new BlockItem(entry, new FabricItemSettings().group(ModItemGroups.CONVENIENT_DECOR)));
+        Registry.register(Registries.ITEM, id, new BlockItem(entry, new FabricItemSettings()));
       }
     }
 
@@ -103,7 +103,7 @@ public abstract class ColoredGroup<T, U extends ColoredGroup<T, U>> {
   public static class ColoredItemGroup extends ColoredGroup<Item, ColoredItemGroup> {
     @Override
     protected void registerSingle(Identifier id, Item entry) {
-      Registry.register(Registry.ITEM, id, entry);
+      Registry.register(Registries.ITEM, id, entry);
     }
 
     public List<ItemStack> getItemStackList() {

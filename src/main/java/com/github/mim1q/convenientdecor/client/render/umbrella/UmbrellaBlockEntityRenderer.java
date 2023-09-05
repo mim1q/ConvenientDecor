@@ -8,7 +8,8 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.MathHelper;
+import org.joml.Quaternionf;
 
 public class UmbrellaBlockEntityRenderer implements BlockEntityRenderer<UmbrellaBlockEntity> {
   private final UmbrellaRenderHelper umbrellaRenderers;
@@ -30,15 +31,15 @@ public class UmbrellaBlockEntityRenderer implements BlockEntityRenderer<Umbrella
     }
     matrices.push();
     matrices.translate(0.5F, 0.05F, 0.5F);
-    matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-rotation + 90.0F));
+    matrices.multiply(new Quaternionf().rotateY(MathHelper.RADIANS_PER_DEGREE * (-rotation + 90.0F)));
     if (leaning) {
-      matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(folded ? 30.0F : 10.0F));
+      matrices.multiply(new Quaternionf().rotateZ(MathHelper.RADIANS_PER_DEGREE * (folded ? 30.0F : 10.0F)));
       matrices.translate(folded ? 0.3F : 0.65F, folded ? -0.3F : -0.2F, 0.0F);
-      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90.0F));
+      matrices.multiply(new Quaternionf().rotateY(MathHelper.RADIANS_PER_DEGREE * (90.0F)));
     } else {
-      matrices.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(folded ? 100.0F : 55.0F));
+      matrices.multiply(new Quaternionf().rotateZ(MathHelper.RADIANS_PER_DEGREE * (folded ? 100.0F : 55.0F)));
       matrices.translate(0.25F, folded ? -0.6F : -0.5F, 0.0F);
-      matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(30.0F));
+      matrices.multiply(new Quaternionf().rotateY(MathHelper.RADIANS_PER_DEGREE * (30.0F)));
     }
     umbrellaRenderers.getRenderer(state).render(matrices, vertexConsumers, light, overlay, block.color, folded);
     matrices.pop();

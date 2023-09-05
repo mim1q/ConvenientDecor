@@ -1,6 +1,8 @@
 package com.github.mim1q.convenientdecor.item.material;
 
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorItem.Type;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
@@ -10,7 +12,7 @@ import net.minecraft.sound.SoundEvents;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterials implements ArmorMaterial {
-  RAINCOAT("convenientdecor_raincoat", 10, new int[]{1, 2, 3, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> Ingredient.ofItems(Items.WHITE_WOOL));
+  RAINCOAT("convenientdecor_raincoat", 10, new int[]{1, 3, 2, 1}, 15, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 0.0F, 0.0F, () -> Ingredient.ofItems(Items.WHITE_WOOL));
 
   private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
   private final String name;
@@ -33,12 +35,14 @@ public enum ModArmorMaterials implements ArmorMaterial {
     this.repairIngredientSupplier = repairIngredientSupplier;
   }
 
-  public int getDurability(EquipmentSlot slot) {
-    return BASE_DURABILITY[slot.getEntitySlotId()] * this.durabilityMultiplier;
+  @Override
+  public int getDurability(Type type) {
+    return BASE_DURABILITY[type.ordinal()] * this.durabilityMultiplier;
   }
 
-  public int getProtectionAmount(EquipmentSlot slot) {
-    return this.protectionAmounts[slot.getEntitySlotId()];
+  @Override
+  public int getProtection(Type type) {
+    return this.protectionAmounts[type.ordinal()];
   }
 
   public int getEnchantability() {

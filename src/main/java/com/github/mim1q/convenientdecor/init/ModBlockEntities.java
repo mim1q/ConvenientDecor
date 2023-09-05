@@ -9,7 +9,8 @@ import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityT
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ModBlockEntities {
   public static void init() { }
 
   public static <T extends BlockEntity> BlockEntityType<T> register(String name, BlockEntityType<T> type) {
-    return Registry.register(Registry.BLOCK_ENTITY_TYPE, ConvenientDecor.id(name), type);
+    return Registry.register(Registries.BLOCK_ENTITY_TYPE, ConvenientDecor.id(name), type);
   }
 
   public static <T extends BlockEntity> FabricBlockEntityTypeBuilder<T> createBuilder(

@@ -10,10 +10,10 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
@@ -21,9 +21,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class WateringCanBlock extends Block implements BlockEntityProvider {
   public static final VoxelShape SHAPE = createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
@@ -57,7 +56,7 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
   @Override
   public BlockState getPlacementState(ItemPlacementContext ctx) {
     boolean filled = WateringCanItem.getWaterLevel(ctx.getStack()) > 0 || EnchantmentHelper.getLevel(Enchantments.INFINITY, ctx.getStack()) > 0;
-    return this.getDefaultState().with(FACING, ctx.getPlayerFacing()).with(FILLED, filled);
+    return this.getDefaultState().with(FACING, ctx.getHorizontalPlayerFacing()).with(FILLED, filled);
   }
 
   @Override
@@ -78,9 +77,15 @@ public class WateringCanBlock extends Block implements BlockEntityProvider {
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-    ItemStack stack = getStackFromBlockEntity(builder.getNullable(LootContextParameters.BLOCK_ENTITY));
-    return stack == null ? List.of() : List.of(stack);
+  public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+    super.afterBreak(world, player, pos, state, blockEntity, tool);
+
+    if (world.isClient) return;
+
+    ItemStack stack = getStackFromBlockEntity(blockEntity);
+    if (stack != null) {
+      var entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+      world.spawnEntity(entity);
+    }
   }
 }

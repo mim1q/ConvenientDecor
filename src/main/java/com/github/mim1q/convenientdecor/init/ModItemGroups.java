@@ -1,7 +1,5 @@
 package com.github.mim1q.convenientdecor.init;
 
-import com.github.mim1q.convenientdecor.ConvenientDecor;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -13,9 +11,9 @@ public class ModItemGroups {
     return item.asItem().getDefaultStack();
   }
 
-  public static final ItemGroup CONVENIENT_DECOR = FabricItemGroupBuilder.create(ConvenientDecor.id("convenient_decor"))
+  public static final ItemGroup CONVENIENT_DECOR = new ItemGroup.Builder(null, -1)
     .icon(() -> ModItems.WATERING_CAN.getStack(32))
-    .appendItems(stacks -> {
+    .entries((ctx, stacks) -> {
       stacks.addAll(List.of(
         stack(ModBlocks.PITCHFORK),
         stack(ModBlocks.SHOVEL)

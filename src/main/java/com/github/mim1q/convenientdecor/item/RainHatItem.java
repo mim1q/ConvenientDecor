@@ -9,7 +9,7 @@ public class RainHatItem extends ArmorItem implements ColoredItem {
   private final DyeColor color;
 
   public RainHatItem(Settings settings, DyeColor color) {
-    super(ModArmorMaterials.RAINCOAT, EquipmentSlot.HEAD, settings);
+    super(ModArmorMaterials.RAINCOAT, Type.HELMET, settings);
     this.color = color;
   }
 

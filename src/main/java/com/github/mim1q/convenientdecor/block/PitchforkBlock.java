@@ -22,9 +22,7 @@ public class PitchforkBlock extends Block {
   public static final VoxelShape SHAPE = createCuboidShape(4, 0, 4, 12, 8, 12);
 
   public PitchforkBlock(Settings settings) {
-    super(settings.nonOpaque().offsetType(
-      (state) -> state.get(TYPE) == Type.TILTED ? OffsetType.NONE : OffsetType.XZ
-    ));
+    super(settings);
     this.setDefaultState(this.getDefaultState().with(TYPE, Type.LYING));
   }
 
@@ -44,7 +42,7 @@ public class PitchforkBlock extends Block {
     if (ctx.getPlayerLookDirection() == Direction.DOWN) {
       type = Type.STRAIGHT;
     }
-    return getDefaultState().with(TYPE, type).with(FACING, ctx.getPlayerFacing());
+    return getDefaultState().with(TYPE, type).with(FACING, ctx.getHorizontalPlayerFacing());
   }
 
   @Override

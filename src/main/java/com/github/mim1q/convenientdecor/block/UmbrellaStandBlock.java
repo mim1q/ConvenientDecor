@@ -7,10 +7,9 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
@@ -25,8 +24,6 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class UmbrellaStandBlock extends Block implements BlockEntityProvider {
   public static final VoxelShape SHAPE = createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
@@ -76,14 +73,16 @@ public class UmbrellaStandBlock extends Block implements BlockEntityProvider {
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-    List<ItemStack> stacks = super.getDroppedStacks(state, builder);
-    BlockEntity entity = builder.get(LootContextParameters.BLOCK_ENTITY);
-    if (entity instanceof UmbrellaStandBlockEntity umbrella && umbrella.hasStack()) {
-      stacks.add(umbrella.getStack());
+  public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+    super.afterBreak(world, player, pos, state, blockEntity, tool);
+
+    if (world.isClient) return;
+
+    if (blockEntity instanceof UmbrellaStandBlockEntity umbrella && umbrella.hasStack()) {
+      var stack = umbrella.getStack();
+      var entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+      world.spawnEntity(entity);
     }
-    return stacks;
   }
 
   @Override

@@ -7,9 +7,10 @@ import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -17,9 +18,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class UmbrellaBlock extends Block implements BlockEntityProvider {
   public static final IntProperty ROTATION = Properties.ROTATION;
@@ -61,10 +61,14 @@ public class UmbrellaBlock extends Block implements BlockEntityProvider {
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public List<ItemStack> getDroppedStacks(BlockState state, LootContext.Builder builder) {
-    ItemStack stack = this.asItem().getDefaultStack();
+  public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+    super.afterBreak(world, player, pos, state, blockEntity, tool);
+
+    if (world.isClient) return;
+
+    var stack = new ItemStack(this);
     UmbrellaItem.setFolded(stack, state.get(FOLDED));
-    return List.of(stack);
+    var entity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+    world.spawnEntity(entity);
   }
 }

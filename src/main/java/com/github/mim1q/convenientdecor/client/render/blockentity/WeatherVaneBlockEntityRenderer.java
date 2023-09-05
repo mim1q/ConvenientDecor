@@ -14,7 +14,8 @@ import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.MathHelper;
+import org.joml.Quaternionf;
 
 public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<WeatherVaneBlockEntity> {
   public static final Identifier TEXTURE_GOLD = ConvenientDecor.id("textures/block/weather_vane/gold_top.png");
@@ -37,7 +38,7 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
       matrices.translate(0.5F, -1.125F, -0.5F);
       matrices.push();
       {
-        matrices.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(entity.getYaw(MinecraftClient.getInstance().getTickDelta())));
+        matrices.multiply(new Quaternionf().rotationY(entity.getYaw(tickDelta) * MathHelper.RADIANS_PER_DEGREE));
         matrices.translate(0.0F, -0.8125F, 0.0F);
         model.render(matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
       }

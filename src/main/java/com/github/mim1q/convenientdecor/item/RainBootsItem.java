@@ -15,7 +15,7 @@ public class RainBootsItem extends ArmorItem implements ColoredItem {
   private final DyeColor color;
 
   public RainBootsItem(Settings settings, DyeColor color) {
-    super(ModArmorMaterials.RAINCOAT, EquipmentSlot.FEET, settings);
+    super(ModArmorMaterials.RAINCOAT, Type.BOOTS, settings);
     this.color = color;
   }
 

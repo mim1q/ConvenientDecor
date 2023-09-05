@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -32,8 +31,8 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
   public static final BooleanProperty FORECAST_MODE = BooleanProperty.of("forecast_mode");
   public static final IntProperty POWER = Properties.POWER;
 
-  public WeatherVaneBlock(int timeUnit) {
-    super(FabricBlockSettings.of(Material.METAL).breakInstantly().noCollision().nonOpaque());
+  public WeatherVaneBlock(int timeUnit, FabricBlockSettings settings) {
+    super(settings);
     this.timeUnit = timeUnit;
     this.setDefaultState(getDefaultState().with(FORECAST_MODE, false).with(POWER, 0));
   }

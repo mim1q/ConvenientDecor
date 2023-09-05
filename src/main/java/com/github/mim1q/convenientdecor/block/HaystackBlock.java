@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 
 public class HaystackBlock extends Block {
   public HaystackBlock(Settings settings) {
-    super(settings.offsetType(Block.OffsetType.XYZ).nonOpaque().dynamicBounds().noCollision());
+    super(settings);
   }
 
   @Override
-  public boolean isTranslucent(BlockState state, BlockView world, BlockPos pos) {
+  public boolean isTransparent(BlockState state, BlockView world, BlockPos pos) {
     return true;
   }
 

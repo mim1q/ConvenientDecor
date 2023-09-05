@@ -4,7 +4,6 @@ import com.github.mim1q.convenientdecor.item.material.ModArmorMaterials;
 import com.github.mim1q.convenientdecor.network.c2s.SwitchHoodC2SPacket;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ArmorItem;
@@ -29,15 +28,15 @@ public class RaincoatItem extends ArmorItem implements ColoredItem {
   public final DyeColor color;
 
   public RaincoatItem(DyeColor color) {
-    super(ModArmorMaterials.RAINCOAT, EquipmentSlot.CHEST, new FabricItemSettings().maxCount(1));
+    super(ModArmorMaterials.RAINCOAT, Type.CHESTPLATE, new FabricItemSettings().maxCount(1));
     this.color = color;
   }
 
   @Override
   public boolean onClicked(ItemStack stack, ItemStack otherStack, Slot slot, ClickType clickType, PlayerEntity player, StackReference cursorStackReference) {
     if (clickType == ClickType.RIGHT) {
-      if (player.world.isClient) {
-        player.world.playSound(player, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 1.0F, 1.0F);
+      if (player.getWorld().isClient) {
+        player.getWorld().playSound(player, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.PLAYERS, 1.0F, 1.0F);
         new SwitchHoodC2SPacket(slot).send();
       }
       return true;
