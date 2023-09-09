@@ -1,8 +1,13 @@
 package com.github.mim1q.convenientdecor.init;
 
+import com.github.mim1q.convenientdecor.ConvenientDecor;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 
 import java.util.List;
 
@@ -11,7 +16,8 @@ public class ModItemGroups {
     return item.asItem().getDefaultStack();
   }
 
-  public static final ItemGroup CONVENIENT_DECOR = new ItemGroup.Builder(null, -1)
+  public static final ItemGroup CONVENIENT_DECOR = register(FabricItemGroup.builder()
+    .displayName(Text.of("Convenient Decor"))
     .icon(() -> ModItems.WATERING_CAN.getStack(32))
     .entries((ctx, stacks) -> {
       stacks.addAll(List.of(
@@ -52,6 +58,13 @@ public class ModItemGroups {
       stacks.addAll(ModItems.RAINCOAT.getItemStackList());
       stacks.addAll(ModItems.RAIN_BOOTS.getItemStackList());
     })
-    .build();
+  );
+
   public static void init() { }
+
+  private static ItemGroup register (ItemGroup.Builder builder) {
+    var itemGroup = builder.build();
+    Registry.register(Registries.ITEM_GROUP, ConvenientDecor.id("convenient_decor"), itemGroup);
+    return itemGroup;
+  }
 }

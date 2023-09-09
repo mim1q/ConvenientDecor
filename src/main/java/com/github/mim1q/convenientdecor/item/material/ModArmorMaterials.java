@@ -1,7 +1,5 @@
 package com.github.mim1q.convenientdecor.item.material;
 
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorItem.Type;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Items;

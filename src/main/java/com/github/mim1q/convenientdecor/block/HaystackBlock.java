@@ -37,12 +37,12 @@ public class HaystackBlock extends Block {
 
   @Override
   public float getMaxHorizontalModelOffset() {
-    return 0.125f;
+    return 0.1f;
   }
 
   @Override
   public float getVerticalModelOffsetMultiplier() {
-    return 0.125f;
+    return 0.5f;
   }
 
   @Override

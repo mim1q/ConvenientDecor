@@ -6,7 +6,6 @@ import com.github.mim1q.convenientdecor.init.group.ColoredGroup;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.mixin.object.builder.AbstractBlockSettingsAccessor;
-import net.minecraft.block.AbstractBlock.Offsetter;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HayBlock;
@@ -15,6 +14,8 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 import java.util.Optional;
@@ -80,22 +81,40 @@ public class ModBlocks {
         .copyOf(Blocks.OAK_LEAVES)
         .strength(0.2F)
         .sounds(BlockSoundGroup.GRASS)
-        .noCollision()
-      )), name);
+        .noCollision(),
+        true
+      )
+    ), name);
   }
 
   @SuppressWarnings("UnstableApiUsage")
-  private static FabricBlockSettings noZOffset(FabricBlockSettings settings) {
-    ((AbstractBlockSettingsAccessor)settings).setOffsetter(Optional.of((state, world, pos) -> {
-      var x = pos.getX() % 3;
-      var y = pos.getY() % 3;
-      var z = pos.getZ() % 3;
-      return new Vec3d(
-        (z * 0.001) + (y * 0.0005) + 0.0005,
-        (x * 0.001) + (z * 0.0005) + 0.0005,
-        (y * 0.001) + (x * 0.0005) + 0.0005
-      );
-    }));
+  private static FabricBlockSettings noZOffset(FabricBlockSettings settings, boolean additionalOffset) {
+    if (additionalOffset) {
+      ((AbstractBlockSettingsAccessor) settings).setOffsetter(Optional.of((state, world, pos) -> {
+        var block = state.getBlock();
+        @SuppressWarnings("deprecation") var l = MathHelper.hashCode(pos);
+        var maxXzOffset = block.getMaxHorizontalModelOffset();
+        var maxYOffset = maxXzOffset * block.getVerticalModelOffsetMultiplier();
+        var x = MathHelper.clamp(((double)((float)(l & 15L) / 15.0F) - 0.5) * 0.5, -maxXzOffset, maxXzOffset);
+        var y =  MathHelper.clamp(((double)((float)(l >> 4 & 15L) / 15.0F) - 0.5) * 0.5, -maxYOffset, maxYOffset);
+        var z = MathHelper.clamp(((double)((float)(l >> 8 & 15L) / 15.0F) - 0.5) * 0.5, -maxXzOffset, maxXzOffset);
+        var baseOffset = new Vec3d(x, y, z);
+        return baseOffset.add(getZFightingOffset(pos));
+      }));
+    } else {
+      ((AbstractBlockSettingsAccessor) settings).setOffsetter(Optional.of((state, world, pos) -> getZFightingOffset(pos)));
+    }
     return settings;
+  }
+
+  private static Vec3d getZFightingOffset(BlockPos pos) {
+    var x = pos.getX() % 3;
+    var y = pos.getY() % 3;
+    var z = pos.getZ() % 3;
+    return new Vec3d(
+      (z * 0.001) + (y * 0.0005) + 0.0005,
+      (x * 0.001) + (z * 0.0005) + 0.0005,
+      (y * 0.001) + (x * 0.0005) + 0.0005
+    );
   }
 }

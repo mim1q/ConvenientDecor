@@ -1,7 +1,6 @@
 package com.github.mim1q.convenientdecor.item;
 
 import com.github.mim1q.convenientdecor.item.material.ModArmorMaterials;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.util.DyeColor;
 

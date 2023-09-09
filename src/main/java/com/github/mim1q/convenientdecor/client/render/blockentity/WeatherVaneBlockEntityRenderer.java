@@ -5,7 +5,6 @@ import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity
 import com.github.mim1q.convenientdecor.init.ModBlocks;
 import com.github.mim1q.convenientdecor.init.ModEntityModelLayers;
 import net.minecraft.block.Block;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
