@@ -42,7 +42,8 @@ public class ModItemGroups {
         stack(ModBlocks.DARK_OAK_LEAF_PILE),
         stack(ModBlocks.MANGROVE_LEAF_PILE),
         stack(ModBlocks.AZALEA_LEAF_PILE),
-        stack(ModBlocks.FLOWERING_AZALEA_LEAF_PILE)
+        stack(ModBlocks.FLOWERING_AZALEA_LEAF_PILE),
+        stack(ModBlocks.CHERRY_LEAF_PILE)
       ));
       stacks.addAll(ModBlocks.UMBRELLA.getItemStackList());
       stacks.addAll(List.of(

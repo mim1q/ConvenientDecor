@@ -45,7 +45,8 @@ public class ModRender {
       ModBlocks.DARK_OAK_LEAF_PILE,
       ModBlocks.MANGROVE_LEAF_PILE,
       ModBlocks.AZALEA_LEAF_PILE,
-      ModBlocks.FLOWERING_AZALEA_LEAF_PILE
+      ModBlocks.FLOWERING_AZALEA_LEAF_PILE,
+      ModBlocks.CHERRY_LEAF_PILE
     );
     for (Block block : ModBlocks.PLASTIC_SHOVEL.getList()) {
       BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), block);

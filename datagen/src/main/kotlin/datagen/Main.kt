@@ -51,7 +51,7 @@ fun main(args: Array<String>) {
         ingredient("minecraft:${it}_dye")
       })
     }
-    listOf("spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove").forEach {
+    listOf("spruce", "birch", "jungle", "acacia", "dark_oak", "mangrove", "cherry").forEach {
       add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", true, "minecraft:${it}_leaves"))
     }
     listOf("azalea", "flowering_azalea").forEach {

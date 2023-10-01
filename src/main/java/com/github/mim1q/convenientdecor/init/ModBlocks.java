@@ -45,6 +45,7 @@ public class ModBlocks {
   public static final HaystackBlock MANGROVE_LEAF_PILE = registerLeafPile("mangrove_leaf_pile");
   public static final HaystackBlock AZALEA_LEAF_PILE = registerLeafPile("azalea_leaf_pile");
   public static final HaystackBlock FLOWERING_AZALEA_LEAF_PILE = registerLeafPile("flowering_azalea_leaf_pile");
+  public static final HaystackBlock CHERRY_LEAF_PILE = registerLeafPile("cherry_leaf_pile");
 
   public static final PitchforkBlock SHOVEL = registerWithSimpleItem(new PitchforkBlock(metalSettings()), "shovel");
   public static final ColoredGroup.ColoredBlockGroup PLASTIC_SHOVEL = ColoredGroup.ofBlocks(true)
