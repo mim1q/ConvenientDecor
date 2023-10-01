@@ -112,6 +112,7 @@ object CustomPresets {
       texture("1", baseTexture)
       texture("particle", baseTexture)
     })
+    add(CommonDropPresets.simpleDrop(id))
     add(name, BlockState.create {
       variant(
         "",
@@ -122,6 +123,7 @@ object CustomPresets {
       )
     })
     add(CommonModelPresets.itemBlockModel(id))
+    TagManager.add("minecraft:blocks/mineable/hoe", id)
 
     if (baseBlock != null) {
       add(name, CraftingRecipe.shaped(id) {

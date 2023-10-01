@@ -30,7 +30,7 @@ public class ModBlocks {
   public static final PitchforkBlock PITCHFORK = registerWithSimpleItem(new PitchforkBlock(metalSettings().breakInstantly()), "pitchfork");
   public static final WateringCanBlock WATERING_CAN = register(new WateringCanBlock(metalSettings().breakInstantly()), "watering_can");
   public static final HayBlock UNBUNDLED_HAY_BLOCK = registerWithSimpleItem(new HayBlock(FabricBlockSettings.copy(Blocks.HAY_BLOCK)), "unbundled_hay_block");
-  public static final HaystackBlock HAYSTACK_BLOCK = registerWithSimpleItem(new HaystackBlock(FabricBlockSettings.copy(Blocks.HAY_BLOCK)), "haystack_block");
+  public static final HaystackBlock HAYSTACK_BLOCK = registerLeafPile("haystack_block");
 
   public static final HaystackBlock LEAF_PILE = registerLeafPile("leaf_pile");
   public static final HaystackBlock YELLOW_LEAF_PILE = registerLeafPile("yellow_leaf_pile");
