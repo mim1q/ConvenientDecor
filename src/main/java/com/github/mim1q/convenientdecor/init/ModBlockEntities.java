@@ -1,10 +1,7 @@
 package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
-import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaBlockEntity;
-import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaStandBlockEntity;
-import com.github.mim1q.convenientdecor.block.blockentity.WateringCanBlockEntity;
-import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity;
+import com.github.mim1q.convenientdecor.block.blockentity.*;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -34,6 +31,10 @@ public class ModBlockEntities {
       ModBlocks.IRON_WEATHER_VANE,
       ModBlocks.NETHERITE_WEATHER_VANE
     ).build()
+  );
+
+  public static final BlockEntityType<PlushieBlockEntity> PLUSHIE = register("plushie",
+    FabricBlockEntityTypeBuilder.create(PlushieBlockEntity::new, ModBlocks.SILLY_ALIEN_PLUSHIE, ModBlocks.GNOME_PLUSHIE).build()
   );
 
   public static void init() { }

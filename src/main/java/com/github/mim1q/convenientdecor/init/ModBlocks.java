@@ -64,6 +64,9 @@ public class ModBlocks {
   public static final WeatherVaneBlock IRON_WEATHER_VANE = registerWithSimpleItem(new WeatherVaneBlock(400, FabricBlockSettings.copyOf(GOLD_WEATHER_VANE)), "iron_weather_vane");
   public static final WeatherVaneBlock NETHERITE_WEATHER_VANE = registerWithSimpleItem(new WeatherVaneBlock(1200, FabricBlockSettings.copyOf(GOLD_WEATHER_VANE)), "netherite_weather_vane");
 
+  public static final PlushieBlock SILLY_ALIEN_PLUSHIE = registerWithSimpleItem(new PlushieBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).nonOpaque().noCollision(), ModSoundEvents.SILLY_ALIEN_PLUSHIE_SQUISH), "silly_alien_plushie");
+  public static final PlushieBlock GNOME_PLUSHIE = registerWithSimpleItem(new PlushieBlock(FabricBlockSettings.copyOf(SILLY_ALIEN_PLUSHIE), ModSoundEvents.GNOME_PLUSHIE_SQUISH), "gnome_plushie");
+
   public static void init() { }
 
   public static <T extends Block> T registerWithSimpleItem(T block, String name) {

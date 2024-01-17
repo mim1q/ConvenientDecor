@@ -2,6 +2,7 @@ package com.github.mim1q.convenientdecor.init;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.client.colors.FallLeavesColors;
+import com.github.mim1q.convenientdecor.client.render.blockentity.PlushieBlockEntityRenderer;
 import com.github.mim1q.convenientdecor.client.render.blockentity.WeatherVaneBlockEntityRenderer;
 import com.github.mim1q.convenientdecor.client.render.clothes.RaincoatRenderer;
 import com.github.mim1q.convenientdecor.client.render.umbrella.UmbrellaBlockEntityRenderer;
@@ -28,6 +29,7 @@ public class ModRender {
     BlockEntityRendererFactories.register(ModBlockEntities.UMBRELLA, UmbrellaBlockEntityRenderer::new);
     BlockEntityRendererFactories.register(ModBlockEntities.UMBRELLA_STAND, UmbrellaStandBlockEntityRenderer::new);
     BlockEntityRendererFactories.register(ModBlockEntities.WEATHER_VANE, WeatherVaneBlockEntityRenderer::new);
+    BlockEntityRendererFactories.register(ModBlockEntities.PLUSHIE, PlushieBlockEntityRenderer::new);
 
     BlockRenderLayerMap.INSTANCE.putBlocks(
       RenderLayer.getCutout(),

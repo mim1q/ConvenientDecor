@@ -1,0 +1,14 @@
+{
+  "silly_alien_plushie_squish": {
+    "sounds": [
+      {"name": "convenientdecor:plushies/silly_alien_0"},
+      {"name": "convenientdecor:plushies/silly_alien_1"}
+    ]
+  },
+  "gnome_plushie_squish": {
+    "sounds": [
+      {"name": "convenientdecor:plushies/gnome_0"},
+      {"name": "convenientdecor:plushies/gnome_1"}
+    ]
+  }
+}
