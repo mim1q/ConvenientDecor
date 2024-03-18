@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    "LL",
+    "LL"
+  ],
+  "key": {
+    "L": { "item": "minecraft:lime_wool"},
+    "E": { "item": "minecraft:ender_pearl" }
+  },
+  "result": {
+    "item": "convenientdecor:silly_alien_plushie",
+    "count": 1
+  }
+}

@@ -11,6 +11,7 @@ import tada.lib.generator.ResourceGenerator
 import tada.lib.presets.common.CommonDropPresets
 import tada.lib.presets.common.CommonModelPresets
 import tada.lib.resources.blockstate.BlockState
+import tada.lib.resources.model.ParentedModel
 import tada.lib.resources.recipe.CraftingRecipe
 import java.nio.file.Path
 
@@ -56,6 +57,11 @@ fun main(args: Array<String>) {
     }
     listOf("azalea", "flowering_azalea").forEach {
       add(leafPile("convenientdecor:${it}_leaf_pile", "minecraft:block/${it}_leaves", "convenientdecor:block/leaf_pile/$it", false, "minecraft:${it}_leaves"))
+    }
+
+    listOf("silly_alien", "gnome").forEach {
+      add("${it}_plushie", BlockState.createSingle("convenientdecor:block/plushie/${it}_plushie"))
+      add("${it}_plushie", ParentedModel.item("convenientdecor:block/plushie/${it}_plushie"))
     }
 
     add(customRecipes())

@@ -31,7 +31,7 @@ public class PlushieBlockEntity extends BlockEntity {
   }
 
   public void squish(World world, SoundEvent sound, long time) {
-    if (time - squishTime > 10L) {
+    if (time - squishTime > 5L) {
       world.playSound(null, pos, sound, SoundCategory.BLOCKS, 0.2F, 1.0F + world.random.nextFloat() * 0.1F);
       squishTime = time;
     }
