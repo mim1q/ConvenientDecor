@@ -19,7 +19,12 @@ public class ConvenientDecorConfig implements Config {
     }
 
     public static class Features {
-        @Comment(" Right-clicking a farmland block with a watering can will permanently hydrate it.")
+        @Comment(
+            " Right-clicking a farmland block with a watering can will permanently hydrate it.\n\n" +
+            " -- WARNING --\n" +
+            " This MUST be set the same on both the client and server, and changing it requires a full restart to take effect!\n" +
+            " Contact your server administrator if you are unsure, and preferably leave this as it was provided by default."
+        )
         public boolean wateringCanPermanentFarmland = true;
         @Comment(" Umbrella attracts lightning in the thunderstorm")
         public boolean umbrellaAttractsLightning = true;
