@@ -1,5 +1,6 @@
 package com.github.mim1q.convenientdecor.mixin.block;
 
+import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.CustomProperties;
 import com.github.mim1q.convenientdecor.init.ModItems;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
@@ -27,6 +28,8 @@ public abstract class HoeItemMixin extends MiningToolItem {
 
   @Inject(method = "createTillAction", at = @At("RETURN"), cancellable = true)
   private static void createTillAction(BlockState result, CallbackInfoReturnable<Consumer<ItemUsageContext>> cir) {
+    if (!ConvenientDecor.CONFIG.features.wateringCanPermanentFarmland) return;
+
     if (result.isOf(Blocks.FARMLAND)) {
       cir.setReturnValue((ctx) -> {
         boolean hydrated = false;

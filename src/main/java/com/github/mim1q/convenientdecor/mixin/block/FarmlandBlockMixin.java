@@ -1,5 +1,6 @@
 package com.github.mim1q.convenientdecor.mixin.block;
 
+import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.CustomProperties;
 import com.github.mim1q.convenientdecor.init.ModItems;
 import com.github.mim1q.convenientdecor.item.WateringCanItem;
@@ -40,6 +41,7 @@ public abstract class FarmlandBlockMixin extends Block {
 
   @Inject(method = "appendProperties", at = @At("HEAD"))
   private void appendProperties(StateManager.Builder<Block, BlockState> builder, CallbackInfo ci) {
+    if (!ConvenientDecor.CONFIG.features.wateringCanPermanentFarmland) return;
     builder.add(CustomProperties.HYDRATED);
   }
 

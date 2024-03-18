@@ -16,9 +16,9 @@ public class ConvenientDecorMixinPlugin implements IMixinConfigPlugin {
     }
 
     private static final Map<String, Supplier<Boolean>> CONDITIONS = ImmutableMap.ofEntries(
-        // Watering Can
-        mixin("block.FarmlandBlockMixin", () -> ConvenientDecor.CONFIG.features.wateringCanPermanentFarmland),
-        mixin("block.HoeItemMixin", () -> ConvenientDecor.CONFIG.features.wateringCanPermanentFarmland)
+        // WARNING FOR MY FUTURE SELF: The Main class shouldn't be referenced here, as it's not initialized yet.
+        // mixin("block.FarmlandBlockMixin", () -> ConvenientDecor.CONFIG.features.wateringCanPermanentFarmland),
+        // mixin("block.HoeItemMixin", () -> ConvenientDecor.CONFIG.features.wateringCanPermanentFarmland)
     );
 
     @Override
