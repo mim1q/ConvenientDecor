@@ -119,5 +119,8 @@
   "block.convenientdecor.iron_weather_vane": "Iron Weather Vane",
   "block.convenientdecor.netherite_weather_vane": "Netherite Weather Vane",
   "block.convenientdecor.weather_vane.detection_mode": "Switched to Weather Detection Mode",
-  "block.convenientdecor.weather_vane.forecast_mode": "Switched to Weather Forecast Mode"
+  "block.convenientdecor.weather_vane.forecast_mode": "Switched to Weather Forecast Mode",
+
+  "block.convenientdecor.silly_alien_plushie": "Silly Alien Plushie",
+  "block.convenientdecor.gnome_plushie": "Silly Gnome Plushie"
 }
