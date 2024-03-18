@@ -18,3 +18,5 @@
 ![Screenshot](https://raw.githubusercontent.com/mim1q/ConvenientDecor/master/projectPage/images/rainy_update.jpg)
 
 ![Screenshot](https://raw.githubusercontent.com/mim1q/ConvenientDecor/master/projectPage/images/screenshot.jpg)
+
+[![Bisect hosting - use code LUNAPIXEL](https://raw.githubusercontent.com/mim1q/MineCells/1.20.x/projectPageAssets/hosting-code.png)](https://www.bisecthosting.com/p/lunapixel)
