@@ -21,6 +21,8 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import static com.github.mim1q.convenientdecor.ConvenientDecor.CONFIG;
+
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
   @Shadow public abstract ItemStack getStackInHand(Hand hand);
@@ -68,6 +70,8 @@ public abstract class LivingEntityMixin extends Entity {
 
   @Inject(method = "tick", at = @At("HEAD"))
   private void tick(CallbackInfo ci) {
+    if (!CONFIG.features.umbrellaAttractsLightning) return;
+
     if (!getWorld().isClient) {
       if (convenientdecor$holdsUmbrella(true, false)
         && getWorld().isThundering()
@@ -93,6 +97,8 @@ public abstract class LivingEntityMixin extends Entity {
 
   @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
   private float modifyDamageAmount(float amount, DamageSource source) {
+    if (!CONFIG.features.umbrellaSlowsDownFalling) return amount;
+
     if (source == getWorld().getDamageSources().fall() && convenientdecor$holdsUmbrella(false, false)) {
       return Math.min(0.25F * amount, 8.0F);
     }
@@ -101,6 +107,8 @@ public abstract class LivingEntityMixin extends Entity {
 
   @ModifyVariable(method = "travel", at = @At("STORE"), ordinal = 0)
   private double modifyTravelGravity(double d) {
+    if (!CONFIG.features.umbrellaSlowsDownFalling) return d;
+
     if (convenientdecor$holdsUmbrella(false, false) && this.getVelocity().getY() < 0.0D) {
       return Math.min(d, 0.025F);
     }
@@ -110,6 +118,8 @@ public abstract class LivingEntityMixin extends Entity {
   @Inject(method = "getMaxHealth", at = @At("RETURN"), cancellable = true)
   @SuppressWarnings("DataFlowIssue")
   private void getMaxHealth(CallbackInfoReturnable<Float> cir) {
+    if (!CONFIG.features.rainclothesIncreasedHp) return;
+
     if (!this.isPlayer() || ((PlayerEntity)(Object) this).getInventory() == null) {
       return;
     }

@@ -17,10 +17,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Set;
 import java.util.function.BiFunction;
 
+import static com.github.mim1q.convenientdecor.ConvenientDecor.CONFIG;
+
 @SuppressWarnings("rawtypes")
 @Pseudo
 @Mixin(targets = "io.github.apace100.apoli.power.factory.condition.ConditionFactory")
-public class ApoliConditionFactoryMixin<T> {
+public class ApoliConditionFactoryMixin {
   @Mutable
   @Shadow
   @Final
@@ -37,11 +39,12 @@ public class ApoliConditionFactoryMixin<T> {
   @Unique
   private static final Set<Identifier> CONDITIONS_NEGATED_BY_UMBRELLA = Set.of(
     apoliId("exposed_to_sky"),
-    apoliId("exposed_to_sun")
+    apoliId("exposed_to_sun"),
+    apoliId("in_rain")
   );
 
   @Unique
-  private static final Set<Identifier> CONDITIONS_NEGATED_BY_RAIN_CLOTHES_OR_UMBRELLA = Set.of(
+  private static final Set<Identifier> CONDITIONS_NEGATED_BY_RAIN_CLOTHES = Set.of(
     apoliId("in_rain")
   );
 
@@ -52,13 +55,13 @@ public class ApoliConditionFactoryMixin<T> {
   )
   private void init(Identifier identifier, @Coerce Object data, BiFunction condition, CallbackInfo ci) {
     this.oldCondition = condition;
-    if (CONDITIONS_NEGATED_BY_UMBRELLA.contains(identifier)) {
+    if (CONFIG.features.umbrellaOriginsIntegration && CONDITIONS_NEGATED_BY_UMBRELLA.contains(identifier)) {
       ConvenientDecor.LOGGER.info("Patching condition: " + identifier + " to negate with umbrellas");
       this.condition = (a, b) -> (boolean) this.oldCondition.apply(a, b) && !holdingUmbrella((LivingEntity) b);
     }
-    if (CONDITIONS_NEGATED_BY_RAIN_CLOTHES_OR_UMBRELLA.contains(identifier)) {
+    if (CONFIG.features.rainclothesOriginsIntegration && CONDITIONS_NEGATED_BY_RAIN_CLOTHES.contains(identifier)) {
       ConvenientDecor.LOGGER.info("Patching condition: " + identifier + " to negate with rain clothes");
-      this.condition = (a, b) -> (boolean) this.oldCondition.apply(a, b) && !hasRainClothesOrUmbrella((LivingEntity) b);
+      this.condition = (a, b) -> (boolean) this.oldCondition.apply(a, b) && !hasRainClothes((LivingEntity) b);
     }
   }
 
@@ -75,10 +78,10 @@ public class ApoliConditionFactoryMixin<T> {
   }
 
   @Unique
-  private static boolean hasRainClothesOrUmbrella(LivingEntity entity) {
+  private static boolean hasRainClothes(LivingEntity entity) {
     var hasRainHat = entity.getEquippedStack(EquipmentSlot.HEAD).isIn(ModItemTags.RAIN_HATS);
     var rainCoat = entity.getEquippedStack(EquipmentSlot.CHEST);
     var hasRainCoatWithHood = rainCoat.isIn(ModItemTags.RAINCOATS) && RaincoatItem.isHooded(rainCoat);
-    return holdingUmbrella(entity) || hasRainHat || hasRainCoatWithHood;
+    return hasRainHat || hasRainCoatWithHood;
   }
 }

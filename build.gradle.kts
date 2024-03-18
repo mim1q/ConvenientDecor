@@ -3,9 +3,9 @@ import net.fabricmc.loom.task.RemapJarTask
 import java.io.FileNotFoundException
 
 plugins {
-  id("fabric-loom") version Versions.loom
-  id("com.modrinth.minotaur") version Versions.minotaur
-  id("com.matthewprenger.cursegradle") version Versions.cursegradle
+  id("fabric-loom") version Versions.LOOM
+  id("com.modrinth.minotaur") version Versions.MINOTAUR
+  id("com.matthewprenger.cursegradle") version Versions.CURSEGRADLE
 }
 
 java {
@@ -23,16 +23,18 @@ version = ModData.version
 
 repositories {
   mavenCentral()
+  maven("https://maven.draylar.dev/releases") // Omega-config
 }
 
 dependencies {
-  minecraft("com.mojang:minecraft:${Versions.minecraft}")
-  mappings("net.fabricmc:yarn:${Versions.yarn}:v2")
-  modImplementation("net.fabricmc:fabric-loader:${Versions.fabricLoader}")
-  modImplementation("net.fabricmc.fabric-api:fabric-api:${Versions.fabricApi}")
+  minecraft("com.mojang:minecraft:${Versions.MINECRAFT}")
+  mappings("net.fabricmc:yarn:${Versions.YARN}:v2")
+  modImplementation("net.fabricmc:fabric-loader:${Versions.FABRIC_LOADER}")
+  modImplementation("net.fabricmc.fabric-api:fabric-api:${Versions.FABRIC_API}")
+
+  modImplementation(include("dev.draylar.omega-config:omega-config-base:${Versions.OMEGA_CONFIG}")!!)
 }
 
-@Suppress("UnstableApiUsage")
 tasks {
   withType<ProcessResources> {
     inputs.property("version", ModData.version)

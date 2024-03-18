@@ -34,6 +34,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static com.github.mim1q.convenientdecor.ConvenientDecor.CONFIG;
+
 public class WateringCanItem extends Item {
 
   public static final int MAX_WATER_LEVEL = 32;
@@ -76,7 +78,7 @@ public class WateringCanItem extends Item {
       }
       return TypedActionResult.fail(stack);
     }
-    if (state.isOf(Blocks.FARMLAND)) {
+    if (state.isOf(Blocks.FARMLAND) && CONFIG.features.wateringCanPermanentFarmland) {
       if (user.isSneaking()) {
         return null;
       }

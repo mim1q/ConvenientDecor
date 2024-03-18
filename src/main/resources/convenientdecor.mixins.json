@@ -14,5 +14,6 @@
   "server": [],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "com.github.mim1q.convenientdecor.ConvenientDecorMixinPlugin"
 }
