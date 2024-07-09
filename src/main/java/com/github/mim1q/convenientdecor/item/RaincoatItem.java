@@ -1,9 +1,15 @@
 package com.github.mim1q.convenientdecor.item;
 
+import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.item.material.ModArmorMaterials;
 import com.github.mim1q.convenientdecor.network.c2s.SwitchHoodC2SPacket;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ArmorItem;
@@ -42,6 +48,24 @@ public class RaincoatItem extends ArmorItem implements ColoredItem {
       return true;
     }
     return false;
+  }
+
+  @Override
+  public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+    if (!world.isClient
+      && slot == EquipmentSlot.FEET.getEntitySlotId()
+      && entity instanceof LivingEntity living
+      && world.isRaining()
+      && ConvenientDecor.CONFIG.features.rainclothesIncreasedHp
+    ) {
+      living.addStatusEffect(new StatusEffectInstance(
+        StatusEffects.RESISTANCE,
+        22,
+        0,
+        false, false, true
+      ));
+    }
+    super.inventoryTick(stack, world, entity, slot, selected);
   }
 
   @Override
