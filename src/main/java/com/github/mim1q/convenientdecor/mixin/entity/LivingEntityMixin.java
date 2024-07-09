@@ -25,124 +25,129 @@ import static com.github.mim1q.convenientdecor.ConvenientDecor.CONFIG;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends Entity {
-  @Shadow public abstract ItemStack getStackInHand(Hand hand);
-  @Shadow public abstract void setStackInHand(Hand hand, ItemStack stack);
-  @Shadow public abstract ItemStack getEquippedStack(EquipmentSlot slot);
+    @Shadow
+    public abstract ItemStack getStackInHand(Hand hand);
 
-  public LivingEntityMixin(EntityType<?> type, World world) {
-    super(type, world);
-  }
+    @Shadow
+    public abstract void setStackInHand(Hand hand, ItemStack stack);
 
-  @Unique
-  private int convenientdecor$umbrellaTimer = 0;
+    @Shadow
+    public abstract ItemStack getEquippedStack(EquipmentSlot slot);
 
-  @Unique
-  private boolean convenientdecor$hasUmbrellaInHand(Hand hand, boolean canBeBroken, boolean canBeFolded) {
-    ItemStack stack = this.getStackInHand(hand);
-    Item item = stack.getItem();
-    return item instanceof UmbrellaItem
-      && (canBeBroken || item != ModItems.BROKEN_UMBRELLA)
-      && (canBeFolded || !UmbrellaItem.isFolded(stack));
-  }
-
-  @Unique
-  private boolean convenientdecor$holdsUmbrella(boolean canBeBroken, boolean canBeFolded) {
-    return convenientdecor$hasUmbrellaInHand(Hand.MAIN_HAND, canBeBroken, canBeFolded)
-      || convenientdecor$hasUmbrellaInHand(Hand.OFF_HAND, canBeBroken, canBeFolded);
-  }
-
-  @Unique
-  private void convenientdecor$tryBurnUmbrella(Hand hand) {
-    if (convenientdecor$hasUmbrellaInHand(hand, false, false)) {
-      this.setStackInHand(hand, ModItems.BROKEN_UMBRELLA.getDefaultStack());
+    public LivingEntityMixin(EntityType<?> type, World world) {
+        super(type, world);
     }
-  }
 
-  @Unique
-  private boolean convenientdecor$onlyAirAbove() {
-    for (int i = this.getBlockY() + 1; i <= getWorld().getTopY(); i++) {
-      if (!getWorld().isAir(this.getBlockPos().withY(i))) {
-        return false;
-      }
+    @Unique
+    private int convenientdecor$umbrellaTimer = 0;
+
+    @Unique
+    private boolean convenientdecor$hasUmbrellaInHand(Hand hand, boolean canBeBroken, boolean canBeFolded) {
+        ItemStack stack = this.getStackInHand(hand);
+        Item item = stack.getItem();
+        return item instanceof UmbrellaItem
+            && (canBeBroken || item != ModItems.BROKEN_UMBRELLA)
+            && (canBeFolded || !UmbrellaItem.isFolded(stack));
     }
-    return true;
-  }
 
-  @Inject(method = "tick", at = @At("HEAD"))
-  private void tick(CallbackInfo ci) {
-    if (!CONFIG.features.umbrellaAttractsLightning) return;
+    @Unique
+    private boolean convenientdecor$holdsUmbrella(boolean canBeBroken, boolean canBeFolded) {
+        return convenientdecor$hasUmbrellaInHand(Hand.MAIN_HAND, canBeBroken, canBeFolded)
+            || convenientdecor$hasUmbrellaInHand(Hand.OFF_HAND, canBeBroken, canBeFolded);
+    }
 
-    if (!getWorld().isClient) {
-      if (convenientdecor$holdsUmbrella(true, false)
-        && getWorld().isThundering()
-        && getWorld().getTopPosition(Heightmap.Type.MOTION_BLOCKING, this.getBlockPos()).getY() <= this.getY()
-        && convenientdecor$onlyAirAbove()
-      ) {
-        convenientdecor$umbrellaTimer++;
-      } else {
-        convenientdecor$umbrellaTimer = Math.min(0, convenientdecor$umbrellaTimer + 1);
-      }
-      if (convenientdecor$umbrellaTimer > 20 * 60 && this.random.nextFloat() < 0.05F) {
-        convenientdecor$umbrellaTimer = -(20 * 60 * 5) - this.random.nextInt(20 * 120);
-        LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(getWorld());
-        if (lightning != null) {
-          lightning.setPosition(this.getPos());
-          getWorld().spawnEntity(lightning);
-          convenientdecor$tryBurnUmbrella(Hand.MAIN_HAND);
-          convenientdecor$tryBurnUmbrella(Hand.OFF_HAND);
+    @Unique
+    private void convenientdecor$tryBurnUmbrella(Hand hand) {
+        if (convenientdecor$hasUmbrellaInHand(hand, false, false)) {
+            this.setStackInHand(hand, ModItems.BROKEN_UMBRELLA.getDefaultStack());
         }
-      }
     }
-  }
 
-  @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
-  private float modifyDamageAmount(float amount, DamageSource source) {
-    if (!CONFIG.features.umbrellaSlowsDownFalling) return amount;
-
-    if (source == getWorld().getDamageSources().fall() && convenientdecor$holdsUmbrella(false, false)) {
-      return Math.min(0.25F * amount, 8.0F);
+    @Unique
+    private boolean convenientdecor$onlyAirAbove() {
+        for (int i = this.getBlockY() + 1; i <= getWorld().getTopY(); i++) {
+            if (!getWorld().isAir(this.getBlockPos().withY(i))) {
+                return false;
+            }
+        }
+        return true;
     }
-    return amount;
-  }
 
-  @ModifyVariable(method = "travel", at = @At("STORE"), ordinal = 0)
-  private double modifyTravelGravity(double d) {
-    if (!CONFIG.features.umbrellaSlowsDownFalling) return d;
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void tick(CallbackInfo ci) {
+        if (!CONFIG.features.umbrellaAttractsLightning) return;
 
-    if (convenientdecor$holdsUmbrella(false, false) && this.getVelocity().getY() < 0.0D) {
-      return Math.min(d, 0.025F);
+        if (!getWorld().isClient) {
+            if (convenientdecor$holdsUmbrella(true, false)
+                && getWorld().isThundering()
+                && getWorld().getTopPosition(Heightmap.Type.MOTION_BLOCKING, this.getBlockPos()).getY() <= this.getY()
+                && convenientdecor$onlyAirAbove()
+            ) {
+                convenientdecor$umbrellaTimer++;
+            } else {
+                convenientdecor$umbrellaTimer = Math.min(0, convenientdecor$umbrellaTimer + 1);
+            }
+            if (convenientdecor$umbrellaTimer > 20 * 60 && this.random.nextFloat() < 0.05F) {
+                convenientdecor$umbrellaTimer = -(20 * 60 * 5) - this.random.nextInt(20 * 120);
+                LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(getWorld());
+                if (lightning != null) {
+                    lightning.setPosition(this.getPos());
+                    getWorld().spawnEntity(lightning);
+                    convenientdecor$tryBurnUmbrella(Hand.MAIN_HAND);
+                    convenientdecor$tryBurnUmbrella(Hand.OFF_HAND);
+                }
+            }
+        }
     }
-    return d;
-  }
 
-  @Inject(method = "getMaxHealth", at = @At("RETURN"), cancellable = true)
-  @SuppressWarnings("DataFlowIssue")
-  private void getMaxHealth(CallbackInfoReturnable<Float> cir) {
-    if (!CONFIG.features.rainclothesIncreasedHp) return;
+    @ModifyVariable(method = "damage", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float modifyDamageAmount(float amount, DamageSource source) {
+        if (!CONFIG.features.umbrellaSlowsDownFalling) return amount;
 
-    if (!this.isPlayer() || ((PlayerEntity)(Object) this).getInventory() == null) {
-      return;
+        if (source == getWorld().getDamageSources().fall() && convenientdecor$holdsUmbrella(false, false)) {
+            return Math.min(0.25F * amount, 8.0F);
+        }
+        return amount;
     }
-    float raincoatBonus = 0.0F;
-    if (this.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof RaincoatItem) {
-      if (getWorld().isThundering()) {
-        raincoatBonus = 8.0F;
-      } else if (getWorld().isRaining()) {
-        raincoatBonus = 4.0F;
-      }
+
+    @ModifyVariable(method = "travel", at = @At("STORE"), ordinal = 0)
+    private double modifyTravelGravity(double d) {
+        if (!CONFIG.features.umbrellaSlowsDownFalling) return d;
+
+        if (convenientdecor$holdsUmbrella(false, false) && this.getVelocity().getY() < 0.0D) {
+            return Math.min(d, 0.025F);
+        }
+        return d;
     }
-    cir.setReturnValue(
-      cir.getReturnValue() + raincoatBonus
-    );
-  }
 
-  @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
-  private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
-    convenientdecor$umbrellaTimer = nbt.getInt("umbrellaTimer");
-  }
+    @SuppressWarnings("ConstantValue")
+    @Inject(method = "getMaxHealth", at = @At("RETURN"), cancellable = true)
+    private void getMaxHealth(CallbackInfoReturnable<Float> cir) {
+        if (!CONFIG.features.rainclothesIncreasedHp) return;
 
-  @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
-  private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
-    nbt.putInt("umbrellaTimer", convenientdecor$umbrellaTimer);
-  }
+        if (!((((Object) this) instanceof PlayerEntity player && player.getInventory() != null))) {
+            return;
+        }
+        float raincoatBonus = 0.0F;
+        if (this.getEquippedStack(EquipmentSlot.CHEST).getItem() instanceof RaincoatItem) {
+            if (getWorld().isThundering()) {
+                raincoatBonus = 8.0F;
+            } else if (getWorld().isRaining()) {
+                raincoatBonus = 4.0F;
+            }
+        }
+        cir.setReturnValue(
+            cir.getReturnValue() + raincoatBonus
+        );
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void readCustomDataFromNbt(NbtCompound nbt, CallbackInfo ci) {
+        convenientdecor$umbrellaTimer = nbt.getInt("umbrellaTimer");
+    }
+
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void writeCustomDataToNbt(NbtCompound nbt, CallbackInfo ci) {
+        nbt.putInt("umbrellaTimer", convenientdecor$umbrellaTimer);
+    }
 }
