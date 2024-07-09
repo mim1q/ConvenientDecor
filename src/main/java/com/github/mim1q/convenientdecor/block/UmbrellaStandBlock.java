@@ -19,7 +19,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RotationPropertyHelper;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
@@ -63,7 +63,7 @@ public class UmbrellaStandBlock extends Block implements BlockEntityProvider {
         player.setStackInHand(hand, ItemStack.EMPTY);
         world.setBlockState(
           pos,
-          state.with(ROTATION, MathHelper.floor((double)(player.getYaw() * 16.0F / 360.0F) + 0.5) & 15)
+          state.with(ROTATION, RotationPropertyHelper.fromYaw(-player.getYaw()))
         );
         world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.BLOCKS, 1.0F, 1.0F);
       }
