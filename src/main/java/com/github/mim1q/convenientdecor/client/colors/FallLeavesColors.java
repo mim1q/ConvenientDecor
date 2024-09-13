@@ -7,6 +7,7 @@ import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
+import org.jetbrains.annotations.Nullable;
 
 public class FallLeavesColors {
   public static final int YELLOW = 0xFFF52d;
@@ -14,7 +15,7 @@ public class FallLeavesColors {
   public static final int RED = 0xD12C1D;
   public static final int BROWN = 0x733420;
 
-  public static int getColor(BlockState state, BlockRenderView world, BlockPos pos, int tintIndex) {
+  public static int getColor(BlockState state, @Nullable BlockRenderView world, @Nullable BlockPos pos, int tintIndex) {
     if (state.isOf(ModBlocks.YELLOW_LEAF_PILE)) {
       return YELLOW;
     }
@@ -26,6 +27,9 @@ public class FallLeavesColors {
     }
     if (state.isOf(ModBlocks.BROWN_LEAF_PILE)) {
       return BROWN;
+    }
+    if (world == null) {
+      return FoliageColors.getDefaultColor();
     }
     return world.getColor(pos, BiomeColors.FOLIAGE_COLOR);
   }
