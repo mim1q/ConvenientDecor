@@ -1,10 +1,14 @@
 package com.github.mim1q.convenientdecor.block;
 
 import com.github.mim1q.convenientdecor.block.blockentity.WeatherVaneBlockEntity;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -15,7 +19,6 @@ import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -23,7 +26,12 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class WeatherVaneBlock extends Block implements BlockEntityProvider {
+public class WeatherVaneBlock extends BlockWithEntity {
+  public static final MapCodec<WeatherVaneBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    Codec.INT.fieldOf("time_unit").forGetter(it -> it.timeUnit),
+    Settings.CODEC.fieldOf("settings").forGetter(it -> it.settings)
+  ).apply(instance, WeatherVaneBlock::new));
+
   public static final String FORECAST_MODE_MESSAGE = "block.convenientdecor.weather_vane.forecast_mode";
   public static final String DETECTION_MODE_MESSAGE = "block.convenientdecor.weather_vane.detection_mode";
 
@@ -31,7 +39,7 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
   public static final BooleanProperty FORECAST_MODE = BooleanProperty.of("forecast_mode");
   public static final IntProperty POWER = Properties.POWER;
 
-  public WeatherVaneBlock(int timeUnit, FabricBlockSettings settings) {
+  public WeatherVaneBlock(int timeUnit, Settings settings) {
     super(settings);
     this.timeUnit = timeUnit;
     this.setDefaultState(getDefaultState().with(FORECAST_MODE, false).with(POWER, 0));
@@ -45,7 +53,7 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
 
   @Override
   @SuppressWarnings("deprecation")
-  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
     if (!world.isClient) {
       boolean currentlyForecast = state.get(FORECAST_MODE);
       world.setBlockState(pos, state.with(FORECAST_MODE, !currentlyForecast));
@@ -85,5 +93,10 @@ public class WeatherVaneBlock extends Block implements BlockEntityProvider {
   @Override
   public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
     return new WeatherVaneBlockEntity(pos, state);
+  }
+
+  @Override
+  protected MapCodec<? extends BlockWithEntity> getCodec() {
+    return CODEC;
   }
 }

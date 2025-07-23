@@ -3,18 +3,20 @@ package com.github.mim1q.convenientdecor.item;
 import com.github.mim1q.convenientdecor.block.CustomProperties;
 import com.github.mim1q.convenientdecor.block.blockentity.WateringCanBlockEntity;
 import com.github.mim1q.convenientdecor.init.ModBlocks;
+import com.github.mim1q.convenientdecor.util.LegacyUtil;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FarmlandBlock;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
@@ -30,7 +32,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -61,7 +62,7 @@ public class WateringCanItem extends Item {
     if (result2.getResult().isAccepted()) {
       BlockEntity entity = world.getBlockEntity(ctx.getBlockPos());
       if (entity instanceof WateringCanBlockEntity wateringCan) {
-        wateringCan.setStackNbt(stack);
+        wateringCan.setStackNbt(stack, world.getRegistryManager());
       }
     }
     return result2;
@@ -72,7 +73,7 @@ public class WateringCanItem extends Item {
     BlockState state = world.getBlockState(hitResult.getBlockPos());
     if (state.getFluidState().isIn(FluidTags.WATER)) {
       if (getWaterLevel(stack) < MAX_WATER_LEVEL) {
-        WateringCanItem.setWaterLevel(stack, MAX_WATER_LEVEL);
+        WateringCanItem.setWaterLevel(world, stack, MAX_WATER_LEVEL);
         world.playSound(pos.x, pos.y, pos.z, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, 1.0F, true);
         return TypedActionResult.success(stack);
       }
@@ -85,7 +86,7 @@ public class WateringCanItem extends Item {
       if (!WateringCanItem.canWater(stack) || state.get(CustomProperties.HYDRATED)) {
         return TypedActionResult.fail(stack);
       }
-      WateringCanItem.setWaterLevel(stack, WateringCanItem.getWaterLevel(stack) - 1);
+      WateringCanItem.setWaterLevel(world, stack, WateringCanItem.getWaterLevel(stack) - 1);
       world.setBlockState(
         hitResult.getBlockPos(),
         Blocks.FARMLAND.getDefaultState()
@@ -118,8 +119,8 @@ public class WateringCanItem extends Item {
   }
 
   @Override
-  public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-    super.appendTooltip(stack, world, tooltip, context);
+  public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    super.appendTooltip(stack, context, tooltip, type);
     tooltip.add(Text.translatable(WATER_LEVEL_KEY, WateringCanItem.getWaterLevel(stack), MAX_WATER_LEVEL).formatted(Formatting.AQUA));
   }
 
@@ -131,13 +132,13 @@ public class WateringCanItem extends Item {
   @Override
   public ItemStack getDefaultStack() {
     ItemStack stack = super.getDefaultStack();
-    WateringCanItem.setWaterLevel(stack, 0);
+    WateringCanItem.setWaterLevel(null, stack, 0);
     return stack;
   }
 
   public ItemStack getStack(int waterLevel) {
     ItemStack stack = super.getDefaultStack();
-    WateringCanItem.setWaterLevel(stack, waterLevel);
+    WateringCanItem.setWaterLevel(null, stack, waterLevel);
     return stack;
   }
 
@@ -152,15 +153,24 @@ public class WateringCanItem extends Item {
   }
 
   public static int getWaterLevel(ItemStack stack) {
-    return stack.getOrCreateNbt().getInt("WaterLevel");
+    return LegacyUtil.getOrEmptyNbt(stack).getInt("WaterLevel");
   }
 
-  public static void setWaterLevel(ItemStack stack, int waterLevel) {
+  public static void setWaterLevel(World world, ItemStack stack, int waterLevel) {
+    if (world == null) {
+      var nbt = LegacyUtil.getOrEmptyNbt(stack);
+      nbt.putInt("WaterLevel", waterLevel);
+      LegacyUtil.writeNbt(stack, nbt);
+      return;
+    }
+    var inifnity = world.getRegistryManager().get(RegistryKeys.ENCHANTMENT).getEntry(Enchantments.INFINITY).orElse(null);
     if (
-      EnchantmentHelper.getLevel(Enchantments.INFINITY, stack) == 0
+      EnchantmentHelper.getLevel(inifnity, stack) == 0
       || waterLevel > getWaterLevel(stack)
     ) {
-      stack.getOrCreateNbt().putInt("WaterLevel", waterLevel);
+      var nbt = LegacyUtil.getOrEmptyNbt(stack);
+      nbt.putInt("WaterLevel", waterLevel);
+      LegacyUtil.writeNbt(stack, nbt);
     }
   }
 

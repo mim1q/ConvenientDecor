@@ -1,0 +1,5 @@
+accessWidener v2 named
+accessible method net/minecraft/block/AbstractBlock getMaxHorizontalModelOffset ()F
+accessible method net/minecraft/block/AbstractBlock getVerticalModelOffsetMultiplier ()F
+extendable class net/minecraft/item/ArmorMaterial
+accessible method net/minecraft/item/ArmorMaterials register (Ljava/lang/String;Ljava/util/EnumMap;ILnet/minecraft/registry/entry/RegistryEntry;FFLjava/util/function/Supplier;Ljava/util/List;)Lnet/minecraft/registry/entry/RegistryEntry;

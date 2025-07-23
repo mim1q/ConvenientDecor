@@ -3,10 +3,10 @@ package com.github.mim1q.convenientdecor.client.colors;
 import com.github.mim1q.convenientdecor.init.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.color.world.BiomeColors;
-import net.minecraft.client.color.world.FoliageColors;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockRenderView;
+import net.minecraft.world.biome.FoliageColors;
 import org.jetbrains.annotations.Nullable;
 
 public class FallLeavesColors {

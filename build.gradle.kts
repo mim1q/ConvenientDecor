@@ -10,8 +10,8 @@ plugins {
 
 java {
   withSourcesJar()
-  sourceCompatibility = JavaVersion.VERSION_17
-  targetCompatibility = JavaVersion.VERSION_17
+  sourceCompatibility = JavaVersion.VERSION_21
+  targetCompatibility = JavaVersion.VERSION_21
 }
 
 base {
@@ -35,6 +35,10 @@ dependencies {
   modImplementation(include("com.github.draylar:omega-config:${Versions.OMEGA_CONFIG}")!!)
 }
 
+loom {
+  accessWidenerPath.set(file("src/main/resources/convenientdecor.accesswidener"))
+}
+
 tasks {
   withType<ProcessResources> {
     inputs.property("version", ModData.VERSION)
@@ -44,7 +48,7 @@ tasks {
   }
   withType<JavaCompile> {
     configureEach {
-      options.release.set(17)
+      options.release.set(21)
     }
   }
   register("runDatagenScript") {

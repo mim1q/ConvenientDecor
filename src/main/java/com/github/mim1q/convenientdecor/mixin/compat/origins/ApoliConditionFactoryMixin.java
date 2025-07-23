@@ -33,7 +33,7 @@ public class ApoliConditionFactoryMixin {
 
   @Unique
   private static Identifier apoliId(String name) {
-    return new Identifier("apoli", name);
+    return  Identifier.of("apoli", name);
   }
 
   @Unique

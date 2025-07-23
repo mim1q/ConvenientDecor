@@ -30,8 +30,7 @@ public class HaystackBlock extends Block {
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+  protected boolean canPathfindThrough(BlockState state, NavigationType type) {
     return false;
   }
 

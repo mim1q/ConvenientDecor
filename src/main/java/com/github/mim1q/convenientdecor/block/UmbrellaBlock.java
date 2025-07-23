@@ -2,10 +2,12 @@ package com.github.mim1q.convenientdecor.block;
 
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaBlockEntity;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +23,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class UmbrellaBlock extends Block implements BlockEntityProvider {
+public class UmbrellaBlock extends BlockWithEntity {
+  public static final MapCodec<UmbrellaBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    Settings.CODEC.fieldOf("settings").forGetter(it -> it.getSettings()),
+    DyeColor.CODEC.fieldOf("color").forGetter(it -> it.color)
+  ).apply(instance, UmbrellaBlock::new));
+
   public static final IntProperty ROTATION = Properties.ROTATION;
   public static final BooleanProperty FOLDED = BooleanProperty.of("folded");
   public static final BooleanProperty LEANING = BooleanProperty.of("leaning");
@@ -43,9 +50,14 @@ public class UmbrellaBlock extends Block implements BlockEntityProvider {
   @Override
   public BlockState getPlacementState(ItemPlacementContext ctx) {
     return this.getDefaultState()
-      .with(ROTATION, MathHelper.floor((double)(ctx.getPlayerYaw() * 16.0F / 360.0F) + 0.5) & 15)
+      .with(ROTATION, MathHelper.floor((double) (ctx.getPlayerYaw() * 16.0F / 360.0F) + 0.5) & 15)
       .with(FOLDED, UmbrellaItem.isFolded(ctx.getStack()))
       .with(LEANING, ctx.getSide().getAxis().isHorizontal());
+  }
+
+  @Override
+  protected MapCodec<? extends BlockWithEntity> getCodec() {
+    return CODEC;
   }
 
   @Override

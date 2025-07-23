@@ -60,7 +60,7 @@ public class UmbrellaRenderer {
   ) {
     UmbrellaModel model = folded ? foldedModel : unfoldedModel;
     VertexConsumer consumer = vertexConsumers.getBuffer(model.getLayer(getTexture(color)));
-    model.render(matrices, consumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+    model.render(matrices, consumer, light, overlay, 0xFFFFFFFF);
   }
 
   public static class UmbrellaRenderHelper {

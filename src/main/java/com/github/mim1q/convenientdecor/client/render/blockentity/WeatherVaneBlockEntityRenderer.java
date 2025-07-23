@@ -39,7 +39,7 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
       {
         matrices.multiply(new Quaternionf().rotationY(entity.getYaw(tickDelta) * MathHelper.RADIANS_PER_DEGREE));
         matrices.translate(0.0F, -0.8125F, 0.0F);
-        model.render(matrices, vertices, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+        model.render(matrices, vertices, light, overlay, 0xFFFFFFFF);
       }
       matrices.pop();
       matrices.translate(0.0F, 0.75F, 0.0F);
@@ -70,8 +70,8 @@ public class WeatherVaneBlockEntityRenderer implements BlockEntityRenderer<Weath
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-      this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+      this.root.render(matrices, vertices, light, overlay, color);
     }
   }
 }

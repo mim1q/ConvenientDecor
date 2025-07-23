@@ -7,9 +7,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,21 +45,21 @@ public class UmbrellaStandBlockEntity extends BlockEntity {
   }
 
   @Override
-  public NbtCompound toInitialChunkDataNbt() {
-    return createNbt();
+  public NbtCompound toInitialChunkDataNbt(RegistryWrapper.WrapperLookup lookup) {
+    return createNbt(lookup);
   }
 
   @Override
-  public void readNbt(NbtCompound nbt) {
-    super.readNbt(nbt);
-    stack = ItemStack.fromNbt(nbt.getCompound("stack"));
+  public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+    super.readNbt(nbt, lookup);
+    stack = ItemStack.fromNbt(lookup, nbt.getCompound("stack")).orElse(ItemStack.EMPTY);
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt) {
-    super.writeNbt(nbt);
-    NbtCompound stackNbt = new NbtCompound();
-    stack.writeNbt(stackNbt);
+  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+    super.writeNbt(nbt, lookup);
+    var stackNbt = ItemStack.CODEC.encode(stack, NbtOps.INSTANCE, new NbtCompound()).getOrThrow();
+
     nbt.put("stack", stackNbt);
   }
 }

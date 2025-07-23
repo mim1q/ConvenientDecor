@@ -22,8 +22,9 @@ import java.util.function.Consumer;
 
 @Mixin(HoeItem.class)
 public abstract class HoeItemMixin extends MiningToolItem {
-  protected HoeItemMixin(float attackDamage, float attackSpeed, ToolMaterial material, TagKey<Block> effectiveBlocks, Settings settings) {
-    super(attackDamage, attackSpeed, material, effectiveBlocks, settings);
+
+  public HoeItemMixin(ToolMaterial material, TagKey<Block> effectiveBlocks, Settings settings) {
+    super(material, effectiveBlocks, settings);
   }
 
   @Inject(method = "createTillAction", at = @At("RETURN"), cancellable = true)
@@ -39,7 +40,7 @@ public abstract class HoeItemMixin extends MiningToolItem {
           if (offhandStack != null && offhandStack.isOf(ModItems.WATERING_CAN)) {
             int waterLevel = WateringCanItem.getWaterLevel(offhandStack);
             if (waterLevel > 0) {
-              WateringCanItem.setWaterLevel(offhandStack, waterLevel - 1);
+              WateringCanItem.setWaterLevel(ctx.getWorld(), offhandStack, waterLevel - 1);
               hydrated = true;
             }
           }

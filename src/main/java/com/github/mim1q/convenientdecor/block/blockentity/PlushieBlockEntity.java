@@ -7,6 +7,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
+import net.minecraft.registry.RegistryWrapper.WrapperLookup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -46,8 +47,8 @@ public class PlushieBlockEntity extends BlockEntity {
   }
 
   @Override
-  public NbtCompound toInitialChunkDataNbt() {
-    return createNbt();
+  public NbtCompound toInitialChunkDataNbt(WrapperLookup lookup) {
+    return createNbt(lookup);
   }
 
   @Nullable
@@ -56,15 +57,17 @@ public class PlushieBlockEntity extends BlockEntity {
     return BlockEntityUpdateS2CPacket.create(this);
   }
 
+
+
   @Override
-  public void writeNbt(NbtCompound nbt) {
-    super.writeNbt(nbt);
+  public void writeNbt(NbtCompound nbt, WrapperLookup lookup) {
+    super.writeNbt(nbt, lookup);
     nbt.putFloat("rotation", rotation);
   }
 
   @Override
-  public void readNbt(NbtCompound nbt) {
-    super.readNbt(nbt);
+  public void readNbt(NbtCompound nbt, WrapperLookup lookup) {
+    super.readNbt(nbt, lookup);
     rotation = nbt.getFloat("rotation");
   }
 }

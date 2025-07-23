@@ -2,10 +2,9 @@ package com.github.mim1q.convenientdecor.block;
 
 import com.github.mim1q.convenientdecor.block.blockentity.UmbrellaStandBlockEntity;
 import com.github.mim1q.convenientdecor.item.UmbrellaItem;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ShapeContext;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +24,11 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class UmbrellaStandBlock extends Block implements BlockEntityProvider {
+public class UmbrellaStandBlock extends BlockWithEntity {
+  public static final MapCodec<UmbrellaStandBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    Settings.CODEC.fieldOf("settings").forGetter(it -> it.getSettings())
+  ).apply(instance, UmbrellaStandBlock::new));
+
   public static final VoxelShape SHAPE = createCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
   public static final IntProperty ROTATION = Properties.ROTATION;
 
@@ -34,14 +37,19 @@ public class UmbrellaStandBlock extends Block implements BlockEntityProvider {
   }
 
   @Override
+  protected MapCodec<? extends BlockWithEntity> getCodec() {
+    return CODEC;
+  }
+
+  @Override
   protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
     builder.add(ROTATION);
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
     UmbrellaStandBlockEntity entity = (UmbrellaStandBlockEntity) world.getBlockEntity(pos);
+    var hand = player.getActiveHand();
     if (entity == null || hand == Hand.OFF_HAND) {
       return ActionResult.PASS;
     }
@@ -51,7 +59,7 @@ public class UmbrellaStandBlock extends Block implements BlockEntityProvider {
         if (!world.isClient) {
           player.setStackInHand(hand, entity.getStack().copy());
           entity.setStack(ItemStack.EMPTY);
-          world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.BLOCKS, 1.0F, 1.0F);
+          world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER.value(), SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
         return ActionResult.SUCCESS;
       }
@@ -65,7 +73,7 @@ public class UmbrellaStandBlock extends Block implements BlockEntityProvider {
           pos,
           state.with(ROTATION, RotationPropertyHelper.fromYaw(-player.getYaw()))
         );
-        world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        world.playSound(null, pos, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER.value(), SoundCategory.BLOCKS, 1.0F, 1.0F);
       }
       return ActionResult.SUCCESS;
     }

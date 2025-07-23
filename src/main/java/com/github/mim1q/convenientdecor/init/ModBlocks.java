@@ -3,13 +3,14 @@ package com.github.mim1q.convenientdecor.init;
 import com.github.mim1q.convenientdecor.ConvenientDecor;
 import com.github.mim1q.convenientdecor.block.*;
 import com.github.mim1q.convenientdecor.init.group.ColoredGroup;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.mixin.object.builder.AbstractBlockSettingsAccessor;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.HayBlock;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
@@ -17,8 +18,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-
-import java.util.Optional;
+import net.minecraft.world.BlockView;
 
 public class ModBlocks {
   public static FabricBlockSettings metalSettings() {
@@ -56,8 +56,8 @@ public class ModBlocks {
     .add16Colors((color) -> new UmbrellaBlock(metalSettings().breakInstantly().mapColor(color), color))
     .register("umbrella");
 
-  public static final UmbrellaBlock BROKEN_UMBRELLA = register(new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK),"broken_umbrella");
-  public static final UmbrellaBlock ALLERTS_UMBRELLA = register(new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK),"allerts_umbrella");
+  public static final UmbrellaBlock BROKEN_UMBRELLA = register(new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK), "broken_umbrella");
+  public static final UmbrellaBlock ALLERTS_UMBRELLA = register(new UmbrellaBlock(FabricBlockSettings.copy(UMBRELLA.get(DyeColor.RED)), DyeColor.BLACK), "allerts_umbrella");
   public static final UmbrellaStandBlock UMBRELLA_STAND = registerWithSimpleItem(new UmbrellaStandBlock(FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).breakInstantly()), "umbrella_stand");
   public static final WeatherVaneBlock GOLD_WEATHER_VANE = registerWithSimpleItem(new WeatherVaneBlock(40, FabricBlockSettings.copyOf(Blocks.IRON_BLOCK).breakInstantly().noCollision().nonOpaque()), "gold_weather_vane");
   public static final WeatherVaneBlock COPPER_WEATHER_VANE = registerWithSimpleItem(new WeatherVaneBlock(100, FabricBlockSettings.copyOf(GOLD_WEATHER_VANE)), "copper_weather_vane");
@@ -67,10 +67,11 @@ public class ModBlocks {
   public static final PlushieBlock SILLY_ALIEN_PLUSHIE = registerWithSimpleItem(new PlushieBlock(FabricBlockSettings.copyOf(Blocks.WHITE_WOOL).nonOpaque().noCollision(), ModSoundEvents.SILLY_ALIEN_PLUSHIE_SQUISH), "silly_alien_plushie");
   public static final PlushieBlock GNOME_PLUSHIE = registerWithSimpleItem(new PlushieBlock(FabricBlockSettings.copyOf(SILLY_ALIEN_PLUSHIE), ModSoundEvents.GNOME_PLUSHIE_SQUISH), "gnome_plushie");
 
-  public static void init() { }
+  public static void init() {
+  }
 
   public static <T extends Block> T registerWithSimpleItem(T block, String name) {
-    Registry.register(Registries.ITEM, ConvenientDecor.id(name), new BlockItem(block, new FabricItemSettings()));
+    Registry.register(Registries.ITEM, ConvenientDecor.id(name), new BlockItem(block, new Item.Settings()));
     return register(block, name);
   }
 
@@ -82,10 +83,10 @@ public class ModBlocks {
   private static HaystackBlock registerLeafPile(String name) {
     return registerWithSimpleItem(new HaystackBlock(
       noZOffset(FabricBlockSettings
-        .copyOf(Blocks.OAK_LEAVES)
-        .strength(0.2F)
-        .sounds(BlockSoundGroup.GRASS)
-        .noCollision(),
+          .copyOf(Blocks.OAK_LEAVES)
+          .strength(0.2F)
+          .sounds(BlockSoundGroup.GRASS)
+          .noCollision(),
         true
       )
     ), name);
@@ -94,19 +95,19 @@ public class ModBlocks {
   @SuppressWarnings("UnstableApiUsage")
   private static FabricBlockSettings noZOffset(FabricBlockSettings settings, boolean additionalOffset) {
     if (additionalOffset) {
-      ((AbstractBlockSettingsAccessor) settings).setOffsetter(Optional.of((state, world, pos) -> {
+      ((AbstractBlockSettingsAccessor) settings).setOffsetter((BlockState state, BlockView world, BlockPos pos) -> {
         var block = state.getBlock();
         @SuppressWarnings("deprecation") var l = MathHelper.hashCode(pos);
         var maxXzOffset = block.getMaxHorizontalModelOffset();
         var maxYOffset = maxXzOffset * block.getVerticalModelOffsetMultiplier();
-        var x = MathHelper.clamp(((double)((float)(l & 15L) / 15.0F) - 0.5) * 0.5, -maxXzOffset, maxXzOffset);
-        var y =  MathHelper.clamp(((double)((float)(l >> 4 & 15L) / 15.0F) - 0.5) * 0.5, -maxYOffset, maxYOffset);
-        var z = MathHelper.clamp(((double)((float)(l >> 8 & 15L) / 15.0F) - 0.5) * 0.5, -maxXzOffset, maxXzOffset);
+        var x = MathHelper.clamp(((double) ((float) (l & 15L) / 15.0F) - 0.5) * 0.5, -maxXzOffset, maxXzOffset);
+        var y = MathHelper.clamp(((double) ((float) (l >> 4 & 15L) / 15.0F) - 0.5) * 0.5, -maxYOffset, maxYOffset);
+        var z = MathHelper.clamp(((double) ((float) (l >> 8 & 15L) / 15.0F) - 0.5) * 0.5, -maxXzOffset, maxXzOffset);
         var baseOffset = new Vec3d(x, y, z);
         return baseOffset.add(getZFightingOffset(pos));
-      }));
+      });
     } else {
-      ((AbstractBlockSettingsAccessor) settings).setOffsetter(Optional.of((state, world, pos) -> getZFightingOffset(pos)));
+      ((AbstractBlockSettingsAccessor) settings).setOffsetter((BlockState state, BlockView world, BlockPos pos) -> getZFightingOffset(pos));
     }
     return settings;
   }

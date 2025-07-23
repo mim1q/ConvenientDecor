@@ -1,6 +1,8 @@
 package com.github.mim1q.convenientdecor.block;
 
 import com.github.mim1q.convenientdecor.block.blockentity.PlushieBlockEntity;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
 import net.minecraft.block.entity.BlockEntity;
@@ -17,6 +19,11 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public class PlushieBlock extends BlockWithEntity {
+  public static final MapCodec<PlushieBlock> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
+    Settings.CODEC.fieldOf("settings").forGetter(it -> it.getSettings()),
+    SoundEvent.CODEC.fieldOf("sound").forGetter(it -> it.soundEvent)
+  ).apply(instance, PlushieBlock::new));
+
   private final SoundEvent soundEvent;
 
   public PlushieBlock(Settings settings, SoundEvent soundEvent) {
@@ -47,13 +54,17 @@ public class PlushieBlock extends BlockWithEntity {
   }
 
   @Override
-  @SuppressWarnings("deprecation")
-  public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+  protected ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
     var blockEntity = world.getBlockEntity(pos);
     if (blockEntity instanceof PlushieBlockEntity plushie) {
       plushie.squish(world, soundEvent, world.getTime());
       return ActionResult.SUCCESS;
     }
-    return super.onUse(state, world, pos, player, hand, hit);
+    return super.onUse(state, world, pos, player, hit);
+  }
+
+  @Override
+  protected MapCodec<? extends BlockWithEntity> getCodec() {
+    return CODEC;
   }
 }

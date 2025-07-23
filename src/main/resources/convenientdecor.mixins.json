@@ -7,7 +7,6 @@
     "block.HoeItemMixin",
     "compat.origins.ApoliConditionFactoryMixin",
     "enchantment.EnchantmentMixin",
-    "enchantment.InfinityEnchantmentMixin",
     "entity.LivingEntityMixin"
   ],
   "client": [],

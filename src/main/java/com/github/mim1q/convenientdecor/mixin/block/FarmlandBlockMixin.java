@@ -65,7 +65,7 @@ public abstract class FarmlandBlockMixin extends Block {
       if (offhandStack != null && offhandStack.isOf(ModItems.WATERING_CAN)) {
         int waterLevel = WateringCanItem.getWaterLevel(offhandStack);
         if (waterLevel > 0) {
-          WateringCanItem.setWaterLevel(offhandStack, waterLevel - 1);
+          WateringCanItem.setWaterLevel(ctx.getWorld(), offhandStack, waterLevel - 1);
           hydrated = true;
         }
       }

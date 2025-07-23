@@ -1,7 +1,6 @@
 package com.github.mim1q.convenientdecor.init.group;
 
 import com.github.mim1q.convenientdecor.ConvenientDecor;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -91,7 +90,7 @@ public abstract class ColoredGroup<T, U extends ColoredGroup<T, U>> {
     protected void registerSingle(Identifier id, Block entry) {
       Registry.register(Registries.BLOCK, id, entry);
       if (withBlockItem) {
-        Registry.register(Registries.ITEM, id, new BlockItem(entry, new FabricItemSettings()));
+        Registry.register(Registries.ITEM, id, new BlockItem(entry, new Item.Settings()));
       }
     }
 

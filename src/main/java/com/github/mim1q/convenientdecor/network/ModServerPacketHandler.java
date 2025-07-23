@@ -2,25 +2,27 @@ package com.github.mim1q.convenientdecor.network;
 
 import com.github.mim1q.convenientdecor.item.RaincoatItem;
 import com.github.mim1q.convenientdecor.network.c2s.SwitchHoodC2SPacket;
-import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 
 public class ModServerPacketHandler {
   public static void init() {
-    ServerPlayNetworking.registerGlobalReceiver(SwitchHoodC2SPacket.ID, ModServerPacketHandler::onSwitchHood);
+    PayloadTypeRegistry.playC2S().register(SwitchHoodC2SPacket.TYPE, SwitchHoodC2SPacket.CODEC);
+
+    ServerPlayNetworking.registerGlobalReceiver(
+      SwitchHoodC2SPacket.TYPE,
+      ModServerPacketHandler::onSwitchHood
+    );
   }
 
-  public static void onSwitchHood(MinecraftServer server, ServerPlayerEntity player, ServerPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-    int slotId = buf.readInt();
+  public static void onSwitchHood(SwitchHoodC2SPacket packet, ServerPlayNetworking.Context context) {
+    int slotId = packet.slot();
 
-    server.execute(() -> {
-      Inventory inventory = player.getInventory();
+    //noinspection resource
+    context.server().execute(() -> {
+      Inventory inventory = context.player().getInventory();
       if (inventory == null) {
         return;
       }

@@ -8,6 +8,8 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 
 public class WateringCanBlockEntity extends BlockEntity {
@@ -35,23 +37,24 @@ public class WateringCanBlockEntity extends BlockEntity {
   }
 
   @Override
-  public void readNbt(NbtCompound nbt) {
-    super.readNbt(nbt);
+  public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+    super.readNbt(nbt, lookup);
     waterLevel = nbt.getInt("WaterLevel");
     infiniteWater = nbt.getBoolean("InfiniteWater");
   }
 
   @Override
-  protected void writeNbt(NbtCompound nbt) {
-    super.writeNbt(nbt);
+  protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
+    super.writeNbt(nbt, lookup);
     nbt.putInt("WaterLevel", waterLevel);
     nbt.putBoolean("InfiniteWater", infiniteWater);
   }
 
   @Override
-  public void setStackNbt(ItemStack stack) {
-    super.setStackNbt(stack);
+  public void setStackNbt(ItemStack stack, RegistryWrapper.WrapperLookup lookup) {
+    super.setStackNbt(stack, lookup);
     this.setWaterLevel(WateringCanItem.getWaterLevel(stack));
-    this.setInfiniteWater(EnchantmentHelper.get(stack).containsKey(Enchantments.INFINITY));
+    var infinityEntry =  lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.INFINITY);
+    this.setInfiniteWater(EnchantmentHelper.getEnchantments(stack).getEnchantments().contains(infinityEntry));
   }
 }
