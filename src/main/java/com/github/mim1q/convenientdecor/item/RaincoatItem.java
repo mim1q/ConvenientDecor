@@ -53,8 +53,8 @@ public class RaincoatItem extends ArmorItem implements ColoredItem {
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
     if (!world.isClient
-      && slot == EquipmentSlot.FEET.getEntitySlotId()
       && entity instanceof LivingEntity living
+      && living.getEquippedStack(EquipmentSlot.CHEST).isOf(this)
       && world.isRaining()
       && ConvenientDecor.CONFIG.features.rainclothesIncreasedHp
     ) {

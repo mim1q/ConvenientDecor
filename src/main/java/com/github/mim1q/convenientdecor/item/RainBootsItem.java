@@ -22,8 +22,8 @@ public class RainBootsItem extends ArmorItem implements ColoredItem {
   @Override
   public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
     if (!world.isClient
-      && slot == EquipmentSlot.FEET.getEntitySlotId()
       && entity instanceof LivingEntity living
+      && living.getEquippedStack(EquipmentSlot.FEET).isOf(this)
       && world.isRaining()
     ) {
       living.addStatusEffect(new StatusEffectInstance(
