@@ -23,7 +23,7 @@ version = ModData.VERSION
 
 repositories {
   mavenCentral()
-  maven("https://maven.draylar.dev/releases") // Omega-config
+  maven("https://jitpack.io") // Omega-config
 }
 
 dependencies {
@@ -32,7 +32,7 @@ dependencies {
   modImplementation("net.fabricmc:fabric-loader:${Versions.FABRIC_LOADER}")
   modImplementation("net.fabricmc.fabric-api:fabric-api:${Versions.FABRIC_API}")
 
-  modImplementation(include("dev.draylar.omega-config:omega-config-base:${Versions.OMEGA_CONFIG}")!!)
+  modImplementation(include("com.github.draylar:omega-config:${Versions.OMEGA_CONFIG}")!!)
 }
 
 tasks {
