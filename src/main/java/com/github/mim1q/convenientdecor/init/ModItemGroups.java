@@ -21,6 +21,8 @@ public class ModItemGroups {
     .icon(() -> ModItems.WATERING_CAN.getStack(32))
     .entries((ctx, stacks) -> {
       stacks.addAll(List.of(
+        stack(ModBlocks.SILLY_ALIEN_PLUSHIE),
+        stack(ModBlocks.GNOME_PLUSHIE),
         stack(ModBlocks.PITCHFORK),
         stack(ModBlocks.SHOVEL)
       ));

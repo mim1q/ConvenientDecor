@@ -1,6 +1,7 @@
 package com.github.mim1q.convenientdecor.client.render.blockentity;
 
 import com.github.mim1q.convenientdecor.block.blockentity.PlushieBlockEntity;
+import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockModelRenderer;
@@ -38,7 +39,7 @@ public class PlushieBlockEntityRenderer implements BlockEntityRenderer<PlushieBl
       matrices.multiply(new Quaternionf().rotationY(MathHelper.RADIANS_PER_DEGREE * (-entity.getRotation())));
       matrices.translate(-0.5, -0.5, -0.5);
 
-      blockRenderer.render(world, model, block, BlockPos.ORIGIN, matrices, vertexConsumers.getBuffer(RenderLayer.getCutout()), true, world.random, 0, light);
+      blockRenderer.render(world, model, block, entity.getPos(), matrices, vertexConsumers.getBuffer(RenderLayer.getCutout()), true, world.random, 0, OverlayTexture.DEFAULT_UV);
     }
     matrices.pop();
   }
