@@ -54,7 +54,7 @@ public class ModRender {
       BlockRenderLayerMap.INSTANCE.putBlocks(RenderLayer.getCutout(), block);
     }
 
-    ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> 0x00AAFF, ModBlocks.WATERING_CAN);
+    ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> 0xFF00AAFF, ModBlocks.WATERING_CAN);
     ColorProviderRegistry.BLOCK.register(
       FallLeavesColors::getColor,
       ModBlocks.LEAF_PILE,
@@ -72,7 +72,7 @@ public class ModRender {
   }
 
   public static void initItems() {
-    ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0x00AAFF, ModItems.WATERING_CAN);
+    ColorProviderRegistry.ITEM.register((stack, tintIndex) -> 0xFF00AAFF, ModItems.WATERING_CAN);
     ColorProviderRegistry.ITEM.register(
       FallLeavesColors::getColor,
       ModBlocks.LEAF_PILE,
@@ -91,7 +91,10 @@ public class ModRender {
     ModelPredicateProviderRegistry.register(
       ModItems.WATERING_CAN,
       ConvenientDecor.id("filled"),
-      (stack, world, entity, seed) -> WateringCanItem.canWater(stack) ? 1 : 0
+      (stack, world, entity, seed) -> {
+        var canWater = WateringCanItem.canWater(stack);
+        return canWater ? 1 : 0;
+      }
     );
 
     for (Item item : ModItems.RAINCOAT.getList()) {

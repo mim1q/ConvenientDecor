@@ -44,7 +44,7 @@ public class RaincoatItem extends ArmorItem implements ColoredItem {
     if (clickType == ClickType.RIGHT) {
       if (player.getWorld().isClient) {
         player.getWorld().playSound(player, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_LEATHER.value(), SoundCategory.PLAYERS, 1.0F, 1.0F);
-        ClientPlayNetworking.send(new SwitchHoodC2SPacket(slot.id));
+        ClientPlayNetworking.send(new SwitchHoodC2SPacket(slot.getIndex()));
       }
       return true;
     }
