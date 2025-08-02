@@ -50,6 +50,7 @@ public class WateringCanItem extends Item {
   public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
     BlockHitResult hitResult = raycast(world, user, RaycastContext.FluidHandling.WATER);
     ItemStack stack = user.getStackInHand(hand);
+    var stackCopy = stack.copy();
     if (hitResult.getType() == HitResult.Type.MISS) {
       return TypedActionResult.pass(stack);
     }
@@ -57,7 +58,7 @@ public class WateringCanItem extends Item {
     if (result != null) {
       return result;
     }
-    ItemPlacementContext ctx = new ItemPlacementContext(user, hand, stack, hitResult);
+    ItemPlacementContext ctx = new ItemPlacementContext(user, hand, stackCopy, hitResult);
     TypedActionResult<ItemStack> result2 = this.tryPlace(ctx);
     if (result2.getResult().isAccepted()) {
       BlockEntity entity = world.getBlockEntity(ctx.getBlockPos());

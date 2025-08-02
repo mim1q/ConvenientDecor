@@ -52,13 +52,17 @@ public class UmbrellaStandBlockEntity extends BlockEntity {
   @Override
   public void readNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
     super.readNbt(nbt, lookup);
-    stack = ItemStack.fromNbt(lookup, nbt.getCompound("stack")).orElse(ItemStack.EMPTY);
+    if (nbt.contains("stack") && !nbt.getCompound("stack").isEmpty()) {
+      stack = ItemStack.fromNbt(lookup, nbt.getCompound("stack")).orElse(ItemStack.EMPTY);
+    } else {
+      stack = ItemStack.EMPTY;
+    }
   }
 
   @Override
   protected void writeNbt(NbtCompound nbt, RegistryWrapper.WrapperLookup lookup) {
     super.writeNbt(nbt, lookup);
-    var stackNbt = ItemStack.CODEC.encode(stack, NbtOps.INSTANCE, new NbtCompound()).getOrThrow();
+    var stackNbt = ItemStack.OPTIONAL_CODEC.encode(stack, NbtOps.INSTANCE, new NbtCompound()).getOrThrow();
 
     nbt.put("stack", stackNbt);
   }

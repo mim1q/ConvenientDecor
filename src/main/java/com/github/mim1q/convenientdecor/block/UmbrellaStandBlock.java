@@ -94,6 +94,11 @@ public class UmbrellaStandBlock extends BlockWithEntity {
   }
 
   @Override
+  protected BlockRenderType getRenderType(BlockState state) {
+    return BlockRenderType.MODEL;
+  }
+
+  @Override
   @SuppressWarnings("deprecation")
   public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
     return SHAPE;

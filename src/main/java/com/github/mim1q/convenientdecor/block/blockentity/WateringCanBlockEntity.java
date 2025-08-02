@@ -52,9 +52,9 @@ public class WateringCanBlockEntity extends BlockEntity {
 
   @Override
   public void setStackNbt(ItemStack stack, RegistryWrapper.WrapperLookup lookup) {
-    super.setStackNbt(stack, lookup);
     this.setWaterLevel(WateringCanItem.getWaterLevel(stack));
     var infinityEntry =  lookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT).getOrThrow(Enchantments.INFINITY);
     this.setInfiniteWater(EnchantmentHelper.getEnchantments(stack).getEnchantments().contains(infinityEntry));
+    super.setStackNbt(stack, lookup);
   }
 }

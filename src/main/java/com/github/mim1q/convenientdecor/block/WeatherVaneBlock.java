@@ -5,10 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockEntityProvider;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
@@ -81,6 +78,11 @@ public class WeatherVaneBlock extends BlockWithEntity {
       return getWeakRedstonePower(state, world, pos, direction);
     }
     return 0;
+  }
+
+  @Override
+  protected BlockRenderType getRenderType(BlockState state) {
+    return BlockRenderType.MODEL;
   }
 
   @Nullable
